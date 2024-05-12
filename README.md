@@ -1,16 +1,21 @@
-mPDF is a PHP library which generates PDF files from UTF-8 encoded HTML.
-
-It is based on [FPDF](http://www.fpdf.org/) and [HTML2FPDF](http://html2fpdf.sourceforge.net/)
-(see [CREDITS](CREDITS.txt)), with a number of enhancements. mPDF was written by Ian Back and is released
-under the [GNU GPL v2 licence](LICENSE.txt).
-
-[![Latest Stable Version](https://poser.pugx.org/mpdf/mpdf/v/stable)](https://packagist.org/packages/mpdf/mpdf)
-[![Total Downloads](https://poser.pugx.org/mpdf/mpdf/downloads)](https://packagist.org/packages/mpdf/mpdf)
-[![License](https://poser.pugx.org/mpdf/mpdf/license)](https://packagist.org/packages/mpdf/mpdf)
-
-
-> ⚠ If you are viewing this file on mPDF GitHub repository homepage or on Packagist, please note that
-> the default repository branch is `development` which can differ from the last stable release.
+Translate the following into English
+Phone applications occupy a large place in people’s lives nowadays, and reliance on them in many fields has become the dominant feature. It is certain that the application market is increasing in popularity day after day. Reliance on them is no longer limited to games and entertainment, but rather it has become a means of buying and selling, and providing... Services, getting jobs, and managing businesses in various fields.
+Students in universities and educational institutions face many challenges in managing their academic lives and accessing the information they need. In this context, the university student portal application comes into play, which is one of the most important electronic tools used by university students in the current era. This portal provides an integrated interface for managing students’ academic and administrative lives.
+The University Student Portal includes many important features and functions, such as accessing class schedules, academic results, and academic progress reports, registering for virtual classes and study forums, and communicating with professors, classmates, and academic administration.
+The university student portal also provides the possibility of submitting administrative requests such as registering courses, submitting apologies and exceptional requests, requesting academic certificates, and registering for training courses and various university events. Thanks to modern technology, the university student portal has become available on various devices such as smartphones and tablets, to facilitate access to academic information at any time and from anywhere.
+The goal of the university student portal is to facilitate the lives of university students, improve the quality and experience of education, and enhance interaction and communication between students, professors, and university administration.
+In short, the university student portal is an integrated interface that facilitates communication, provides academic and administrative information to university students, and helps improve the quality of education and the student’s academic experience.
+2-1 Description of the mechanism of the “University Student Portal” application:
+This work aims to develop an Android application that simplifies college management by providing an efficient platform for the student and faculty to conduct academic activities smoothly. The application is designed to help students manage their academic records, view results, communicate with their professors, and receive updates about college-related activities. In addition, it has provided a platform for faculty to monitor attendance, manage fees, and post important announcements. The system replaced traditional paper records, reducing paperwork and time needed to access faculty and student records.
+1. Login: The student begins by logging in to the application using his username and password. The information is verified and the student can access his personal account.
+2. Home page: After logging in, the student’s home page is displayed, and it contains a group of different links and sections.
+3. View study materials: The student can view his study materials, including the lesson schedule, study materials, and various educational resources.
+4. Registration in courses: The student can register in the required courses for the following semester. He can choose courses from the available list and add them to his study schedule.
+5. Grades and results: The student can see his grades and results for each course. Information about grades and grades is displayed, including tests, assignments, and class participation.
+6. Administrative inquiries and requests: The student can submit inquiries and communicate with the university administration through the application. He can also submit requests for leave, objections, or any other type of administrative requests.
+7. Announcements: The student receives important announcements from the university through the application, such as deadlines, academic announcements, and events.
+8. Communication with university members: The university student portal application facilitates communication between students, faculty members, and administrative staff within the university. Students can send messages, ask for help, or participate in academic discussions.
+This is the basic workflow in the University Student Portal application. The system is designed to meet the needs and requirements of undergraduate students and facilitate the management of their academic lives.
 
 Requirements
 ============
@@ -19,124 +24,39 @@ PHP versions
 ---------------------------
 PHP >=8.1
 
-
-PHP `mbstring` and `gd` extensions have to be loaded.
-
-Additional extensions may be required for some advanced features such as `zlib` for compression of output and
-embedded resources such as fonts, `bcmath` for generating barcodes or `xml` for character set conversion
-and SVG handling.
-
-Known server caveats
---------------------
-
-mPDF has some problems with fetching external HTTP resources with single threaded servers such as `php -S`. A proper
-server such as nginx (php-fpm) or Apache is recommended.
-
-Support us
-==========
-
-Consider supporting development of mPDF with a donation of any value. [Donation button][1] can be found on the
-[main page of the documentation][1].
-
 Installation
 ============
+Here are the installation steps for the Student-Portal project:
 
-Official installation method is via composer and its packagist package [mpdf/mpdf](https://packagist.org/packages/mpdf/mpdf).
+1. Use the following command to clone the project repository from GitHub:
+   ```
+   git clone https://github.com/osama-zayed/Student-Portal.git
+   ```
 
-```
-$ composer require mpdf/mpdf
-```
+2. After the download is complete, navigate to the downloaded project folder using the command:
+   ```
+   cd Student-Portal
+   ```
 
-Usage
-=====
+3. Run the following command to execute the database migration:
+   ```
+   php artisan migrate
+   ```
 
-The simplest usage (since version 7.0) of the library would be as follows:
+4. Once the migration is completed, run the following command to seed the default data into the database:
+   ```
+   php artisan db:seed
+   ```
 
-```php
-<?php
+5. Finally, start the local development server by running the following command:
+   ```
+   php artisan serve
+   ```
 
-require_once __DIR__ . '/vendor/autoload.php';
+After starting the server, you can access the project through your browser by visiting `http://localhost:8000`.
 
-$mpdf = new \Mpdf\Mpdf();
-$mpdf->WriteHTML('<h1>Hello world!</h1>');
-$mpdf->Output();
+For login information, use the following credentials:
+- Username: admin@admin.com
+- Password: 123123123
 
-```
-
-This will output the PDF inline to the browser as `application/pdf` Content-type.
-
-Setup & Configuration
-=====================
-
-All [configuration directives](https://mpdf.github.io/reference/mpdf-variables/overview.html) can
-be set by the `$config` parameter of the constructor.
-
-It is recommended to set one's own temporary directory via `tempDir` configuration variable.
-The directory must have write permissions (mode `775` is recommended) for users using mPDF
-(typically `cli`, `webserver`, `fpm`).
-
-**Warning:** mPDF will clean up old temporary files in the temporary directory. Choose a path dedicated to mPDF only.
-
-
-```php
-<?php
-
-$mpdf = new \Mpdf\Mpdf(['tempDir' => __DIR__ . '/tmp']);
-
-```
-
-By default, the temporary directory will be inside vendor directory and will have write permissions from
-`post_install` composer script.
-
-For more information about custom temporary directory see the note on
-[Folder for temporary files](https://mpdf.github.io/installation-setup/folders-for-temporary-files.html)
-in the section on Installation & Setup in the [manual][1].
-
-If you have problems, please read the section on
-[troubleshooting](https://mpdf.github.io/troubleshooting/known-issues.html) in the manual.
-
-About CSS support and development state
-=======================================
-
-mPDF as a whole is a quite dated software. Nowadays, better alternatives are available, albeit not written in PHP.
-
-Use mPDF if you cannot use non-PHP approach to generate PDF files or if you want to leverage some of the benefits of mPDF
-over browser approach – color handling, pre-print, barcodes support, headers and footers, page numbering, TOCs, etc.
-But beware that a HTML/CSS template tailored for mPDF might be necessary.
-
-If you are looking for state of the art CSS support, mirroring existing HTML pages to PDF, use headless Chrome.
-
-mPDF will still be updated to enhance some internal capabilities and to support newer versions of PHP,
-but better and/or newer CSS support will most likely not be implemented.
-
-Online manual
-=============
-
-Online manual is available at https://mpdf.github.io/.
-
-General troubleshooting
-=============
-
-For general questions or troubleshooting please use [Discussions](https://github.com/mpdf/mpdf/discussions).
-
-You can also use the [mpdf tag](https://stackoverflow.com/questions/tagged/mpdf) at Stack Overflow as the StackOverflow user base is more likely to answer you in a timely manner.
-
-Contributing
-============
-
-Before submitting issues and pull requests please read the [CONTRIBUTING.md](https://github.com/mpdf/mpdf/blob/development/.github/CONTRIBUTING.md) file.
-
-Unit Testing
-============
-
-Unit testing for mPDF is done using [PHPUnit](https://phpunit.de/).
-
-To get started, run `composer install` from the command line while in the mPDF root directory
-(you'll need [composer installed first](https://getcomposer.org/download/)).
-
-To execute tests, run `composer test` from the command line while in the mPDF root directory.
-
-Any assistance writing unit tests for mPDF is greatly appreciated. If you'd like to help, please
-note that any PHP file located in the `/tests/` directory will be autoloaded when unit testing.
-
-[1]: https://mpdf.github.io
+Login with these credentials, and you should be able to access and explore the project interface.
