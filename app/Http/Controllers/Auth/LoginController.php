@@ -21,38 +21,38 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function email()
+    public function username()
     {
-        return "email";
+        return "username";
     }
 
     protected function credentials(Request $request)
     {
-        return $request->only($this->email(), 'password', 'member');
+        return $request->only($this->username(), 'password', 'member');
     }
 
     public function login(userRequest $request)
     {
-        $email = $request->input($this->email());
+        $username = $request->input($this->username());
 
         $rateLimiter = app(RateLimiter::class);
-        $rateLimiter->hit($email);
+        $rateLimiter->hit($username);
 
-        if ($rateLimiter->tooManyAttempts($email, 5)) {
+        if ($rateLimiter->tooManyAttempts($username, 5)) {
             toastr()->warning("لقد قمت بمحاولة تسجيل الدخول عددًا كبيرًا من المرات. يرجى الانتظار لمدة دقيقة قبل المحاولة مرة أخرى.");
-            return back()->withInput($request->only($this->email()));
+            return back()->withInput($request->only($this->username()));
         }
 
         $credentials = $request->validated();
 
         if (Auth::attempt($credentials)) {
-            $rateLimiter->clear($email);
+            $rateLimiter->clear($username);
             $request->session()->regenerate();
             return redirect()->intended($this->redirectTo);
         }
 
         return back()->withErrors([
-            $this->email() => trans('البريد الاكتروني أو كلمة المرور غير صحيحة.'),
-        ])->withInput($request->only($this->email()));
+            $this->username() => trans('البريد الاكتروني أو كلمة المرور غير صحيحة.'),
+        ])->withInput($request->only($this->username()));
     }
 }

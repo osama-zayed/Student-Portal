@@ -122,7 +122,6 @@ class userController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             }
-            // إنشاء مستخدم جديد
             $userCreated = new User();
 
             $name = htmlspecialchars(strip_tags($request->input('name')));

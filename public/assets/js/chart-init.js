@@ -40,7 +40,7 @@
       datasets: [{
         data: Counts,
         backgroundColor: colors,
-        label: 'نسبة احصائيات البلاغات'
+        label: 'نسبة احصائيات الطلاب'
       }],
       labels: labels
     },
@@ -52,7 +52,7 @@
       },
       title: {
         display: false,
-        text: 'نسبة احصائيات البلاغات'
+        text: 'نسبة احصائيات الطلاب'
       },
       animation: {
         animateScale: true,
@@ -66,7 +66,7 @@
       datasets: [{
         data: Counts,
         backgroundColor: colors,
-        label: 'نسبة احصائيات البلاغات'
+        label: 'نسبة احصائيات الطلاب'
       }],
       labels: labels
     },
@@ -78,7 +78,7 @@
       },
       title: {
         display: false,
-        text: 'نسبة احصائيات البلاغات'
+        text: 'نسبة احصائيات الطلاب'
       },
       animation: {
         animateScale: true,

@@ -24,29 +24,29 @@
                         </a>
                     </li>
                     <!-- menu title -->
-                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">البلاغات</li>
+                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الطلاب</li>
                     <!-- menu item Incidents-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Incidents">
                             <div class="pull-left"><i class="fa fa-bar-chart-o highlight-icon"></i><span
-                                    class="right-nav-text">البلاغات</span></div>
+                                    class="right-nav-text">الطلاب</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Incidents" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="{{ route('Incident.index') }}">عرض البلاغات</a></li>
+                            <li><a href="{{ route('Incident.index') }}">عرض الطلاب</a></li>
                             <li><a href="{{ route('Incident.create') }}">اضافة بلاغ</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'أولي']) }}">البلاغات
+                            <li><a href="{{ route('Incident.index', ['incident_status' => 'أولي']) }}">الطلاب
                                     الأولية</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'تكميلي']) }}">البلاغات
+                            <li><a href="{{ route('Incident.index', ['incident_status' => 'تكميلي']) }}">الطلاب
                                     التكميلية</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'محول']) }}">البلاغات
+                            <li><a href="{{ route('Incident.index', ['incident_status' => 'محول']) }}">الطلاب
                                     المحولة</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'مشيك']) }}">البلاغات
+                            <li><a href="{{ route('Incident.index', ['incident_status' => 'مشيك']) }}">الطلاب
                                     المشيكة</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'وهمي']) }}">البلاغات
+                            <li><a href="{{ route('Incident.index', ['incident_status' => 'وهمي']) }}">الطلاب
                                     الوهمية</a></li>
-                            <li><a href="{{ route('Incident_deleted') }}">ارشيف البلاغات</a></li>
+                            <li><a href="{{ route('Incident_deleted') }}">ارشيف الطلاب</a></li>
                         </ul>
                     </li>
                     <!-- menu item Department-->
@@ -60,7 +60,7 @@
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Department-menu" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{ route('report_Incident') }}">تقرير البلاغات</a> </li>
+                            <li> <a href="{{ route('report_Incident') }}">تقرير الطلاب</a> </li>
                             <li> <a href="{{ route('report_Department') }}">تقرير الاقسام</a> </li>
                         </ul>
                     </li>
@@ -108,7 +108,7 @@
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Security-wanted" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{ route('Security_wanted.index') }}">قائمة البلاغات مطلوب امنياً</a> </li>
+                            <li> <a href="{{ route('Security_wanted.index') }}">قائمة الطلاب مطلوب امنياً</a> </li>
                             <li> <a href="{{ route('Security_wanted.create') }}">اضافة مطلوب امنياً</a> </li>
                             <li> <a href="{{ route('Security_wanted_deleted') }}">بيانات المطلوبين امنياً المؤرشفة</a>
                             </li>

@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //جدول المحافظات:
-        Schema::create('departments', function (Blueprint $table) {
+        //جدول الكليات:
+        Schema::create('college', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('phone_number');
             $table->timestamps();
         });
     }

@@ -14,15 +14,13 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('username')->unique();
             $table->string('password');
-            $table->integer('department_id')->unsigned();
             $table->string('user_type')->default('user');
             $table->boolean("user_status")->default(true);
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('department_id')->references('id')->on('departments');
         });
     }
 

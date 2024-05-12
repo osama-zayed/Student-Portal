@@ -22,18 +22,18 @@
                                 <h3 class="text-center font-weight-light my-4"> <img class="col-lg-5"
                                         src="{{ asset('assets/images/favicon.ico') }}" alt=""
                                         style="width: 70px" srcset="">
-                                    برنامج ادارة مراكز الشرطة امانة
-                                    العاصمة صنعاء</h3>
+                                بوابة الطالب الاكترونية جامعة سباء
+                                    </h3>
                                 <h4 class="text-premary" style="color: #0361e7">مرحباً بك</h4>
                                 <h6>تسجيل الدخول</h6>
                                 <form method="POST" action="{{ route('login') }}" >
                                     @csrf
                                     <div class="form-floating mb-3">
-                                        <label for="email">البريد الاكتروني</label>
-                                        <input id="email" type="email" placeholder="البريد الالكتروني"
-                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                            value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                        @error('email')
+                                        <label for="username">الاسم الفريد</label>
+                                        <input id="username" type="text" placeholder="الاسم الفريد"
+                                            class="form-control @error('username') is-invalid @enderror" name="username"
+                                            value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                        @error('username')
                                             <span class="invalid-feedback " role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
