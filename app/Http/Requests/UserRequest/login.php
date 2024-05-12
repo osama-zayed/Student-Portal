@@ -22,7 +22,7 @@ class login extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'max:255'],
             'member' => ['boolean'],
         ];
@@ -30,10 +30,9 @@ class login extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'البريد الإلكتروني مطلوب',
-            'email.string' => 'يجب أن يكون البريد الإلكتروني نصًا',
-            'email.email' => 'يجب أن يكون البريد الإلكتروني صالحًا',
-            'email.max' => 'الحد الأقصى لطول البريد الإلكتروني هو :max حرف',
+            'username.required' => 'اسم المستخدم مطلوب',
+            'username.string' => 'يجب أن يكون الاسم نصًا',
+            'username.max' => 'لقد تجاوز الاسم الحد المطلوب',
             'password.required' => 'كلمة المرور مطلوبة',
             'password.string' => 'يجب أن تكون كلمة المرور نصًا',
             'password.min' => 'يجب أن تحتوي كلمة المرور على الأقل :min أحرف',
