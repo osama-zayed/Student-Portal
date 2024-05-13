@@ -55,7 +55,7 @@ Here are the installation steps for the Student-Portal project:
 After starting the server, you can access the project through your browser by visiting `http://localhost:8000`.
 
 For login information, use the following credentials:
-- Username: admin@admin.com
+- Username: admin
 - Password: 123123123
 
 Login with these credentials, and you should be able to access and explore the project interface.
