@@ -5,19 +5,19 @@
 @endsection
 
 @section('title')
-    تعديل جريمة {{ $Crime->name }}
+    تعديل كلية {{ $College->name }}
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-    تعديل جريمة {{ $Crime->name }}
+    تعديل كلية {{ $College->name }}
 @endsection
 
 @section('page-header')
     المراكز / الجرائم
 @endsection
 @section('sub-page-header')
-    تعديل جريمة {{ $Crime->name }}
+    تعديل كلية {{ $College->name }}
 @endsection
 
 <!-- breadcrumb -->
@@ -30,24 +30,24 @@
                     <div class="col-xs-12">
                         <div class="col-md-12">
                             <br>
-                            <form action="{{ route('Crime.update', 'test') }}" method="post"
-                                enctype="multipart/form-Crime">
+                            <form action="{{ route('College.update', 'test') }}" method="post"
+                                enctype="multipart/form-College">
                                 @method('PUT')
                                 @csrf
                                 <div class="form-row">
 
                                     <div class="col">
-                                        <label for="name">اسم الجريمة :
+                                        <label for="name">اسم الكلية :
                                             <span class="text-danger">* @error('name')
                                                     {{ $message }}
                                                 @enderror
                                             </span>
                                         </label>
                                         <input type="text" name="name"
-                                            value="{{ $Crime->name . old('name') }}"
+                                            value="{{ $College->name . old('name') }}"
                                             class="form-control">
 
-                                        <input type="hidden" name="id" value="{{ $Crime->id }}"
+                                        <input type="hidden" name="id" value="{{ $College->id }}"
                                             class="form-control">
                                     </div>
 

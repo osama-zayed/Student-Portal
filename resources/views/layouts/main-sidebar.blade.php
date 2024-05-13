@@ -24,17 +24,17 @@
                         </a>
                     </li>
                     <!-- menu title -->
-                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الطلاب</li>
+                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الكلية</li>
                     <!-- menu item Incidents-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Incidents">
                             <div class="pull-left"><i class="fa fa-bar-chart-o highlight-icon"></i><span
-                                    class="right-nav-text">الطلاب</span></div>
+                                    class="right-nav-text">الكلية</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Incidents" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="{{ route('Incident.index') }}">عرض الطلاب</a></li>
+                            <li><a href="{{ route('Incident.index') }}">عرض الكلية</a></li>
                             <li><a href="{{ route('Incident.create') }}">اضافة بلاغ</a></li>
                             <li><a href="{{ route('Incident.index', ['incident_status' => 'أولي']) }}">الطلاب
                                     الأولية</a></li>
@@ -94,16 +94,16 @@
                                 @if (auth()->user()->user_type == 'admin')
                                     <li> <a href="{{ route('Department.index') }}">اقسام الشرطة</a> </li>
                                 @endif
-                                <li> <a href="{{ route('Crime.index') }}">الجرائم</a> </li>
+                                <li> <a href="{{ route('College.index') }}">الجرائم</a> </li>
                             </ul>
                         </li>
                     @endif
 
-                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">مطلوب امنياُ</li>
+                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الطلاب</li>
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Security-wanted">
-                            <div class="pull-left"><i class="ti-calendar"></i><span class="right-nav-text">مطلوب
-                                    امنياً</span></div>
+                            <div class="pull-left"><i class="ti-calendar"></i><span class="right-nav-text">
+                                الطلاب</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>

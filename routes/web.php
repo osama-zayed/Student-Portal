@@ -12,7 +12,7 @@ Route::middleware(["auth", "userStatus"])->group(function () {
     Route::resource('Incident', App\Http\Controllers\IncidentController::class);
     Route::resource('Security_wanted', App\Http\Controllers\SecurityWantedController::class);
     Route::resource('Department', App\Http\Controllers\DepartmentsController::class);
-    Route::resource('Crime', App\Http\Controllers\CrimeController::class);
+    Route::resource('College', App\Http\Controllers\CollegeController::class);
     Route::get('/Activity', [App\Http\Controllers\userController::class, 'Activity'])->name('Activity');
     Route::resource('user', App\Http\Controllers\userController::class);
     Route::get('/report/Incident', [App\Http\Controllers\reportsController::class, 'report_Incident'])->name('report_Incident');
