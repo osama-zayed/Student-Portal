@@ -43,8 +43,4 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return [];
     }
 
-    public function department()
-    {
-        return $this->belongsTo(department::class, 'department_id');
-    }
 }

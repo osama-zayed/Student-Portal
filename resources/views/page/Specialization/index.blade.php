@@ -4,16 +4,16 @@
 @endsection
 
 @section('title')
-اقسام الشرطة 
+التخصصات الدراسية 
 @endsection
 @section('page-header')
 المراكز
 @endsection
 @section('sub-page-header')
-اقسام الشرطة 
+التخصصات الدراسية 
 @endsection
 @section('PageTitle')
-اقسام الشرطة 
+التخصصات الدراسية 
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -23,12 +23,12 @@
             <div class="card card-statistics h-100">
                 <div class="card-body">
                     <a type="button"class="btn btn-primary btn-sm text-light" role="button" data-toggle="modal"
-                        data-target="#create" aria-pressed="true" title="اضافة قسم جديد">
+                        data-target="#create" aria-pressed="true" title="اضافة تخصص جديد">
                         <i class="ti-plus"></i>
                         اضافة
-                        قسم</a>
+                        تخصص</a>
                     <br><br>
-                    @include('page.Department.create')
+                    @include('page.Specialization.create')
 
                     <div class="table-responsive">
                         <table id="datatable" class="table  table-hover table-sm table-bordered p-0" data-page-length="50"
@@ -36,30 +36,34 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>اسم القسم</th>
-                                    <th>رقم الهاتف</th>
+                                    <th>اسم التخصص</th>
+                                    <th>الكلية</th>
+                                    <th>عدد السنين الدراسية</th>
+                                    <th>السعر</th>
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($data as $Department)
+                                @forelse ($data as $Specialization)
                                     <tr>
-                                        <td>{{ $Department['id'] }}</td>
-                                        <td>{{ $Department['name'] }}</td>
-                                        <td>{{ $Department['phone_number'] }}</td>
+                                        <td>{{ $Specialization['id'] }}</td>
+                                        <td>{{ $Specialization['name'] }}</td>
+                                        <td>{{ $Specialization->college['name'] }}</td>
+                                        <td>{{ $Specialization['Number_of_years_of_study'] }}</td>
+                                        <td>{{ $Specialization['Price'] }}</td>
                                         <td>
-                                            <a href="{{ route('Department.edit', $Department['id']) }}"
+                                            <a href="{{ route('Specialization.edit', $Specialization['id']) }}"
                                                 class="btn btn-info btn-sm" role="button" aria-pressed="true"
                                                 title="تعديل"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#delete_Department{{ $Department['id'] }}" title="حذف"><i
+                                                data-target="#delete_Specialization{{ $Specialization['id'] }}" title="حذف"><i
                                                     class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
-                                    @include('page.Department.destroy')
+                                    @include('page.Specialization.destroy')
                                 @empty
                                     <tr>
-                                        <td colspan="4">لا توجد بيانات</td>
+                                        <td colspan="6">لا توجد بيانات</td>
                                     </tr>
                                 @endforelse
                         </table>

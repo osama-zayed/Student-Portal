@@ -15,13 +15,13 @@
                         <div class="col-12">
                             <label for="name">اسم الكلية
                                 <span class="text-danger">*
-                                    @error('id')
+                                    @error('name')
                                         {{ $message }}
                                     @enderror
                                 </span>
                             </label>
                             <input id="name" type="text" name="name" class="form-control"
-                                value="{{ old('id') }}" placeholder="أدخل اسم الكلية" required="الحقل مطلوب">
+                                value="{{ old('name') }}" placeholder="أدخل اسم الكلية" required="الحقل مطلوب">
                         </div>
                     </div>
                 </div>

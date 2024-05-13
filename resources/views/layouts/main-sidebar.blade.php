@@ -34,8 +34,8 @@
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Incidents" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="{{ route('Incident.index') }}">عرض الكلية</a></li>
-                            <li><a href="{{ route('Incident.create') }}">اضافة بلاغ</a></li>
+                            <li><a href="{{ route('College.index') }}">عرض الكليات</a></li>
+                            <li><a href="{{ route('Specialization.index') }}">عرض التخصصات</a></li>
                             <li><a href="{{ route('Incident.index', ['incident_status' => 'أولي']) }}">الطلاب
                                     الأولية</a></li>
                             <li><a href="{{ route('Incident.index', ['incident_status' => 'تكميلي']) }}">الطلاب
@@ -61,7 +61,7 @@
                         </a>
                         <ul id="Department-menu" class="collapse" data-parent="#sidebarnav">
                             <li> <a href="{{ route('report_Incident') }}">تقرير الطلاب</a> </li>
-                            <li> <a href="{{ route('report_Department') }}">تقرير الاقسام</a> </li>
+                            <li> <a href="{{ route('report_Department') }}">تقرير التخصصات</a> </li>
                         </ul>
                     </li>
                     @if (auth()->user()->user_type == 'admin')
@@ -92,7 +92,7 @@
                             </a>
                             <ul id="Centre" class="collapse" data-parent="#sidebarnav">
                                 @if (auth()->user()->user_type == 'admin')
-                                    <li> <a href="{{ route('Department.index') }}">اقسام الشرطة</a> </li>
+                                    <li> <a href="{{ route('Specialization.index') }}">تخصصات الشرطة</a> </li>
                                 @endif
                                 <li> <a href="{{ route('College.index') }}">الجرائم</a> </li>
                             </ul>

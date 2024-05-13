@@ -18,4 +18,8 @@ class Specialization extends Model
 
     ];
     protected $table = 'specialization';
+    public function college()
+    {
+        return $this->belongsTo(college::class, 'college_id');
+    }
 }

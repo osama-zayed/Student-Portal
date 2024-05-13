@@ -1,7 +1,7 @@
-<div class="modal fade" id="delete_Department{{$Department['id']}}" tabindex="-1"
+<div class="modal fade" id="delete_Specialization{{$Specialization['id']}}" tabindex="-1"
     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
-       <form action="{{route('Department.destroy',$Department['name'])}}" method="post">
+       <form action="{{route('Specialization.destroy',$Specialization['name'])}}" method="post">
            @method('delete')
            @csrf
            <div class="modal-content">
@@ -14,9 +14,9 @@
                    </button>
                </div>
                <div class="modal-body">
-                   <p>اسم القسم <span class="text-danger">{{$Department['name']}}</span></p>
-                   <input type="hidden" name="id" value="{{$Department['id']}}">
-                   <input type="hidden" name="file_name" value="{{$Department['name']}}">
+                   <p>اسم التخصص <span class="text-danger">{{$Specialization['name']}}</span></p>
+                   <input type="hidden" name="id" value="{{$Specialization['id']}}">
+                   <input type="hidden" name="file_name" value="{{$Specialization['name']}}">
                </div>
                <div class="modal-footer">
                    <div class="modal-footer">

@@ -11,7 +11,7 @@ Route::middleware(["auth", "userStatus"])->group(function () {
     Route::get('/search', [App\Http\Controllers\HomeController::class, 'searchById'])->name('searchById');
     Route::resource('Incident', App\Http\Controllers\IncidentController::class);
     Route::resource('Security_wanted', App\Http\Controllers\SecurityWantedController::class);
-    Route::resource('Department', App\Http\Controllers\DepartmentsController::class);
+    Route::resource('Specialization', App\Http\Controllers\SpecializationsController::class);
     Route::resource('College', App\Http\Controllers\CollegeController::class);
     Route::get('/Activity', [App\Http\Controllers\userController::class, 'Activity'])->name('Activity');
     Route::resource('user', App\Http\Controllers\userController::class);
