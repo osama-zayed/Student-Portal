@@ -48,7 +48,7 @@ class SpecializationsController extends Controller
         try {
             //التحقق من الحقول
             $validator = Validator::make($request->all(), [
-                    'name' => 'required|string|unique:specialization,name|min:2',
+                    'name' => 'required|string|unique:specializations,name|min:2',
                     'Number_of_years_of_study' => 'required|integer|min:4|max:6',
                     'Price' => 'required|integer|min:500|max:6000',
                     'college_id' => 'required|integer|min:1',

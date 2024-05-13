@@ -9,9 +9,13 @@ class College extends Model
 {
     use HasFactory;
     protected $fillable = ['id', 'name'];
-    protected $table = 'college';
+    protected $table = 'colleges';
     public function Specialization()
     {
         return $this->hasMany(Specialization::class);
+    }
+    public function students()
+    {
+        return $this->hasMany(Student::class);
     }
 }

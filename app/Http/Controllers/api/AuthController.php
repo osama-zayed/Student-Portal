@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\api;
 
 use Exception;
-use App\Models\WarehouseSupplyOperation;
-use App\Models\ExchangeIssuanceOperation;
 use Illuminate\Validation\ValidationException;
 use App\Models\User as users;
 use App\Notifications\Notifications;
@@ -53,7 +51,16 @@ class AuthController extends Controller
                     'Message' => 'اسم المستخدم أو كلمة المرور غير صحيحة'
                 ], 400);
             }
-
+            // if (!$token = auth('api')->attempt([
+            //     "username" => htmlspecialchars(strip_tags($data["username"])),
+            //     "password" => htmlspecialchars(strip_tags($data["password"])),
+            // ], ['table' => 'اسم_الجدول_الجديد'])) {
+            //     return response()->json([
+            //         'Status' => false,
+            //         'Message' => 'اسم المستخدم أو كلمة المرور غير صحيحة'
+            //     ], 400);
+            // }
+            
             return $this->respondWithToken($token);
         } catch (ValidationException $e) {
             foreach ($e->errors() as $error) {
@@ -99,13 +106,9 @@ class AuthController extends Controller
 
         try {
             $credentials = request()->validate([
-                'username' => 'required|string|max:255|min:5',
                 'Old_password' => 'required|string|min:8|max:255',
                 'New_password' => 'required|string|min:8|confirmed|max:255',
             ], [
-                "username.required" => "اسم المستخدم الفريد مطلوب",
-                "username.min" => "اقل حد للاسم الفريد 5 احرف ",
-                "username.max" => "الحد الاقصى للاسم الفريد 255",
                 "Old_password.required" => "ادخل الرمز القديم",
                 "Old_password.min" => " اقل عدد للرمز القديم 8 خانات",
                 "Old_password.max" => "الحد الاقصى للرمز 255",
@@ -125,14 +128,6 @@ class AuthController extends Controller
             }
             $newPassword = htmlspecialchars(strip_tags($credentials['New_password']));
             $userToUpdate->password = bcrypt($newPassword);
-            if (request()->has('username')) {
-                if ($userToUpdate->username != $credentials["username"]) {
-                    request()->validate(['username' => 'unique:users'], [
-                        "username.unique" => " اسم المستخدم الفريد موجود مسبقا، اختر اسماً آخر",
-                    ]);
-                    $userToUpdate->username = htmlspecialchars(strip_tags($credentials["username"]));
-                }
-            }
             if (request()->has('password')) {
                 $userToUpdate->password = bcrypt(htmlspecialchars(strip_tags($credentials['password'])));
             }
@@ -143,7 +138,7 @@ class AuthController extends Controller
                 $date = date('H:i Y-m-d');
                 $user->notify(new Notifications([
                     "body" => " لقد قمت بتعديل بياناتك الشخصية "  .
-                        " في الوقت والتاريخ " . $date,
+                        "في الوقت والتاريخ " . $date,
                 ]));
                 activity()->performedOn($userToUpdate)->event("تعديل مستخدم")->causedBy($user)
                     ->log(

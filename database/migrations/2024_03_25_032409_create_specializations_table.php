@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {//جدول التخصص
-        Schema::create('specialization', function (Blueprint $table) {
+        Schema::create('specializations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->integer('college_id')->unsigned();
             $table->double('Price');
             $table->integer('Number_of_years_of_study');
-            $table->foreign('college_id')->references('id')->on('college'); 
+            $table->foreign('college_id')->references('id')->on('colleges'); 
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('crimes');
+        Schema::dropIfExists('specializations');
     }
 };

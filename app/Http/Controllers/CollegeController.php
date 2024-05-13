@@ -48,7 +48,7 @@ class CollegeController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 [
-                    'name' => 'required|string|unique:college,name|min:2',
+                    'name' => 'required|string|unique:colleges,name|min:2',
                 ],
                 [
                     'name.required' => "اسم الكلية مطلوب",
@@ -144,7 +144,7 @@ class CollegeController extends Controller
             $updataCollege = College::findOrFail(htmlspecialchars(strip_tags($data["id"]), ENT_QUOTES));
             if ($request->has('name') && $data["name"] != $updataCollege->name) {
                 request()->validate(
-                    ['name' => 'unique:college,name'],
+                    ['name' => 'unique:colleges,name'],
                     ['name.unique' => "يجب ان يكون اسم الكلية فريد"]
                 );
             }

@@ -15,11 +15,21 @@ class Specialization extends Model
         'college_id',
         'Price',
         'Number_of_years_of_study',
-
     ];
-    protected $table = 'specialization';
+
+    protected $table = 'specializations';
+
     public function college()
     {
-        return $this->belongsTo(college::class, 'college_id');
+        return $this->belongsTo(College::class, 'college_id');
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_specialization', 'specialization_id', 'course_id')->withTimestamps()->withPivot('semester_num');
+    }
+    public function students()
+    {
+        return $this->hasMany(Student::class);
     }
 }

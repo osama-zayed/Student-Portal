@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         //جدول الكليات:
-        Schema::create('college', function (Blueprint $table) {
+        Schema::create('colleges', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('colleges');
     }
 };
