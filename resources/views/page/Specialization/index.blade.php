@@ -4,16 +4,16 @@
 @endsection
 
 @section('title')
-التخصصات الدراسية 
+قائمة التخصصات الدراسية 
 @endsection
 @section('page-header')
-المراكز
+التخصصات
 @endsection
 @section('sub-page-header')
-التخصصات الدراسية 
+قائمة التخصصات الدراسية 
 @endsection
 @section('PageTitle')
-التخصصات الدراسية 
+قائمة التخصصات الدراسية 
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -39,6 +39,8 @@
                                     <th>اسم التخصص</th>
                                     <th>الكلية</th>
                                     <th>عدد السنين الدراسية</th>
+                                    <th>المؤهل المطلوب</th>
+                                    <th>اقل معدل للقبول</th>
                                     <th>السعر</th>
                                     <th>العمليات</th>
                                 </tr>
@@ -50,7 +52,9 @@
                                         <td>{{ $Specialization['name'] }}</td>
                                         <td>{{ $Specialization->college['name'] }}</td>
                                         <td>{{ $Specialization['Number_of_years_of_study'] }}</td>
-                                        <td>{{ $Specialization['Price'] }}</td>
+                                        <td>{{ $Specialization['educational_qualification'] }}</td>
+                                        <td>{{ $Specialization['lowest_acceptance_rate'] }}%</td>
+                                        <td>{{ $Specialization['Price'] }}$</td>
                                         <td>
                                             <a href="{{ route('Specialization.edit', $Specialization['id']) }}"
                                                 class="btn btn-info btn-sm" role="button" aria-pressed="true"
@@ -63,7 +67,7 @@
                                     @include('page.Specialization.destroy')
                                 @empty
                                     <tr>
-                                        <td colspan="6">لا توجد بيانات</td>
+                                        <td colspan="8">لا توجد بيانات</td>
                                     </tr>
                                 @endforelse
                         </table>

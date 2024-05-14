@@ -31,8 +31,7 @@
                                     @enderror
                                 </span>
                             </label>
-                            <select class="form-control h-65" name="college_id" aria-placeholder="اختر كلية"
-                                required>
+                            <select class="form-control h-65" name="college_id" aria-placeholder="اختر كلية" required>
                                 <option value="" disabled selected>اختر كلية من القائمة</option>
                                 @forelse (\App\Models\College::get() as $data)
                                     <option value="{{ $data['id'] }}"
@@ -44,6 +43,35 @@
                             </select>
                         </div>
                         <div class="col-12 mt-10">
+                            <label for="educational_qualification">المؤهل المطلوب
+                                <span class="text-danger">*
+                                    @error('educational_qualification')
+                                        {{ $message }}
+                                    @enderror
+                                </span>
+                            </label>
+                            <select class="form-control h-65" name="educational_qualification"
+                                aria-placeholder="المؤهل مطلوب" required>
+                                <option value="" disabled selected>اختر المؤهل</option>
+                                <option value="ثانوية عامة علمي" @if (old('educational_qualification') == 'ثانوية عامة علمي') selected @endif>
+                                    ثانوية عامة علمي
+                                <option value="ثانوية عامة ادبي" @if (old('educational_qualification') == 'ثانوية عامة ادبي') selected @endif>
+                                    ثانوية عامة ادبي
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-10">
+                            <label for="lowest_acceptance_rate">اقل معدل للقبول
+                                <span class="text-danger">*
+                                    @error('lowest_acceptance_rate')
+                                        {{ $message }}
+                                    @enderror
+                                </span>
+                            </label>
+                            <input id="lowest_acceptance_rate" type="number" name="lowest_acceptance_rate" class="form-control" min="50"
+                                value="{{ old('lowest_acceptance_rate') }}" placeholder="اقل معدل للقبول" required="الحقل مطلوب">
+                        </div>
+                        <div class="col-12 mt-10">
                             <label for="Price">السعر
                                 <span class="text-danger">*
                                     @error('Price')
@@ -51,9 +79,8 @@
                                     @enderror
                                 </span>
                             </label>
-                            <input id="Price" type="number" name="Price"
-                                class="form-control" min="1" value="{{ old('Price') }}"
-                                placeholder="السعر" required="الحقل مطلوب">
+                            <input id="Price" type="number" name="Price" class="form-control" min="1"
+                                value="{{ old('Price') }}" placeholder="السعر" required="الحقل مطلوب">
                         </div>
                         <div class="col-12 mt-10">
                             <label for="Number_of_years_of_study">عدد السنين الدراسية
@@ -70,8 +97,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-                    <button type="submit" class="btn btn-success">اضافة</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">اضافة</button>
                 </div>
             </form>
         </div>

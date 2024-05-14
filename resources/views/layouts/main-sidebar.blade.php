@@ -12,8 +12,7 @@
                         </div>
                     </div>
                     <div style="text-align: center; " class="mb-20">
-                        <p>{{ auth()->user()->name }}</p>
-                        <p style="color: #797878; font-size: smaller;">{{ auth()->user()->email }}</p>
+                        <h6 style="color: #ffffff; ">{{ auth()->user()->name }}</h6>
                     </div>
                     <li>
                         <a href="{{ route('home') }}">
@@ -24,7 +23,7 @@
                         </a>
                     </li>
                     <!-- menu title -->
-                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الكلية</li>
+                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الادارة</li>
                     <!-- menu item Incidents-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Incidents">
@@ -36,17 +35,6 @@
                         <ul id="Incidents" class="collapse" data-parent="#sidebarnav">
                             <li><a href="{{ route('College.index') }}">عرض الكليات</a></li>
                             <li><a href="{{ route('Specialization.index') }}">عرض التخصصات</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'أولي']) }}">الطلاب
-                                    الأولية</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'تكميلي']) }}">الطلاب
-                                    التكميلية</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'محول']) }}">الطلاب
-                                    المحولة</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'مشيك']) }}">الطلاب
-                                    المشيكة</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'وهمي']) }}">الطلاب
-                                    الوهمية</a></li>
-                            <li><a href="{{ route('Incident_deleted') }}">ارشيف الطلاب</a></li>
                         </ul>
                     </li>
                     <!-- menu item Department-->
@@ -80,7 +68,7 @@
                             </ul>
                         </li>
                     @endif
-                    @if (auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'incidentOfficer')
+                    {{-- @if (auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'incidentOfficer')
                         <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">المركز</li>
                         <li>
                             <a href="javascript:void(0);" data-toggle="collapse" data-target="#Centre">
@@ -97,7 +85,7 @@
                                 <li> <a href="{{ route('College.index') }}">الجرائم</a> </li>
                             </ul>
                         </li>
-                    @endif
+                    @endif --}}
 
                     <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الطلاب</li>
                     <li>
@@ -108,9 +96,9 @@
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Security-wanted" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{ route('Security_wanted.index') }}">قائمة الطلاب مطلوب امنياً</a> </li>
-                            <li> <a href="{{ route('Security_wanted.create') }}">اضافة مطلوب امنياً</a> </li>
-                            <li> <a href="{{ route('Security_wanted_deleted') }}">بيانات المطلوبين امنياً المؤرشفة</a>
+                            <li> <a href="{{ route('Student.index') }}">قائمة الطلاب</a> </li>
+                            {{-- <li> <a href="{{ route('Student.create') }}">اضافة مطلوب امنياً</a> </li>
+                            <li> <a href="{{ route('Student_deleted') }}">بيانات المطلوبين امنياً المؤرشفة</a> --}}
                             </li>
                         </ul>
                     </li>

@@ -4,17 +4,17 @@
 @endsection
 
 @section('title')
-    المطلوبين امنياً
+    الطلاب 
 @endsection
 @section('page-header')
-    المطلوبين امنياً
+    الطلاب 
 @endsection
 @section('sub-page-header')
     {{ $title }}
 @endsection
 
 @section('PageTitle')
-    المطلوبين امنياً
+    الطلاب 
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -23,11 +23,11 @@
         <div class="col-xl-12 mb-30">
             <div class="card card-statistics h-100">
                 <div class="card-body">
-                    <a href="{{ route('Security_wanted.create') }}" class="btn btn-primary btn-sm" role="button"
+                    <a href="{{ route('Student.create') }}" class="btn btn-primary btn-sm" role="button"
                         aria-pressed="true">
                         <i class="ti-plus"></i>
                         اضافة
-                        مطلوب امني
+                        طالب جديد
                     </a><br><br>
                     <div class="table-responsive">
                         <table id="datatable" class="table  table-hover table-sm table-bordered p-0" data-page-length="50"
@@ -35,53 +35,60 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>رقم القيد</th>
-                                    <th>اليوم</th>
-                                    <th>تاريخ القيد</th>
-                                    <th>اسم المطلوب</th>
-                                    <th>العمر</th>
-                                    <th>بالغ/حدث</th>
+                                    <th>رقم الطالب الاكاديمي</th>
+                                    <th>الاسم</th>
+                                    <th>رقم البطاقة الشخصية</th>
+                                    <th>رقم الهاتف</th>
+                                    <th>رقم هاتف احد الاقارب</th>
                                     <th>الجنس</th>
-                                    <th>الحاله الاجتماعية</th>
-                                    <th>الجنسية</th>
-                                    <th>المهنة</th>
+                                    <th>تاريخ الميلاد</th>
                                     <th>محل الميلاد</th>
-                                    <th>السكن</th>
-                                    <th>السوابق</th>
+                                    <th>الجنسية</th>
+                                    <th> المؤهل الدراسي</th>
+                                    <th>المعدل</th>
+                                    <th>تاريخ الحصول عليها</th>
+                                    <th>الكلية</th>
+                                    <th>التخصص</th>
+                                    <th>نسبة التخفيض</th>
+                                    <th>الفصل الدراسي</th>
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($data as $SecurityWanted)
+                                @forelse ($data as $Student)
                                     <tr>
-                                        <td>{{ $SecurityWanted->id }}</td>
-                                        <td>{{ $SecurityWanted->registration_number }}</td>
-                                        <td>{{ $SecurityWanted->day }}</td>
-                                        <td>{{ $SecurityWanted->registration_date }}</td>
-                                        <td>{{ $SecurityWanted->wanted_name }}</td>
-                                        <td>{{ $SecurityWanted->age }}</td>
-                                        <td>{{ $SecurityWanted->event }}</td>
-                                        <td>{{ $SecurityWanted->gender }}</td>
-                                        <td>{{ $SecurityWanted->marital_status }}</td>
-                                        <td>{{ $SecurityWanted->nationality }}</td>
-                                        <td>{{ $SecurityWanted->occupation }}</td>
-                                        <td>{{ $SecurityWanted->place_of_birth }}</td>
-                                        <td>{{ $SecurityWanted->residence }}</td>
-                                        <td>{{ $SecurityWanted->previous_convictions }}</td>
+                            
+                                        <td>{{ $Student->id }}</td>
+                                        <td>{{ $Student->academic_id }}</td>
+                                        <td>{{ $Student->full_name }}</td>
+                                        <td>{{ $Student->personal_id }}</td>
+                                        <td>{{ $Student->phone_number }}</td>
+                                        <td>{{ $Student->relative_phone_number }}</td>
+                                        <td>{{ $Student->gender }}</td>
+                                        <td>{{ $Student->date_of_birth }}</td>
+                                        <td>{{ $Student->place_of_birth }}</td>
+                                        <td>{{ $Student->nationality }}</td>
+                                        <td>{{ $Student->educational_qualification }}</td>
+                                        <td>{{ $Student->high_school_grade }}</td>
+                                        <td>{{ $Student->school_graduation_date }}</td>
+                                        <td>{{ $Student->College['name'] }}</td>
+                                        <td>{{ $Student->Specialization['name'] }}</td>
+                                        <td>{{ $Student->discount_percentage }}%</td>
+                                        <td>{{ $Student->semester_num }}</td>
                                         <td>
-                                            <a href="{{ route('Security_wanted.edit', $SecurityWanted->id) }}"
+                                            <a href="{{ route('Student.edit', $Student->id) }}"
                                                 class="btn btn-info btn-sm" role="button" aria-pressed="true"
                                                 title="تعديل"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#delete_SecurityWanted{{ $SecurityWanted->id }}"
+                                                data-target="#delete_Student{{ $Student->id }}"
                                                 title="ارشفة"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
 
-                                    @include('page.SecurityWanted.destroy')
+                                    @include('page.Student.destroy')
                                 @empty
                                     <tr>
-                                        <td colspan="15">لا توجد بيانات</td>
+                                        <td colspan="18">لا توجد بيانات</td>
                                     </tr>
                                 @endforelse
                             </tbody>

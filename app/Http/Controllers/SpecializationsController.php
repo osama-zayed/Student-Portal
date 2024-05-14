@@ -25,6 +25,8 @@ class SpecializationsController extends Controller
                 'college_id',
                 'Price',
                 'Number_of_years_of_study',
+                'educational_qualification',
+                'lowest_acceptance_rate',
             )->get();
 
             if ($Specializations->isEmpty()) {
@@ -52,6 +54,8 @@ class SpecializationsController extends Controller
                     'Number_of_years_of_study' => 'required|integer|min:4|max:6',
                     'Price' => 'required|integer|min:500|max:6000',
                     'college_id' => 'required|integer|min:1',
+                    'educational_qualification' => 'required|string|min:1',
+                    'lowest_acceptance_rate' => 'required|integer|min:50|max:90',
                 ],
                 [
                     'Number_of_years_of_study.required' => "عدد السنين الدراسية مطلوب",
@@ -62,6 +66,10 @@ class SpecializationsController extends Controller
                     'college_id.integer' => "يجب أن يكون رقم الكلية رقم",
                     'college_id.min' => "يجب أن يكون رقم الكلية اكبر من 0",
                     'college_id.max' => "يجب أن يكون رقم الكلية اقل من 100",
+                    'lowest_acceptance_rate.required' => "اقل معدل مطلوب",
+                    'lowest_acceptance_rate.integer' => "يجب أن يكون رقم معدل رقم",
+                    'lowest_acceptance_rate.min' => "يجب أن يكون اقل معدل اكبر من 50",
+                    'lowest_acceptance_rate.max' => "يجب أن يكون اقل معدل اقل من 90",
                     'Price.required' => "السعر مطلوب",
                     'Price.integer' => "يجب أن يكون السعر رقم",
                     'Price.min' => "يجب أن يكون السعر اكبر من 500$",
@@ -71,6 +79,10 @@ class SpecializationsController extends Controller
                     'name.max' => "اكبر حد لاسم التخصص 255 حرف",
                     'name.min' => "اقل حد لاسم التخصص 2",
                     'name.unique' => "يجب ان يكون اسم التخصص فريد",
+                    'educational_qualification.required' => 'حقل المؤهل العلمي مطلوب',
+                    'educational_qualification.string' => "يجب ان يكون المؤهل العلمي نص",
+                    'educational_qualification.max' => "اكبر حد لاسم المؤهل العلمي 255 حرف",
+                    'educational_qualification.min' => "اقل حد لاسم المؤهل العلمي 2",
                 ]
             );
             if ($validator->fails()) {
@@ -84,6 +96,8 @@ class SpecializationsController extends Controller
             $AddSpecialization->Number_of_years_of_study = htmlspecialchars(strip_tags($request["Number_of_years_of_study"]));
             $AddSpecialization->college_id = htmlspecialchars(strip_tags($request["college_id"]));
             $AddSpecialization->Price = htmlspecialchars(strip_tags($request["Price"]));
+            $AddSpecialization->educational_qualification = htmlspecialchars(strip_tags($request["educational_qualification"]));
+            $AddSpecialization->lowest_acceptance_rate = htmlspecialchars(strip_tags($request["lowest_acceptance_rate"]));
             if ($AddSpecialization->save()) {
 
                 //اضافة الاشعار والاضافة الى سجل العمليات

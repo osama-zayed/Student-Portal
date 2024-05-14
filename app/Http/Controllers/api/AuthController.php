@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use Exception;
 use Illuminate\Validation\ValidationException;
-use App\Models\User as users;
+use App\Models\Student as users;
 use App\Notifications\Notifications;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
@@ -23,13 +23,12 @@ class AuthController extends Controller
     {
         try {
             $data = request()->validate([
-                'username' => 'required|string|max:255',
+                'academic_id' => 'required|integer',
                 'password' => 'required|string|max:255',
             ], [
-                'username.required' => 'اسم المستخدم الفريد مطلوب',
+                'academic_id.required' => 'رقم الطالب الاكاديمي مطلوب',
                 'password.required' => 'ادخل الرمز',
                 'password.max' => 'الحد الاقصى للرمز 255',
-                'username.max' => 'الحد الاقصى للاسم الفريد 255',
             ]);
             $rateLimiter = app(RateLimiter::class);
             $rateLimiter->hit($data["username"]);
@@ -43,7 +42,7 @@ class AuthController extends Controller
 
             //  تسجيل الدخول
             if (!$token = auth('api')->attempt([
-                "username" => htmlspecialchars(strip_tags($data["username"])),
+                "academic_id" => htmlspecialchars(strip_tags($data["academic_id"])),
                 "password" => htmlspecialchars(strip_tags($data["password"])),
             ])) {
                 return response()->json([
@@ -51,16 +50,7 @@ class AuthController extends Controller
                     'Message' => 'اسم المستخدم أو كلمة المرور غير صحيحة'
                 ], 400);
             }
-            // if (!$token = auth('api')->attempt([
-            //     "username" => htmlspecialchars(strip_tags($data["username"])),
-            //     "password" => htmlspecialchars(strip_tags($data["password"])),
-            // ], ['table' => 'اسم_الجدول_الجديد'])) {
-            //     return response()->json([
-            //         'Status' => false,
-            //         'Message' => 'اسم المستخدم أو كلمة المرور غير صحيحة'
-            //     ], 400);
-            // }
-            
+
             return $this->respondWithToken($token);
         } catch (ValidationException $e) {
             foreach ($e->errors() as $error) {

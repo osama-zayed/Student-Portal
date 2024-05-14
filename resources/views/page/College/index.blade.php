@@ -3,16 +3,16 @@
     <div style="display: none">@toastr_css</div>
 @endsection
 @section('title')
-    الكليات
+الكلية
 @endsection
 @section('page-header')
     الكلية
 @endsection
 @section('sub-page-header')
-    الكليات
+    قائمة الكليات
 @endsection
 @section('PageTitle')
-    الكليات
+الكلية
 @endsection
 <!-- breadcrumb -->
 @section('content')

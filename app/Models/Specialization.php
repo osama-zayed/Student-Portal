@@ -15,6 +15,8 @@ class Specialization extends Model
         'college_id',
         'Price',
         'Number_of_years_of_study',
+        'educational_qualification',
+        'lowest_acceptance_rate',
     ];
 
     protected $table = 'specializations';

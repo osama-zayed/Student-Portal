@@ -4,16 +4,16 @@
 @endsection
 
 @section('title')
-    تعديل مطلوب امني
+تعديل بيانات طالب 
 @endsection
 @section('PageTitle')
-    تعديل مطلوب امني
+تعديل بيانات طالب 
 @endsection
 @section('page-header')
-    المطلوبين امنياُ
+    الطلاب 
 @endsection
 @section('sub-page-header')
-    تعديل مطلوب امنياً
+    تعديل بيانات طالب 
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -24,11 +24,11 @@
                 <div class="card-body">
                     <div class="col-xs-12">
                         <br>
-                        <form action="{{ route('Security_wanted.update', 'test') }}" method="post"
+                        <form action="{{ route('Student.update', 'test') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <input type="number" name="id" value="{{$SecurityWanted->id}}" hidden>
+                            <input type="number" name="id" value="{{$Student->id}}" hidden>
                             <div class="form-row">
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="registration_number">رقم القيد
@@ -39,7 +39,7 @@
                                         </span>
                                     </label>
                                     <input type="number" name="registration_number" class="form-control"
-                                        value="{{ old('registration_number', $SecurityWanted->registration_number) }}"
+                                        value="{{ old('registration_number', $Student->registration_number) }}"
                                         required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
@@ -51,7 +51,7 @@
                                         </span>
                                     </label>
                                     <input type="text" name="day" class="form-control"
-                                        value="{{ old('day', $SecurityWanted->day) }}" required>
+                                        value="{{ old('day', $Student->day) }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="registration_date">تاريخ القيد
@@ -62,11 +62,11 @@
                                         </span>
                                     </label>
                                     <input type="date" name="registration_date" class="form-control"   max='{{ date('Y-m-d') }}'
-                                        value="{{ old('registration_date', date('Y-m-d'), $SecurityWanted->registration_date) }}"
+                                        value="{{ old('registration_date', date('Y-m-d'), $Student->registration_date) }}"
                                         required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="wanted_name">اسم المطلوب
+                                    <label for="wanted_name">اسم الطالب
                                         <span class="text-danger">*
                                             @error('wanted_name')
                                                 {{ $message }}
@@ -74,7 +74,7 @@
                                         </span>
                                     </label>
                                     <input type="text" name="wanted_name" class="form-control"
-                                        value="{{ old('wanted_name',$SecurityWanted->wanted_name) }}" required>
+                                        value="{{ old('wanted_name',$Student->wanted_name) }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="age">العمر
@@ -85,7 +85,7 @@
                                         </span>
                                     </label>
                                     <input type="number" name="age" class="form-control"
-                                        value="{{ old('age', $SecurityWanted->age) }}" required>
+                                        value="{{ old('age', $Student->age) }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="event">بالغ/حدث
@@ -96,9 +96,9 @@
                                         </span>
                                     </label>
                                     <select class="form-control h-65" name="event" required>
-                                        <option value="بالغ" @if (old('event', $SecurityWanted->event) == 'بالغ') selected @endif>بالغ
+                                        <option value="بالغ" @if (old('event', $Student->event) == 'بالغ') selected @endif>بالغ
                                         </option>
-                                        <option value="حدث" @if (old('event', $SecurityWanted->event) == 'حدث') selected @endif>حدث
+                                        <option value="حدث" @if (old('event', $Student->event) == 'حدث') selected @endif>حدث
                                         </option>
                                     </select>
 
@@ -111,12 +111,12 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <select class="form-control h-65" name="gender" aria-placeholder="الجنس مطلوب"
+                                    <select class="form-control h-65" name="gender" aria-placeholder="الجنس طالب"
                                         required>
                                         <option value="" disabled selected>اختر الجنس</option>
-                                        <option value="ذكر" @if (old('gender', $SecurityWanted->gender) == 'ذكر') selected @endif>ذكر
+                                        <option value="ذكر" @if (old('gender', $Student->gender) == 'ذكر') selected @endif>ذكر
                                         </option>
-                                        <option value="انثى" @if (old('gender', $SecurityWanted->gender) == 'انثى') selected @endif>انثى
+                                        <option value="انثى" @if (old('gender', $Student->gender) == 'انثى') selected @endif>انثى
                                         </option>
                                     </select>
                                 </div>
@@ -131,13 +131,13 @@
                                     <select class="form-control h-65" name="marital_status"
                                         aria-placeholder="اختر الحاله الاجتماعيه" required>
                                         <option value="" disabled selected>اختر الحاله الاجتماعيه</option>
-                                        <option value="اعزب" @if (old('marital_status', $SecurityWanted->marital_status) == 'اعزب') selected @endif>اعزب
+                                        <option value="اعزب" @if (old('marital_status', $Student->marital_status) == 'اعزب') selected @endif>اعزب
                                         </option>
-                                        <option value="خاطب" @if (old('marital_status', $SecurityWanted->marital_status) == 'خاطب') selected @endif>خاطب
+                                        <option value="خاطب" @if (old('marital_status', $Student->marital_status) == 'خاطب') selected @endif>خاطب
                                         </option>
-                                        <option value="متزوج" @if (old('marital_status', $SecurityWanted->marital_status) == 'متزوج') selected @endif>متزوج
+                                        <option value="متزوج" @if (old('marital_status', $Student->marital_status) == 'متزوج') selected @endif>متزوج
                                         </option>
-                                        <option value="مطلق" @if (old('marital_status', $SecurityWanted->marital_status) == 'مطلق') selected @endif>مطلق
+                                        <option value="مطلق" @if (old('marital_status', $Student->marital_status) == 'مطلق') selected @endif>مطلق
                                         </option>
                                     </select>
                                 </div>
@@ -150,7 +150,7 @@
                                         </span>
                                     </label>
                                     <input type="text" name="nationality" class="form-control"
-                                        value="{{ old('nationality', $SecurityWanted->nationality) }}" required>
+                                        value="{{ old('nationality', $Student->nationality) }}" required>
                                 </div>
                                 <div class="col-lg-3 col-md-6 mb-10">
                                     <label for="occupation">المهنة
@@ -161,7 +161,7 @@
                                         </span>
                                     </label>
                                     <input type="text" name="occupation" class="form-control"
-                                        value="{{ old('occupation', $SecurityWanted->occupation) }}" required>
+                                        value="{{ old('occupation', $Student->occupation) }}" required>
                                 </div>
                                 <div class="col-lg-3 col-md-6 mb-10">
                                     <label for="place_of_birth">محل الميلاد
@@ -172,7 +172,7 @@
                                         </span>
                                     </label>
                                     <input type="text" name="place_of_birth" class="form-control"
-                                        value="{{ old('place_of_birth', $SecurityWanted->place_of_birth) }}" required>
+                                        value="{{ old('place_of_birth', $Student->place_of_birth) }}" required>
                                 </div>
                                 <div class="col-lg-3 col-md-6 mb-10">
                                     <label for="residence">السكن
@@ -183,7 +183,7 @@
                                         </span>
                                     </label>
                                     <input type="text" name="residence" class="form-control"
-                                        value="{{ old('residence', $SecurityWanted->residence) }}" required>
+                                        value="{{ old('residence', $Student->residence) }}" required>
                                 </div>
                                 <div class="col-lg-3 col-md-6 mb-10">
                                     <label for="previous_convictions">السوابق
@@ -194,7 +194,7 @@
                                         </span>
                                     </label>
                                     <input type="text" name="previous_convictions" class="form-control"
-                                        value="{{ old('previous_convictions', $SecurityWanted->previous_convictions) }}"
+                                        value="{{ old('previous_convictions', $Student->previous_convictions) }}"
                                         required>
                                 </div>
                             </div>

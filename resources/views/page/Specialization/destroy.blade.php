@@ -20,7 +20,7 @@
                </div>
                <div class="modal-footer">
                    <div class="modal-footer">
-                       <button type="button" class="btn btn-secondary"
+                       <button type="button" class="btn btn-primary"
                                data-dismiss="modal">اغلاق</button>
                        <button type="submit"
                                class="btn btn-danger">حذف</button>

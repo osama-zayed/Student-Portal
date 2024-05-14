@@ -13,7 +13,7 @@
     تعديل تخصص {{ $Specializations->name }}
 @endsection
 @section('page-header')
-المراكز
+التخصصات
 @endsection
 @section('sub-page-header')
 تعديل تخصص {{ $Specializations->name }}
@@ -63,7 +63,7 @@
                                 <br>
 
                               
-                                <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit"
+                                <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right" type="submit"
                                     title="تعديل"> تعديل
                                     البيانات</button>
                             </form>

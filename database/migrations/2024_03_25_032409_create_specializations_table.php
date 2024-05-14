@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('college_id')->unsigned();
             $table->double('Price');
             $table->integer('Number_of_years_of_study');
+            $table->string('educational_qualification');
+            $table->double('lowest_acceptance_rate');
             $table->foreign('college_id')->references('id')->on('colleges'); 
             $table->timestamps();
         });

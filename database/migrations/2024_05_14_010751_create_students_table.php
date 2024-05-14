@@ -19,11 +19,16 @@ class CreateStudentsTable extends Migration
             $table->string('place_of_birth');
             $table->string('gender');
             $table->float('high_school_grade');
+            $table->float('discount_percentage');
+            $table->string('educational_qualification');
+            $table->string('school_graduation_date');
             $table->integer('college_id')->unsigned();
             $table->integer('specialization_id')->unsigned();
             $table->string('password');
+            $table->string('nationality');
             $table->integer('semester_num')->default(1);
             $table->boolean("user_status")->default(true);
+            $table->string('image');
 
             $table->timestamps();
             $table->foreign('college_id')->references('id')->on('colleges');

@@ -10,11 +10,11 @@
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-    تعديل كلية {{ $College->name }}
+الكلية
 @endsection
 
 @section('page-header')
-    المراكز / الجرائم
+تعديل كلية {{ $College->name }}
 @endsection
 @section('sub-page-header')
     تعديل كلية {{ $College->name }}
@@ -54,7 +54,7 @@
                                 </div>
                                 <br>
 
-                                <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit"
+                                <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right" type="submit"
                                     title="تعديل"> تعديل
                                     البيانات</button>
                             </form>

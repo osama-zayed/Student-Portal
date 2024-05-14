@@ -7,10 +7,10 @@ Route::middleware(["auth", "userStatus"])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/Incident/get/data', [App\Http\Controllers\HomeController::class, 'Incident_get']);
     Route::get('/Incident/Archive', [App\Http\Controllers\IncidentController::class, 'showDeleted'])->name('Incident_deleted');
-    Route::get('/Security_wanted/Archive', [App\Http\Controllers\SecurityWantedController::class, 'showDeleted'])->name('Security_wanted_deleted');
+    Route::get('/Student/Archive', [App\Http\Controllers\StudentController::class, 'showDeleted'])->name('Student_deleted');
     Route::get('/search', [App\Http\Controllers\HomeController::class, 'searchById'])->name('searchById');
     Route::resource('Incident', App\Http\Controllers\IncidentController::class);
-    Route::resource('Security_wanted', App\Http\Controllers\SecurityWantedController::class);
+    Route::resource('Student', App\Http\Controllers\StudentController::class);
     Route::resource('Specialization', App\Http\Controllers\SpecializationsController::class);
     Route::resource('College', App\Http\Controllers\CollegeController::class);
     Route::get('/Activity', [App\Http\Controllers\userController::class, 'Activity'])->name('Activity');
