@@ -14,7 +14,6 @@ class AddStudentRequest extends FormRequest
     {
         return true;
     }
-    // protected $stopOnFirstFailure = true;
     protected function failedValidation(Validator $validator)
     {
         $errorMessages = [];

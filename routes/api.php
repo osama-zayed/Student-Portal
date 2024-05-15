@@ -15,54 +15,28 @@ Route::group([
     Route::post('logout', 'App\Http\Controllers\api\AuthController@logout');
     Route::get('me', 'App\Http\Controllers\api\AuthController@me');
     Route::get('Notification', 'App\Http\Controllers\api\AuthController@Notification');
-    Route::post('report', 'App\Http\Controllers\api\reportsController@report');
     Route::put('editUser', 'App\Http\Controllers\api\AuthController@editUser');
 });
 
 ///////////////////////End User/////////////////////
-///////////////////////Start Category /////////////////////
+///////////////////////Start College /////////////////////
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'Category'
+    'prefix' => 'College'
 ], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\CategoryController@showAll');
-    Route::post('Add', 'App\Http\Controllers\api\CategoryController@Add');
-    Route::put('updata', 'App\Http\Controllers\api\CategoryController@updata');
+    Route::get('showAll', 'App\Http\Controllers\api\CollegeController@showAll');
 });
-///////////////////////End Category /////////////////////////
-///////////////////////Start CompanyBranches /////////////////////
+///////////////////////End College /////////////////////////
+///////////////////////Start Specialization /////////////////////
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'CompanyBranch'
+    'prefix' => 'Specialization'
 ], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\CompanyBranchesController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\CompanyBranchesController@show');
-    Route::post('Add', 'App\Http\Controllers\api\CompanyBranchesController@Add');
-    Route::put('updata', 'App\Http\Controllers\api\CompanyBranchesController@updata');
+    Route::get('showAll', 'App\Http\Controllers\api\SpecializationsController@showAll');
+    Route::post('showByCollege', 'App\Http\Controllers\api\SpecializationsController@showByCollege');
+    Route::post('showById', 'App\Http\Controllers\api\SpecializationsController@showById');
 });
-///////////////////////End CompanyBranches /////////////////////////
-///////////////////////Start Directorate /////////////////////
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'Directorate'
-], function ($router) {
-    Route::post('showAll', 'App\Http\Controllers\api\DirectoratesController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\DirectoratesController@show');
-    Route::post('Add', 'App\Http\Controllers\api\DirectoratesController@Add');
-    Route::put('updata', 'App\Http\Controllers\api\DirectoratesController@updata');
-});
-///////////////////////End Directorate /////////////////////////
-///////////////////////Start ExchangeIssuanceOperation /////////////////////
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'ExchangeIssuanceOperation'
-], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\ExchangeIssuuanceOperationsController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\ExchangeIssuuanceOperationsController@show');
-    Route::post('Add', 'App\Http\Controllers\api\ExchangeIssuuanceOperationsController@Add');
-    Route::post('edit', 'App\Http\Controllers\api\ExchangeIssuuanceOperationsController@edit');
-});
-///////////////////////End ExchangeIssuanceOperation /////////////////////////
+///////////////////////End Specialization /////////////////////////
 ///////////////////////Start Project /////////////////////
 Route::group([
     'middleware' => 'api',

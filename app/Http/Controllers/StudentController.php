@@ -97,9 +97,7 @@ class StudentController extends Controller
     
         try {
 
-            $Student = new Student();
-            
-            // إضافة بيانات الطالب ال
+            $Student = new Student();            
             $latestId = Student::max('id') ;
             $Student->full_name = htmlspecialchars(strip_tags($request['full_name']));
             $Student->personal_id = htmlspecialchars(strip_tags($request['personal_id']));
@@ -126,15 +124,12 @@ class StudentController extends Controller
                 $Student->image = $StudentImagePath;
             }
             if ($Student->save()) {
-                // إضافة الإشعار والإضافة إلى سجل العمليات
                 $date = date('H:i Y-m-d');
                 $user = User::find(auth()->user()->id);
                 activity()->performedOn($Student)->event("إضافة طالب")->causedBy($user)
                     ->log(
                         "تمت إضافة طالب جديد بإسم " . $Student->full_name . " والرقم الاكاديمي " . $Student->academic_id . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
                     );
-                // نهاية كود إضافة الإشعار والإضافة إلى سجل العمليات
-
                 toastr()->success('تمت العملية بنجاح');
                 return redirect()->route("Student.index");
             } else {
