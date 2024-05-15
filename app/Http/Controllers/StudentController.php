@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Student\AddStudentRequest;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Http\Controllers\Controller;
@@ -51,10 +52,6 @@ class StudentController extends Controller
 
     public function showDeleted()
     {
-        // if (auth()->user()->user_type == 'user') {
-        //     toastr()->error("غير مصرح لك");
-        //     return redirect()->back();
-        // }
         try {
             $pageSize = 100;
             $page = request()->input('page', 1);
@@ -84,10 +81,6 @@ class StudentController extends Controller
     }
     public function create()
     {
-        // if (auth()->user()->user_type == 'statisticOfficer') {
-        //     toastr()->error("غير مصرح لك");
-        //     return redirect()->back();
-        // }
         try {
             return view("page.Student.create");
         } catch (\Throwable $th) {
@@ -99,78 +92,13 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AddStudentRequest $request)
     {
-        // if (auth()->user()->user_type == 'statisticOfficer') {
-        //     toastr()->error("غير مصرح لك");
-        //     return redirect()->back();
-        // }
+    
         try {
-            // التحقق من الحقول
-            // $validator = Validator::make($request->all(), [
-            //     'registration_number' => 'required|integer|min:1|unique:security_wanteds,registration_number',
-            //     'day' => 'required|string|min:2',
-            //     'registration_date' => 'required|date',
-            //     'full_name' => 'required|string|regex:/^([\p{Arabic}]+\s){3}[\p{Arabic}]+$/u',
-            //     'age' => 'required|integer|min:1',
-            //     'event' => 'required|string|min:2',
-            //     'gender' => 'required|string|min:2',
-            //     'marital_status' => 'required|string|min:2',
-            //     'nationality' => 'required|string|min:2',
-            //     'occupation' => 'required|string|min:2',
-            //     'place_of_birth' => 'required|string|min:2',
-            //     'residence' => 'required|string|min:2',
-            //     'previous_convictions' => 'required|string|min:2',
-            // ], [
-            //     'registration_number.required' => 'حقل رقم الاكاديمي طالب',
-            //     'registration_number.string' => 'حقل رقم الاكاديمي يجب أن يكون نصًا',
-            //     'registration_number.min' => 'حقل رقم الاكاديمي يجب أن يتكون من الحد الأدنى للحروف',
-            //     'registration_number.unique' => 'حقل رقم الاكاديمي يجب أن يكون فريد',
-            //     'day.required' => 'حقل اليوم طالب',
-            //     'day.string' => 'حقل اليوم يجب أن يكون نصًا',
-            //     'day.min' => 'حقل اليوم يجب أن يتكون من الحد الأدنى للحروف',
-            //     'registration_date.required' => 'حقل تاريخ الاكاديمي طالب',
-            //     'registration_date.date' => 'حقل تاريخ الاكاديمي يجب أن يكون تاريخًا',
-            //     'full_name.required' => 'حقل اسم الطالب طالب',
-            //     'full_name.string' => 'حقل اسم الطالب يجب أن يكون نصًا',
-            //     'full_name.min' => 'حقل اسم الطالب يجب أن يتكون من الحد الأدنى للحروف',
-            //     'full_name.regex' => 'يجب ان يكون الاسام رباعي',
-            //     'age.required' => 'حقل العمر طالب',
-            //     'age.integer' => 'حقل العمر يجب أن يكون رقمًا صحيحًا',
-            //     'age.min' => 'حقل العمر يجب أن يكون أكبر من الصفر',
-            //     'event.required' => 'حقل الحدث طالب',
-            //     'event.string' => 'حقل الحدث يجب أن يكون نصًا',
-            //     'event.min' => 'حقل الحدث يجب أن يتكون من الحد الأدنى للحروف',
-            //     'gender.required' => 'حقل الجنس طالب',
-            //     'gender.string' => 'حقل الجنس يجب أن يكون نصًا',
-            //     'gender.min' => 'حقل الجنس يجب أن يتكون من الحد الأدنى للحروف',
-            //     'marital_status.required' => 'حقل الحالة الاجتماعية طالب',
-            //     'marital_status.string' => 'حقل الحالة الاجتماعية يجب أن يكون نصًا',
-            //     'marital_status.min' => 'حقل الحالة الاجتماعية يجب أن يتكون من الحد الأدنى للحروف',
-            //     'nationality.required' => 'حقل الجنسية طالب',
-            //     'nationality.string' => 'حقل الجنسية يجب أن يكون نصًا',
-            //     'nationality.min' => 'حقل الجنسية يجب أن يتكون من الحد الأدنى للحروف',
-            //     'occupation.required' => 'حقل المهنة طالب',
-            //     'occupation.string' => 'حقل المهنة يجب أن يكون نصًا',
-            //     'occupation.min' => 'حقل المهنة يجب أن يتكون من الحد الأدنى للحروف',
-            //     'place_of_birth.required' => 'حقل محل الميلاد طالب',
-            //     'place_of_birth.string' => 'حقل محل الميلاد يجب أن يكون نصًا',
-            //     'place_of_birth.min' => 'حقل محل الميلاد يجب أن يتكون من الحد الأدنى للحروف',
-            //     'residence.required' => 'حقل السكن طالب',
-            //     'residence.string' => 'حقل السكن يجب أن يكون نصًا',
-            //     'residence.min' => 'حقل السكن يجب أن يتكون من الحد الأدنى للحروف',
-            //     'previous_convictions.required' => 'حقل السوابق طالب',
-            //     'previous_convictions.string' => 'حقل السوابق يجب أن يكون نصًا',
-            //     'previous_convictions.min' => 'حقل السوابق يجب أن يتكون من الحد الأدنى للحروف',
-            // ]);
-            // if ($validator->fails()) {
-            //     toastr()->error($validator->errors()->first());
-            //     return redirect()->back()
-            //         ->withErrors($validator)
-            //         ->withInput();
-            // }
 
             $Student = new Student();
+            
             // إضافة بيانات الطالب ال
             $latestId = Student::max('id') ;
             $Student->full_name = htmlspecialchars(strip_tags($request['full_name']));
@@ -194,9 +122,6 @@ class StudentController extends Controller
                 // إضافة الإشعار والإضافة إلى سجل العمليات
                 $date = date('H:i Y-m-d');
                 $user = User::find(auth()->user()->id);
-                HelperController::NotificationsAllUser(
-                    "لقد تمت اضافة طالب جديد بإسم " . $Student->full_name . " والرقم الاكاديمي " . $Student->academic_id . " في تاريخ " . $date,
-                );
                 activity()->performedOn($Student)->event("إضافة طالب")->causedBy($user)
                     ->log(
                         "تمت إضافة طالب جديد بإسم " . $Student->full_name . " والرقم الاكاديمي " . $Student->academic_id . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
@@ -228,10 +153,6 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        if (auth()->user()->user_type == 'user' || auth()->user()->user_type == 'statisticOfficer') {
-            toastr()->error("غير مصرح لك");
-            return redirect()->back();
-        }
         try {
             $Student = Student::select(
                 'id',
@@ -268,10 +189,6 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (auth()->user()->user_type == 'user' || auth()->user()->user_type == 'statisticOfficer') {
-            toastr()->error("غير مصرح لك");
-            return redirect()->back();
-        }
         try {
             // التحقق من الحقول
             $validator = Validator::make($request->all(), [
@@ -398,10 +315,6 @@ class StudentController extends Controller
      */
     public function destroy(int $id)
     {
-        if (auth()->user()->user_type == 'user' || auth()->user()->user_type == 'statisticOfficer') {
-            toastr()->error("غير مصرح لك");
-            return redirect()->back();
-        }
         try {
             $request = request()->validate([
                 "id" => "required|integer|min:1|max:255",
