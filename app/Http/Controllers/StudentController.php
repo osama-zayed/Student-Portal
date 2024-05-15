@@ -118,6 +118,13 @@ class StudentController extends Controller
             $Student->college_id = htmlspecialchars(strip_tags($request['college_id']));
             $Student->specialization_id = htmlspecialchars(strip_tags($request['specialization_id']));
             $Student->password = bcrypt($Student->personal_id??$Student->phone_number);
+            if (isset($request["image"]) && !empty($request["image"])) {
+                $StudentImage = request()->file('image');
+                $StudentImagePath = 'images/Student/' .
+                    $academicId .  $StudentImage->getClientOriginalName();
+                $StudentImage->move(public_path('images/Student/'), $StudentImagePath);
+                $Student->image = $StudentImagePath;
+            }
             if ($Student->save()) {
                 // إضافة الإشعار والإضافة إلى سجل العمليات
                 $date = date('H:i Y-m-d');
