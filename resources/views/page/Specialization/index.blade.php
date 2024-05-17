@@ -4,16 +4,16 @@
 @endsection
 
 @section('title')
-قائمة التخصصات الدراسية 
+    قائمة التخصصات الدراسية
 @endsection
 @section('page-header')
-التخصصات
+    التخصصات
 @endsection
 @section('sub-page-header')
-قائمة التخصصات الدراسية 
+    قائمة التخصصات الدراسية
 @endsection
 @section('PageTitle')
-قائمة التخصصات الدراسية 
+    قائمة التخصصات الدراسية
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -42,6 +42,7 @@
                                     <th>المؤهل المطلوب</th>
                                     <th>اقل معدل للقبول</th>
                                     <th>السعر</th>
+                                    <th>الخطة الدراسية</th>
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
@@ -56,18 +57,23 @@
                                         <td>{{ $Specialization['lowest_acceptance_rate'] }}%</td>
                                         <td>{{ $Specialization['Price'] }}$</td>
                                         <td>
+                                            <a href="{{ route('CourseSpecialization.index', $Specialization['id']) }}"
+                                                class="btn  btn-primary btn-sm" role="button" aria-pressed="true"
+                                                title="عرض الخطة الدراسية">عرض الخطة الدراسية</a>
+                                        </td>
+                                        <td>
                                             <a href="{{ route('Specialization.edit', $Specialization['id']) }}"
                                                 class="btn btn-info btn-sm" role="button" aria-pressed="true"
                                                 title="تعديل"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#delete_Specialization{{ $Specialization['id'] }}" title="حذف"><i
-                                                    class="fa fa-trash"></i></button>
+                                                data-target="#delete_Specialization{{ $Specialization['id'] }}"
+                                                title="حذف"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     @include('page.Specialization.destroy')
                                 @empty
                                     <tr>
-                                        <td colspan="8">لا توجد بيانات</td>
+                                        <td colspan="9">لا توجد بيانات</td>
                                     </tr>
                                 @endforelse
                         </table>

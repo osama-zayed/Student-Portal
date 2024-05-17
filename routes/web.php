@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::middleware(["auth", "userStatus"])->group(function () {
+Route::middleware(["auth", "userStatus" ,'admin'])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/Incident/get/data', [App\Http\Controllers\HomeController::class, 'Incident_get']);
     Route::get('/Incident/Archive', [App\Http\Controllers\IncidentController::class, 'showDeleted'])->name('Incident_deleted');
@@ -13,6 +13,8 @@ Route::middleware(["auth", "userStatus"])->group(function () {
     Route::resource('Student', App\Http\Controllers\StudentController::class);
     Route::resource('Specialization', App\Http\Controllers\SpecializationsController::class);
     Route::resource('College', App\Http\Controllers\CollegeController::class);
+    Route::resource('Course', App\Http\Controllers\CourseController::class);
+    Route::resource('CourseSpecialization', App\Http\Controllers\CourseSpecializationController::class);
     Route::get('/Activity', [App\Http\Controllers\userController::class, 'Activity'])->name('Activity');
     Route::resource('user', App\Http\Controllers\userController::class);
     Route::get('/report/Incident', [App\Http\Controllers\reportsController::class, 'report_Incident'])->name('report_Incident');

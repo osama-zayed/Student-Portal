@@ -5,19 +5,19 @@
 @endsection
 
 @section('title')
-    تعديل كلية {{ $College->name }}
+    تعديل مقرر {{ $Course->name }}
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-الكلية
+    المقررات الدراسية
 @endsection
 
 @section('page-header')
-الكلية
+المقررات الدراسية
 @endsection
 @section('sub-page-header')
-    تعديل كلية {{ $College->name }}
+    تعديل مقرر {{ $Course->name }}
 @endsection
 
 <!-- breadcrumb -->
@@ -30,27 +30,35 @@
                     <div class="col-xs-12">
                         <div class="col-md-12">
                             <br>
-                            <form action="{{ route('College.update', 'test') }}" method="post"
-                                enctype="multipart/form-College">
+                            <form action="{{ route('Course.update', 'test') }}" method="post" enctype="multipart/form-Course">
                                 @method('PUT')
                                 @csrf
                                 <div class="form-row">
-
                                     <div class="col">
-                                        <label for="name">اسم الكلية :
+                                        <label for="name">اسم المقررات الدراسية :
                                             <span class="text-danger">* @error('name')
                                                     {{ $message }}
                                                 @enderror
                                             </span>
                                         </label>
-                                        <input type="text" name="name"
-                                            value="{{ $College->name . old('name') }}"
+                                        <input type="text" name="name" value="{{ old('name') ?? $Course->name }}"
                                             class="form-control">
 
-                                        <input type="hidden" name="id" value="{{ $College->id }}"
+                                        <input type="hidden" name="id" value="{{ $Course->id }}"
                                             class="form-control">
                                     </div>
-
+                                    <div class="col">
+                                        <label for="hours">عدد الساعات
+                                            <span class="text-danger">*
+                                                @error('hours')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
+                                        </label>
+                                        <input id="hours" type="number" name="hours" class="form-control"
+                                            min="1" max="4" value="{{ old('hours') ?? $Course->hours }}"
+                                            placeholder="أدخل عدد الساعات" required="الحقل مطلوب">
+                                    </div>
                                 </div>
                                 <br>
 

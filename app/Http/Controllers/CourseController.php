@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
 use App\Models\Course;
-use App\Models\CourseSpecialization;
-use App\Models\Specialization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-class CourseSpecializationController extends Controller
+
+
+class CourseController extends Controller
 {
     public function __construct()
     {
@@ -20,18 +20,16 @@ class CourseSpecializationController extends Controller
     public function index()
     {
         try {
-            $Specialization = Specialization::select('id', 'name')->first();
             $Course = Course::select('id', 'name', 'hours')->get();
             if ($Course->isEmpty()) {
                 toastr()->error('لا يوجد مواد دراسية');
             }
-            return view("page.CourseSpecialization.index", [
-                'data' => $Course,
-                'Specialization' => $Specialization,
+            return view("page.Course.index", [
+                'data' => $Course
             ]);
         } catch (Exception $e) {
             toastr()->error('خطأ عند جلب البيانات');
-            return view("page.CourseSpecialization.index");
+            return view("page.Course.index");
         }
     }
 
@@ -40,7 +38,7 @@ class CourseSpecializationController extends Controller
      */
     public function create()
     {
-        return view("page.CourseSpecialization.create");
+        return view("page.Course.create");
     }
 
     /**
@@ -211,4 +209,3 @@ class CourseSpecializationController extends Controller
         }
     }
 }
-

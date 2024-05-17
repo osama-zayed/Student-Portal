@@ -30,6 +30,7 @@ class StudentController extends Controller
             $totalrequest = Student::count();
             $totalPages = ceil($totalrequest / $pageSize);
             $Student = Student::skip($skip)->take($pageSize)->get();
+            
             if ($Student->isEmpty()) {
                 toastr()->error('لا يوجد بيانات');
             }
@@ -48,6 +49,7 @@ class StudentController extends Controller
                 "totalPages" => $totalPages,
             ]);
         }
+        
     }
 
     public function showDeleted()

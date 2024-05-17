@@ -73,9 +73,6 @@ class CollegeController extends Controller
                 $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي
                 $date = date('H:i Y-m-d');
 
-                HelperController::NotificationsAdmin(" لقد تمت اضافة كلية جديد باسم " . $AddCollege->name
-                    . " الوقت والتاريخ " . $date);
-
                 activity()->performedOn($AddCollege)->event("اضافة كلية")->causedBy($user)
                     ->log(
                         ' تم اضافة كلية جديد باسم ' . $AddCollege->name .
