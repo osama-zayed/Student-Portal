@@ -35,7 +35,6 @@
                         <ul id="Incidents" class="collapse" data-parent="#sidebarnav">
                             <li><a href="{{ route('College.index') }}">عرض الكليات</a></li>
                             <li><a href="{{ route('Specialization.index') }}">عرض التخصصات</a></li>
-                            <li><a href="{{ route('Course.index') }}">المقررات الدراسية</a></li>
                         </ul>
                     </li>
                     <!-- menu item Department-->

@@ -14,7 +14,7 @@
 @endsection
 
 @section('page-header')
-المقررات الدراسية
+    المقررات الدراسية
 @endsection
 @section('sub-page-header')
     تعديل مقرر {{ $Course->name }}
@@ -29,12 +29,12 @@
                 <div class="card-body">
                     <div class="col-xs-12">
                         <div class="col-md-12">
-                            <br>
+                            
                             <form action="{{ route('Course.update', 'test') }}" method="post" enctype="multipart/form-Course">
                                 @method('PUT')
                                 @csrf
                                 <div class="form-row">
-                                    <div class="col">
+                                    <div class="col-md-6 mt-3">
                                         <label for="name">اسم المقررات الدراسية :
                                             <span class="text-danger">* @error('name')
                                                     {{ $message }}
@@ -47,7 +47,7 @@
                                         <input type="hidden" name="id" value="{{ $Course->id }}"
                                             class="form-control">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-6 mt-3">
                                         <label for="hours">عدد الساعات
                                             <span class="text-danger">*
                                                 @error('hours')
@@ -59,10 +59,45 @@
                                             min="1" max="4" value="{{ old('hours') ?? $Course->hours }}"
                                             placeholder="أدخل عدد الساعات" required="الحقل مطلوب">
                                     </div>
+                                    <input id="specialization_id" type="hidden" name="specialization_id"
+                                        class="form-control" value="{{ $Course->specialization_id }}"
+                                        placeholder="أدخل رقم التخصص" required="الحقل مطلوب">
+                                    <div class="col-md-6 mt-3 ">
+                                        <label for="semester_num">الترم الدراسي
+                                            <span class="text-danger">*
+                                                @error('semester_num')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
+                                        </label>
+                                        <input id="semester_num" type="number" name="semester_num" class="form-control"
+                                            min="1" max="14"
+                                            value="{{ old('semester_num') ?? $Course->semester_num }}"
+                                            placeholder="أدخل رقم الترم الدراسي" required="الحقل مطلوب">
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                        <label for="teachers_id">مدرس المقرر
+                                            <span class="text-danger">*
+                                                @error('teachers_id')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
+                                        </label>
+                                        <select class="form-control h-65" name="teachers_id" aria-placeholder="اختر مدرس">
+                                            <option value="" disabled selected>اختر مدرس المقرر من القائمة</option>
+                                            @forelse (\App\Models\Teacher::get() as $data)
+                                                <option value="{{ $data['id'] }}"
+                                                    @if ($data->id == old('teachers_id') ?? $Course->teachers_id) selected @endif>
+                                                    {{ $data['name'] }}</option>
+                                            @empty
+                                                <option value="">لا يوجد مدرسين</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
                                 </div>
-                                <br>
+                                
 
-                                <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right" type="submit"
+                                <button class="btn btn-primary mt-3 btn-sm nextBtn btn-lg pull-right" type="submit"
                                     title="تعديل"> تعديل
                                     البيانات</button>
                             </form>

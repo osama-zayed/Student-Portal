@@ -57,9 +57,13 @@
                                         <td>{{ $Specialization['lowest_acceptance_rate'] }}%</td>
                                         <td>{{ $Specialization['Price'] }}$</td>
                                         <td>
-                                            <a href="{{ route('CourseSpecialization.index', $Specialization['id']) }}"
-                                                class="btn  btn-primary btn-sm" role="button" aria-pressed="true"
-                                                title="عرض الخطة الدراسية">عرض الخطة الدراسية</a>
+                                            <a href="{{ route('Course.index', ['Specialization_id' => $Specialization['id']]) }}"
+                                                class="btn btn-primary btn-sm" 
+                                                role="button" 
+                                                aria-pressed="true"
+                                                title="عرض الخطة الدراسية">
+                                                عرض الخطة الدراسية
+                                             </a>
                                         </td>
                                         <td>
                                             <a href="{{ route('Specialization.edit', $Specialization['id']) }}"

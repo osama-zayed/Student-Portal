@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
 use App\Models\Course;
+use App\Models\Specialization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -14,22 +15,39 @@ use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
-    public function __construct()
-    {
-    }
     public function index()
     {
         try {
-            $Course = Course::select('id', 'name', 'hours')->get();
+            $Specialization_id = request('Specialization_id');
+
+            $Specialization = Specialization::select('id', 'name')->where('id', $Specialization_id)->first();
+            if (empty($Specialization)) {
+                toastr()->error('لا يوجد تخصص');
+                return redirect()->back();
+            }
+            $Course = Course::select(
+                'id',
+                'name',
+                'hours',
+                'specialization_id',
+                'semester_num',
+                'teachers_id'
+            )->orderBy('semester_num', 'asc')->where('specialization_id', $Specialization->id)
+                ->get();
+
             if ($Course->isEmpty()) {
                 toastr()->error('لا يوجد مواد دراسية');
             }
             return view("page.Course.index", [
-                'data' => $Course
+                'data' => $Course,
+                'Specialization' => $Specialization,
             ]);
         } catch (Exception $e) {
             toastr()->error('خطأ عند جلب البيانات');
-            return view("page.Course.index");
+            return view("page.Course.index", [
+                'data' => [],
+                'Specialization' => $Specialization,
+            ]);
         }
     }
 
@@ -47,10 +65,14 @@ class CourseController extends Controller
     public function store(CourseRequest $request)
     {
         try {
-
             $AddCourse = new Course();
             $AddCourse->name = htmlspecialchars(strip_tags($request["name"]));
             $AddCourse->hours = htmlspecialchars(strip_tags($request["hours"]));
+            $AddCourse->specialization_id = htmlspecialchars(strip_tags($request["specialization_id"]));
+            $AddCourse->semester_num = htmlspecialchars(strip_tags($request["semester_num"]));
+            if (isset($request["teachers_id"]) && !empty($request["teachers_id"])) {
+                $AddCourse->teachers_id = htmlspecialchars(strip_tags($request["teachers_id"]));
+            }
             if ($AddCourse->save()) {
                 $user = User::find(auth()->user()->id);
                 $date = date('H:i Y-m-d');
@@ -62,7 +84,7 @@ class CourseController extends Controller
                     );
                 //نهاية كود عملية الاشعار والاضافة الى سجل العمليات
                 toastr()->success('تمت العملية بنجاح');
-                return redirect()->route("Course.index");
+                return redirect()->route("Course.index", ['Specialization_id' => $AddCourse->specialization_id]);
             } else {
                 toastr()->error('العملية فشلت');
                 return redirect()->back();
@@ -98,39 +120,18 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CourseRequest $request, string $id)
     {
         try {
 
-            $data = $request->validate(
-                [
-                    'name' => 'required|string|min:2',
-                    'hours' => 'required|integer',
-
-                ],
-                [
-                    'id.required' => "معرف المقرر مطلوب",
-                    'id.integer' => "معرف المقرر مطلوب",
-                    'id.max' => "اكبر حد لمعرف المقرر 255 حرف",
-                    'id.min' => "اقل حد لمعرف المقرر 1",
-                    'name.required' => "اسم المقرر مطلوب",
-                    'name.string' => "يجب ان يكون اسم المقرر نص",
-                    'name.max' => "اكبر حد لاسم المقرر 255 حرف",
-                    'name.min' => "اقل حد لاسم المقرر 2",
-                    'hours.required' => "عدد ساعات المقرر مطلوبة",
-                ]
-            );
             $updataCourse = Course::findOrFail(htmlspecialchars(strip_tags($request["id"])));
-            if ($request->has('name') && $request["name"] != $updataCourse->name) {
-                request()->validate(
-                    ['name' => 'unique:Courses,name'],
-                    ['name.unique' => "يجب ان يكون اسم المقرر فريد"]
-                );
-                $updataCourse->name = htmlspecialchars(strip_tags($request["name"]));
-            }
-
+            $updataCourse->name = htmlspecialchars(strip_tags($request["name"]));
             $updataCourse->hours = htmlspecialchars(strip_tags($request["hours"]));
-
+            $updataCourse->specialization_id = htmlspecialchars(strip_tags($request["specialization_id"]));
+            $updataCourse->semester_num = htmlspecialchars(strip_tags($request["semester_num"]));
+            if (isset($request["teachers_id"]) && !empty($request["teachers_id"])) {
+                $updataCourse->teachers_id = htmlspecialchars(strip_tags($request["teachers_id"]));
+            }
             if ($updataCourse->save()) {
                 //اضافة الاشعار والاضافة الى سجل العمليات
                 $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي
@@ -147,7 +148,7 @@ class CourseController extends Controller
                     );
                 //نهاية كود عملية الاشعار والاضافة الى سجل العمليات
                 toastr()->success('تمت العملية بنجاح');
-                return redirect()->route("Course.index");
+                return redirect()->route("Course.index", ['Specialization_id' => $updataCourse->specialization_id]);
             } else {
                 toastr()->error('العملية فشلت');
                 return redirect()->back();
@@ -177,7 +178,7 @@ class CourseController extends Controller
                     'id.min' => "اقل حد لمعرف المقرر 1",
                 ]
             );
-            $rowsAffected = Course::destroy(htmlspecialchars(strip_tags($data["id"]), ENT_QUOTES));
+            $rowsAffected = Course::destroy(htmlspecialchars(strip_tags($data["id"])));
             if ($rowsAffected) {
                 //اضافة الاشعار والاضافة الى سجل العمليات
                 $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي

@@ -11,14 +11,21 @@ class Course extends Model
 
     protected $table = 'courses';
 
-    protected $fillable = ['id','name', 'hours'];
-
-    public function specializations()
+    protected $fillable = [
+        'id',
+        'name',
+        'hours',
+        "specialization_id",
+        "semester_num",
+        "teachers_id",
+    ];
+        public function specialization()
     {
-        return $this->belongsToMany(Specialization::class, 'course_specialization', 'course_id', 'specialization_id')->withTimestamps()->withPivot('semester_num');
+        return $this->belongsTo(Specialization::class);
     }
+
     public function teachers()
     {
-        return $this->belongsToMany(Teacher::class, 'course_teacher', 'course_id', 'teacher_id')->withTimestamps();
+        return $this->belongsTo(Teacher::class);
     }
 }

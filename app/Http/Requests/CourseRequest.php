@@ -31,8 +31,11 @@ class CourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique:Courses,name|min:2',
+            'name' => 'required|string|min:2',
             'hours' => 'required|integer',
+            'specialization_id' => 'required|integer',
+            'semester_num' => 'required|integer',
+            'teachers_id' => 'nullable|integer',
         ];
 
     }
@@ -46,6 +49,12 @@ class CourseRequest extends FormRequest
             'name.min' => "اقل حد لاسم المقرر 2",
             'name.unique' => "يجب ان يكون اسم المقرر فريد",
             'hours.required' => "عدد ساعات المقرر مطلوبة",
+            'hours.integer' => "عدد ساعات المقرر يجب ان يكون رقم",
+            'specialization_id.required' => "رقم المقرر مطلوب",
+            'specialization_id.integer' => "رقم المقرر يجب ان يكون رقم",
+            'semester_num.required' => "الترم الدراسي مطلوب",
+            'semester_num.integer' => "الترم الدراسي يجب ان يكون رقم",
+            'teachers_id.integer' => "رقم المدرس يجب ان يكون رقم",
         ];
     }
 }

@@ -14,7 +14,6 @@ Route::middleware(["auth", "userStatus" ,'admin'])->group(function () {
     Route::resource('Specialization', App\Http\Controllers\SpecializationsController::class);
     Route::resource('College', App\Http\Controllers\CollegeController::class);
     Route::resource('Course', App\Http\Controllers\CourseController::class);
-    Route::resource('CourseSpecialization', App\Http\Controllers\CourseSpecializationController::class);
     Route::get('/Activity', [App\Http\Controllers\userController::class, 'Activity'])->name('Activity');
     Route::resource('user', App\Http\Controllers\userController::class);
     Route::get('/report/Incident', [App\Http\Controllers\reportsController::class, 'report_Incident'])->name('report_Incident');

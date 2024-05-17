@@ -3,16 +3,16 @@
     <div style="display: none">@toastr_css</div>
 @endsection
 @section('title')
-المقررات الدراسية
+    الخطة الدراسية
 @endsection
 @section('page-header')
-    المقررات الدراسية
+    الخطة الدراسية
 @endsection
 @section('sub-page-header')
-    قائمة المقررات الدراسية
+    تخصص {{ $Specialization->name }}
 @endsection
 @section('PageTitle')
-المقررات الدراسية
+    الخطة الدراسية
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -35,18 +35,24 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>اسم المقرر </th>
-                                    <th>عدد الساعات </th>
+                                    <th>الترم الدراسي</th>
+                                    <th>اسم المقرر</th>
+                                    <th>عدد الساعات</th>
+                                    <th>المدرس</th>
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @php
+                                    $rowNumber = 1;
+                                @endphp
                                 @forelse ($data as $Course)
                                     <tr>
-                                        <td>{{ $Course['id'] }}</td>
+                                        <td>{{ $rowNumber++ }}</td>
+                                        <td>{{ $Course['semester_num'] }}</td>
                                         <td>{{ $Course['name'] }}</td>
                                         <td>{{ $Course['hours'] }}</td>
+                                        <td>{{ $Course->teachers->name ?? 'لا يوجد مدرس' }}</td>
                                         <td>
                                             <a href="{{ route('Course.edit', $Course['id']) }}" class="btn btn-info btn-sm"
                                                 role="button" aria-pressed="true" title="تعديل"><i
@@ -59,7 +65,7 @@
                                     @include('page.Course.destroy')
                                 @empty
                                     <tr>
-                                        <td colspan="4">لا توجد بيانات</td>
+                                        <td colspan="6">لا توجد بيانات</td>
                                     </tr>
                                 @endforelse
                         </table>
