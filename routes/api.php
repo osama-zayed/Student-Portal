@@ -37,17 +37,15 @@ Route::group([
     Route::post('showById', 'App\Http\Controllers\api\SpecializationsController@showById');
 });
 ///////////////////////End Specialization /////////////////////////
-///////////////////////Start Project /////////////////////
+///////////////////////Start Course /////////////////////
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'Project'
+    'prefix' => 'Course'
 ], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\ProjectsController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\ProjectsController@show');
-    Route::post('Add', 'App\Http\Controllers\api\ProjectsController@Add');
-    Route::put('updata', 'App\Http\Controllers\api\ProjectsController@updata');
+    Route::get('showByStudent', 'App\Http\Controllers\api\CourseController@showByStudent');
+    Route::post('showBySpecialization', 'App\Http\Controllers\api\CourseController@showBySpecialization');
 });
-///////////////////////End Project /////////////////////////
+///////////////////////End Course /////////////////////////
 ///////////////////////Start Province /////////////////////
 Route::group([
     'middleware' => 'api',
