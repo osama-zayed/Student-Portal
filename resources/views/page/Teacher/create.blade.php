@@ -3,16 +3,16 @@
     <div style="display: none">@toastr_css</div>
 @endsection
 @section('page-header')
-    الطلاب 
+    المدرسين
 @endsection
 @section('sub-page-header')
-    اضافة بيانات طالب جديد
+    اضافة بيانات مدرس جديد
 @endsection
 @section('title')
-الطلاب 
+    المدرسين
 @endsection
 @section('PageTitle')
-الطلاب 
+    المدرسين
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -23,33 +23,21 @@
                 <div class="card-body">
                     <div class="col-xs-12">
                         <br>
-                        <form action="{{ route('Student.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('teacher.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-row">
-                              
+
                                 <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="full_name">الاسم
+                                    <label for="name">الاسم
                                         <span class="text-danger">*
-                                            @error('full_name')
+                                            @error('name')
                                                 {{ $message }}
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="text" name="full_name" class="form-control" value="{{ old('full_name') }}"
+                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}"
                                         required>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="personal_id">رقم البطاقة الشخصيه
-                                        <span class="text-danger">*
-                                            @error('personal_id')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <input type="number" name="personal_id" class="form-control"
-                                        value="{{ old('personal_id') }}" required>
-                                </div>
-
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="phone_number">رقم الهاتف
                                         <span class="text-danger">*
@@ -58,19 +46,9 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="number" name="phone_number" class="form-control" pattern="[0-9]+(\.[0-9]+)?" title="يرجى إدخال أرقام فقط"
-                                        value="{{ old('phone_number') }}"    required>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="relative_phone_number">رقم هاتف احد الاقرباء
-                                        <span class="text-danger">*
-                                            @error('relative_phone_number')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <input type="number" name="relative_phone_number" class="form-control" pattern="[0-9]+(\.[0-9]+)?" title="يرجى إدخال أرقام فقط"
-                                        value="{{ old('relative_phone_number') }}" required>
+                                    <input type="number" name="phone_number" class="form-control"
+                                        pattern="[0-9]+(\.[0-9]+)?" title="يرجى إدخال أرقام فقط"
+                                        value="{{ old('phone_number') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="gender">الجنس
@@ -88,142 +66,35 @@
                                         <option value="انثى" @if (old('gender') == 'انثى') selected @endif>انثى
                                         </option>
                                     </select>
-                                </div>                          
-
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="date_of_birth">تاريخ الميلاد
-                                        <span class="text-danger">*
-                                            @error('date_of_birth')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <input type="date" name="date_of_birth" class="form-control h-65"
-                                        value="{{ old('date_of_birth', date('Y-m-d')) }}"   max='{{ date('Y-m-d') }}' required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="place_of_birth">محل الميلاد
+                                    <label for="qualification">المؤهل الدراسي
                                         <span class="text-danger">*
-                                            @error('place_of_birth')
+                                            @error('qualification')
                                                 {{ $message }}
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="text" name="place_of_birth" class="form-control"
-                                        value="{{ old('place_of_birth') }}" required>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="nationality">الجنسية
-                                        <span class="text-danger">*
-                                            @error('nationality')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <input type="text" name="nationality" class="form-control"
-                                        value="{{ old('nationality') }}" required>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="educational_qualification">المؤهل الدراسي
-                                        <span class="text-danger">*
-                                            @error('educational_qualification')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <select class="form-control h-65" name="educational_qualification" aria-placeholder="المؤهل مطلوب"
+                                    <select class="form-control h-65" name="qualification" aria-placeholder="المؤهل مطلوب"
                                         required>
                                         <option value="" disabled selected>اختر المؤهل</option>
-                                        <option value="ثانوية عامة علمي" @if (old('educational_qualification') == "ثانوية عامة علمي") selected @endif>ثانوية عامة علمي
-                                        <option value="ثانوية عامة ادبي" @if (old('educational_qualification') == "ثانوية عامة ادبي") selected @endif>ثانوية عامة ادبي
+                                        <option value="دكتوراة" @if (old('qualification') == 'دكتوراة') selected @endif>دكتوراه
+                                        <option value="ماجستير" @if (old('qualification') == 'ماجستير') selected @endif>ماجستير
+                                        <option value="بكالريوس" @if (old('qualification') == 'بكالريوس') selected @endif>بكالريوس
                                         </option>
                                     </select>
-                                </div>       
+                                </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="high_school_grade">معدل الثانوية
+                                    <label for="address">الموقع
                                         <span class="text-danger">*
-                                            @error('high_school_grade')
+                                            @error('address')
                                                 {{ $message }}
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="number" name="high_school_grade" class="form-control" max="100" min="50"
-                                        value="{{ old('high_school_grade') }}" required>
+                                    <input type="number" name="text" class="form-control" pattern="[0-9]+(\.[0-9]+)?"
+                                        title="يرجى إدخال أرقام فقط" value="{{ old('address') }}" required>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="school_graduation_date">تاريخ الحصول عليها
-                                        <span class="text-danger">*
-                                            @error('school_graduation_date')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <input type="date" name="school_graduation_date" class="form-control h-65"
-                                        value="{{ old('school_graduation_date', date('Y-m-d')) }}"   max='{{ date('Y-m-d') }}' required>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="college_id">الكلية
-                                        <span class="text-danger">*
-                                            @error('college_id')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <select class="form-control h-65" name="college_id" aria-placeholder="اختر كلية"
-                                        required>
-                                        <option value="" disabled selected>اختر كلية من القائمة</option>
-                                        @forelse (\App\Models\College::get() as $data)
-                                            <option value="{{ $data['id'] }}"
-                                                @if ($data->id == old('college_id')) selected @endif>
-                                                {{ $data['name'] }}</option>
-                                        @empty
-                                            <option value="">لا يوجد كليات</option>
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="specialization_id">التخصص
-                                        <span class="text-danger">*
-                                            @error('specialization_id')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <select class="form-control h-65" name="specialization_id" aria-placeholder="اختر كلية"
-                                        required>
-                                        <option value="" disabled selected>اختر كلية من القائمة</option>
-                                        @forelse (\App\Models\Specialization::get() as $data)
-                                            <option value="{{ $data['id'] }}"
-                                                @if ($data->id == old('specialization_id')) selected @endif>
-                                                {{ $data['name'] }}</option>
-                                        @empty
-                                            <option value="">لا يوجد تخصصات</option>
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="discount_percentage">نسبة التخفيض
-                                        <span class="text-danger">*
-                                            @error('discount_percentage')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <input type="number" name="discount_percentage" class="form-control" max="50" min="30"
-                                        value="{{ old('discount_percentage') }}" required>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-10">
-                                    <label for="image">الصورة الشخصية
-                                        <span class="text-danger">*
-                                            @error('image')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </label>
-                                    <input type="file" name="image" class="form-control h-65"
-                                        value="{{ old('image') }}" required>
-                                </div>
-                                
                             </div>
                             <br>
                             <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right" type="submit">حفظ

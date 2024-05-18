@@ -31,21 +31,11 @@ class AddTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'personal_id' => 'required|numeric|min:1|unique:students,personal_id',
-            'full_name' => 'required|string|regex:/^([\p{Arabic}]+\s){3}[\p{Arabic}]+$/u',
-            'gender' => 'required|string|min:2',
-            'nationality' => 'required|string|min:2',
-            'date_of_birth' => 'required|date',
-            'place_of_birth' => 'required|string|min:2',
-            'phone_number' => '',
-            'relative_phone_number' => '',
-            'educational_qualification' => '',
-            'high_school_grade' => '',
-            'school_graduation_date' => '',
-            'discount_percentage' => '',
-            'college_id' => 'required|integer|min:1',
-            'specialization_id' => 'required|integer|min:1',
-            'image' => '',
+            'name'=>"",
+            'qualification'=>"",
+            'gender'=>"",
+            'phone_number'=>"",
+            'address'=>"",
         ];
     }
 

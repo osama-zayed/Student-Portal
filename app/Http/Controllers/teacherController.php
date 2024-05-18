@@ -100,40 +100,21 @@ class teacherController extends Controller
         try {
 
             $Teacher = new Teacher();            
-            $latestId = Teacher::max('id') ;
-            $Teacher->full_name = htmlspecialchars(strip_tags($request['full_name']));
-            $Teacher->personal_id = htmlspecialchars(strip_tags($request['personal_id']));
-            $academicId = date('Ymd') . ++$latestId;
-            $Teacher->academic_id = $academicId;
-            $Teacher->phone_number = htmlspecialchars(strip_tags($request['phone_number']));
-            $Teacher->relative_phone_number = htmlspecialchars(strip_tags($request['relative_phone_number']));
-            $Teacher->date_of_birth = htmlspecialchars(strip_tags($request['date_of_birth']));
-            $Teacher->place_of_birth = htmlspecialchars(strip_tags($request['place_of_birth']));
+            $Teacher->name = htmlspecialchars(strip_tags($request['name']));
             $Teacher->gender = htmlspecialchars(strip_tags($request['gender']));
-            $Teacher->nationality = htmlspecialchars(strip_tags($request['nationality']));
-            $Teacher->educational_qualification = htmlspecialchars(strip_tags($request['educational_qualification']));
-            $Teacher->high_school_grade = htmlspecialchars(strip_tags($request['high_school_grade']));
-            $Teacher->school_graduation_date = htmlspecialchars(strip_tags($request['school_graduation_date']));
-            $Teacher->discount_percentage = htmlspecialchars(strip_tags($request['discount_percentage']));
-            $Teacher->college_id = htmlspecialchars(strip_tags($request['college_id']));
-            $Teacher->specialization_id = htmlspecialchars(strip_tags($request['specialization_id']));
-            $Teacher->password = bcrypt($Teacher->personal_id??$Teacher->phone_number);
-            if (isset($request["image"]) && !empty($request["image"])) {
-                $TeacherImage = request()->file('image');
-                $TeacherImagePath = 'images/Teacher/' .
-                    $academicId .  $TeacherImage->getClientOriginalName();
-                $TeacherImage->move(public_path('images/Teacher/'), $TeacherImagePath);
-                $Teacher->image = $TeacherImagePath;
-            }
+            $Teacher->phone_number = htmlspecialchars(strip_tags($request['phone_number']));
+            $Teacher->address = htmlspecialchars(strip_tags($request['address']));
+            $Teacher->qualification = htmlspecialchars(strip_tags($request['qualification']));
+
             if ($Teacher->save()) {
                 $date = date('H:i Y-m-d');
                 $user = User::find(auth()->user()->id);
-                activity()->performedOn($Teacher)->event("إضافة طالب")->causedBy($user)
+                activity()->performedOn($Teacher)->event("إضافة مدرس")->causedBy($user)
                     ->log(
-                        "تمت إضافة طالب جديد بإسم " . $Teacher->full_name . " والرقم الاكاديمي " . $Teacher->academic_id . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
+                        "تمت إضافة مدرس جديد بإسم " . $Teacher->full_name . " والرقم الاكاديمي " . $Teacher->academic_id . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
                     );
                 toastr()->success('تمت العملية بنجاح');
-                return redirect()->route("Teacher.index");
+                return redirect()->route("teacher.index");
             } else {
                 toastr()->error('العملية فشلت');
                 return redirect()->back();
@@ -176,7 +157,7 @@ class teacherController extends Controller
             )->where('id', $id)
                 ->first();
             if (!$Teacher) {
-                toastr()->error("الطالب الامني غير موجود");
+                toastr()->error("المدرس الامني غير موجود");
                 return redirect()->back()
                     ->withInput();
             }
@@ -210,49 +191,49 @@ class teacherController extends Controller
                 'residence' => 'required|string|min:2',
                 'previous_convictions' => 'required|string|min:2',
             ], [
-                'registration_number.required' => 'حقل رقم الاكاديمي طالب',
+                'registration_number.required' => 'حقل رقم الاكاديمي مدرس',
                 'registration_number.string' => 'حقل رقم الاكاديمي يجب أن يكون نصًا',
                 'registration_number.min' => 'حقل رقم الاكاديمي يجب أن يتكون من الحد الأدنى للحروف',
-                'day.required' => 'حقل اليوم طالب',
+                'day.required' => 'حقل اليوم مدرس',
                 'day.string' => 'حقل اليوم يجب أن يكون نصًا',
                 'day.min' => 'حقل اليوم يجب أن يتكون من الحد الأدنى للحروف',
-                'registration_date.required' => 'حقل تاريخ الاكاديمي طالب',
+                'registration_date.required' => 'حقل تاريخ الاكاديمي مدرس',
                 'registration_date.date' => 'حقل تاريخ الاكاديمي يجب أن يكون تاريخًا',
-                'full_name.required' => 'حقل اسم الطالب طالب',
-                'full_name.string' => 'حقل اسم الطالب يجب أن يكون نصًا',
-                'full_name.min' => 'حقل اسم الطالب يجب أن يتكون من الحد الأدنى للحروف',
-                'full_name.regex' => 'اسم الطالب يجب ان يكون رباعي',
-                'age.required' => 'حقل العمر طالب',
+                'full_name.required' => 'حقل اسم المدرس مدرس',
+                'full_name.string' => 'حقل اسم المدرس يجب أن يكون نصًا',
+                'full_name.min' => 'حقل اسم المدرس يجب أن يتكون من الحد الأدنى للحروف',
+                'full_name.regex' => 'اسم المدرس يجب ان يكون رباعي',
+                'age.required' => 'حقل العمر مدرس',
                 'age.integer' => 'حقل العمر يجب أن يكون رقمًا صحيحًا',
                 'age.min' => 'حقل العمر يجب أن يكون أكبر من الصفر',
-                'event.required' => 'حقل الحدث طالب',
+                'event.required' => 'حقل الحدث مدرس',
                 'event.string' => 'حقل الحدث يجب أن يكون نصًا',
                 'event.min' => 'حقل الحدث يجب أن يتكون من الحد الأدنى للحروف',
-                'gender.required' => 'حقل الجنس طالب',
+                'gender.required' => 'حقل الجنس مدرس',
                 'gender.string' => 'حقل الجنس يجب أن يكون نصًا',
                 'gender.min' => 'حقل الجنس يجب أن يتكون من الحد الأدنى للحروف',
-                'marital_status.required' => 'حقل الحالة الاجتماعية طالب',
+                'marital_status.required' => 'حقل الحالة الاجتماعية مدرس',
                 'marital_status.string' => 'حقل الحالة الاجتماعية يجب أن يكون نصًا',
                 'marital_status.min' => 'حقل الحالة الاجتماعية يجب أن يتكون من الحد الأدنى للحروف',
-                'nationality.required' => 'حقل الجنسية طالب',
+                'nationality.required' => 'حقل الجنسية مدرس',
                 'nationality.string' => 'حقل الجنسية يجب أن يكون نصًا',
                 'nationality.min' => 'حقل الجنسية يجب أن يتكون من الحد الأدنى للحروف',
-                'occupation.required' => 'حقل المهنة طالب',
+                'occupation.required' => 'حقل المهنة مدرس',
                 'occupation.string' => 'حقل المهنة يجب أن يكون نصًا',
                 'occupation.min' => 'حقل المهنة يجب أن يتكون من الحد الأدنى للحروف',
-                'place_of_birth.required' => 'حقل محل الميلاد طالب',
+                'place_of_birth.required' => 'حقل محل الميلاد مدرس',
                 'place_of_birth.string' => 'حقل محل الميلاد يجب أن يكون نصًا',
                 'place_of_birth.min' => 'حقل محل الميلاد يجب أن يتكون من الحد الأدنى للحروف',
-                'residence.required' => 'حقل السكن طالب',
+                'residence.required' => 'حقل السكن مدرس',
                 'residence.string' => 'حقل السكن يجب أن يكون نصًا',
                 'residence.min' => 'حقل السكن يجب أن يتكون من الحد الأدنى للحروف',
-                'previous_convictions.required' => 'حقل السوابق طالب',
+                'previous_convictions.required' => 'حقل السوابق مدرس',
                 'previous_convictions.string' => 'حقل السوابق يجب أن يكون نصًا',
                 'previous_convictions.min' => 'حقل السوابق يجب أن يتكون من الحد الأدنى للحروف',
             ]);
             $Teacher = Teacher::find(htmlspecialchars(strip_tags($request['id'])));
             if (!$Teacher) {
-                toastr()->error("الطالب الامني غير موجود");
+                toastr()->error("المدرس الامني غير موجود");
                 return redirect()->back()
                     ->withInput();
             }
@@ -274,7 +255,7 @@ class teacherController extends Controller
             }
 
 
-            // إضافة بيانات الطالب ال
+            // إضافة بيانات المدرس ال
             $Teacher->registration_number = htmlspecialchars(strip_tags($request['registration_number']));
             $Teacher->day = htmlspecialchars(strip_tags($request['day']));
             $Teacher->registration_date = htmlspecialchars(strip_tags($request['registration_date']));
@@ -294,12 +275,12 @@ class teacherController extends Controller
                 $user = User::find(auth()->user()->id);
                 $date = date('H:i Y-m-d');
                 HelperController::NotificationsAllUser(
-                    "لقد تمت تعديل بيانات طالب بإسم " . $Teacher->full_name . " ورقم الاكاديمي " . $Teacher->registration_number . " في تاريخ " . $date,
+                    "لقد تمت تعديل بيانات مدرس بإسم " . $Teacher->full_name . " ورقم الاكاديمي " . $Teacher->registration_number . " في تاريخ " . $date,
                 );
 
-                activity()->performedOn($Teacher)->event("تعديل طالب")->causedBy($user)
+                activity()->performedOn($Teacher)->event("تعديل مدرس")->causedBy($user)
                     ->log(
-                        "تم تعديل طالب بإسم " . $Teacher->full_name . " ورقم الاكاديمي " . $Teacher->registration_number . " في تاريخ " . $Teacher->registration_date . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
+                        "تم تعديل مدرس بإسم " . $Teacher->full_name . " ورقم الاكاديمي " . $Teacher->registration_number . " في تاريخ " . $Teacher->registration_date . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
                     );
                 // نهاية كود إضافة الإشعار والإضافة إلى سجل العمليات
 
@@ -323,15 +304,15 @@ class teacherController extends Controller
             $request = request()->validate([
                 "id" => "required|integer|min:1|max:255",
             ], [
-                'id.required' => "معرف الطالب طالب",
-                'id.integer' => "معرف الطالب يجب أن يكون عدد صحيح",
-                'id.min' => "اقل قيمة لمعرف الطالب هي 1",
-                'id.max' => "اكبر قيمة لمعرف الطالب هي 255",
+                'id.required' => "معرف المدرس مدرس",
+                'id.integer' => "معرف المدرس يجب أن يكون عدد صحيح",
+                'id.min' => "اقل قيمة لمعرف المدرس هي 1",
+                'id.max' => "اكبر قيمة لمعرف المدرس هي 255",
             ]);
 
             $Teacher = Teacher::find(htmlspecialchars(strip_tags($request["id"])));
             if (!$Teacher) {
-                toastr()->error('الطالب الامني غير موجود');
+                toastr()->error('المدرس الامني غير موجود');
                 return redirect()->back()
                     ->withInput();
             }
@@ -341,13 +322,13 @@ class teacherController extends Controller
                 // اضافة الاشعار والاضافة الى سجل العمليات
                 $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي
                 HelperController::NotificationsAllUser(
-                    "لقد تمت تعديل بيانات طالب بإسم " . $Teacher->full_name . " ورقم الاكاديمي " . $Teacher->registration_number . " في تاريخ " . $date,
+                    "لقد تمت تعديل بيانات مدرس بإسم " . $Teacher->full_name . " ورقم الاكاديمي " . $Teacher->registration_number . " في تاريخ " . $date,
                 );
 
                 activity()->event("أرشفة بلاغ")->causedBy($user)
                     ->log(
-                        "تم أرشفة الطالب الامني " .
-                            "معرف الطالب " . $id .
+                        "تم أرشفة المدرس الامني " .
+                            "معرف المدرس " . $id .
                             " بواسطة المستخدم " . $user->name .
                             " الوقت والتاريخ " . $date
                     );
@@ -363,7 +344,7 @@ class teacherController extends Controller
             toastr()->error($e->getMessage());
             return redirect()->back();
         } catch (Exception $e) {
-            toastr()->error("لا يمكنك أرشفة الطالب لأنه هناك عمليات مرتبطة به ");
+            toastr()->error("لا يمكنك أرشفة المدرس لأنه هناك عمليات مرتبطة به ");
             return redirect()->back();
         }
     }
