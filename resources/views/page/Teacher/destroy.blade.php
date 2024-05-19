@@ -14,9 +14,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>رقم المدرس الاكاديمي  <span class="text-danger">{{$teacher->academic_id}}</span></p>
+                    <p>اسم المدرس   <span class="text-danger">{{$teacher->name}}</span></p>
                     <input type="hidden" name="id" value="{{$teacher->id}}">
-                    <input type="hidden" name="academic_id" value="{{$teacher->academic_id}}">
+                    <input type="hidden" name="name" value="{{$teacher->name}}">
                 </div>
                 <div class="modal-footer">
                     <div class="modal-footer">
