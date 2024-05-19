@@ -15,6 +15,7 @@ class NewsController extends Controller
                 'id',
                 'title',
                 'image',
+                'description',
             )
             ->orderBy('id', 'desc')
             ->take(7)
