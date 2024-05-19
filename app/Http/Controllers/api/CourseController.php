@@ -33,13 +33,12 @@ class CourseController extends Controller
                     'id' => ++$num,
                     'name' => $Course->name,
                     'hours' => $Course->hours,
-                    'semester_num' => $Course->semester_num,
                     'teachers_id' => $Course->teachers_id??"",
                     'teachers_name' => $Course->teachers->name??"",
                 ];
             });
             if ($Course->isEmpty()) {
-                return response()->json(['Status' => false, 'Message' => 'لا يوجد كليات'], 404);
+                return response()->json(['Status' => false, 'Message' => 'لا يوجد تخصصات'], 404);
             }
             return response()->json(['Status' => true, 'Message' => "تم جلب البيانات بنجاح", 'data' => $transformedData]);
         } catch (Exception $e) {
@@ -75,7 +74,7 @@ class CourseController extends Controller
                 ];
             });
             if ($Course->isEmpty()) {
-                return response()->json(['Status' => false, 'Message' => 'لا يوجد كليات'], 404);
+                return response()->json(['Status' => false, 'Message' => 'لا يوجد تخصصات'], 404);
             }
             return response()->json(['Status' => true, 'Message' => "تم جلب البيانات بنجاح", 'data' => $transformedData]);
         } catch (Exception $e) {
