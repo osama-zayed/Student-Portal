@@ -3,7 +3,7 @@
     <div style="display: none">@toastr_css</div>
 @endsection
 @section('title')
-المكتبة
+    المكتبة
 @endsection
 @section('page-header')
     المكتبة
@@ -12,7 +12,7 @@
     قائمة الكتب
 @endsection
 @section('PageTitle')
-المكتبة
+    المكتبة
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -37,6 +37,7 @@
                                     <th>#</th>
                                     <th>اسم الكتاب</th>
                                     <th>الوصف</th>
+                                    <th>الكتاب</th>
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
@@ -48,18 +49,27 @@
                                         <td>{{ $library['name'] }}</td>
                                         <td>{{ $library['description'] }}</td>
                                         <td>
-                                            <a href="{{ route('library_Book.edit', $library['id']) }}" class="btn btn-info btn-sm"
-                                                role="button" aria-pressed="true" title="تعديل"><i
-                                                    class="fa fa-edit"></i></a>
+                                            <a href="{{ asset($library['url']) }}"
+                                            class="btn btn-primary btn-sm" role="button" aria-pressed="true" 
+                                            title="عرض الكتاب">عرض الكتاب</i></a>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                data-target="#show_image{{ $library['id'] }}"
+                                                title="عرض الصوره">عرض صوره الكتاب</button>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('library_Book.edit', $library['id']) }}"
+                                                class="btn btn-info btn-sm" role="button" aria-pressed="true"
+                                                title="تعديل"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#delete_library{{ $library['id'] }}" title="حذف"><i
                                                     class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     @include('page.library.destroy')
+                                    @include('page.library.show_image')
                                 @empty
                                     <tr>
-                                        <td colspan="3">لا توجد بيانات</td>
+                                        <td colspan="5">لا توجد بيانات</td>
                                     </tr>
                                 @endforelse
                         </table>

@@ -79,6 +79,7 @@ class CollegeNewsController extends Controller
                 $AddCollegeNewImage->move(public_path('CollegeNew/'), $AddCollegeNewImagePath);
                 $AddCollegeNew->image = $AddCollegeNewImagePath;
             }
+            
             if ($AddCollegeNew->save()) {
 
                 $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي

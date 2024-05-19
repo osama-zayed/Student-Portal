@@ -13,9 +13,11 @@ class NewsController extends Controller
         try {
             $CollegeNew = CollegeNew::select(
                 'id',
-                'title',
+                'title'
             )
-                ->get();
+            ->orderBy('id', 'desc')
+            ->take(7)
+            ->get();
             $transformedData = $CollegeNew->map(function ($CollegeNew, $num) {
                 return [
                     'id' => $CollegeNew->id,

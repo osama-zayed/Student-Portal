@@ -3,7 +3,7 @@
     <div style="display: none">@toastr_css</div>
 @endsection
 @section('title')
-الاخبار
+    الاخبار
 @endsection
 @section('page-header')
     الاخبار
@@ -12,7 +12,7 @@
     قائمة الاخبار
 @endsection
 @section('PageTitle')
-الاخبار
+    الاخبار
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -37,7 +37,7 @@
                                     <th>#</th>
                                     <th>عنوان الخبر</th>
                                     <th>تفاصيل الخبر</th>
-                                    {{-- <th>صورة الخبر</th> --}}
+                                    <th>صورة الخبر</th>
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
@@ -48,17 +48,20 @@
                                         <td>{{ $CollegeNew['id'] }}</td>
                                         <td>{{ $CollegeNew['title'] }}</td>
                                         <td>{{ $CollegeNew['description'] }}</td>
-                                        {{-- <td><img src="'{{ asset('{{ $CollegeNew["image"] }}') }}" alt=""></td> --}}
+                                        <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                data-target="#show_image{{ $CollegeNew['id'] }}" title="عرض الصوره">عرض</button></td>
+                                                    
                                         <td>
-                                            <a href="{{ route('College-New.edit', $CollegeNew['id']) }}" class="btn btn-info btn-sm"
-                                                role="button" aria-pressed="true" title="تعديل"><i
-                                                    class="fa fa-edit"></i></a>
+                                            <a href="{{ route('College-New.edit', $CollegeNew['id']) }}"
+                                                class="btn btn-info btn-sm" role="button" aria-pressed="true"
+                                                title="تعديل"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#delete_CollegeNew{{ $CollegeNew['id'] }}" title="حذف"><i
                                                     class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     @include('page.CollegeNew.destroy')
+                                    @include('page.CollegeNew.show_image')
                                 @empty
                                     <tr>
                                         <td colspan="5">لا توجد بيانات</td>
