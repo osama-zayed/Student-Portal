@@ -34,8 +34,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>الاسم</th>
-                                    <th>الايميل</th>
-                                    <th>القسم</th>
+                                    <th>الاسم الفريد</th>
                                     <th>نوع الصلاحية</th>
                                     <th>حالة الحساب</th>
                                     <th>العمليات</th>
@@ -47,9 +46,8 @@
                                         <tr>
                                             <td>{{ $user['id'] }}</td>
                                             <td>{{ $user['name'] }}</td>
-                                            <td>{{ $user['email'] }}</td>
+                                            <td>{{ $user['username'] }}</td>
 
-                                            <td>{{ $user->department['name'] }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm">
                                                     @if ($user['user_type'] == 'user')

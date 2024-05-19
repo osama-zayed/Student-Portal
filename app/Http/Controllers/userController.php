@@ -27,12 +27,11 @@ class userController extends Controller
             $skip = ($page - 1) * $pageSize;
             $totalData = users::count();
             $totalPages = ceil($totalData / $pageSize);
-            $users = users::with("department")->select(
+            $users = users::select(
                 'id',
                 'name',
-                'email',
+                'username',
                 'password',
-                'department_id',
                 'user_type',
                 'user_status',
             )->skip($skip)->take($pageSize)->get();
@@ -48,7 +47,11 @@ class userController extends Controller
             ]);
         } catch (Exception $e) {
             toastr()->error('حدث خطأ غير متوقع');
-            return view("page.user.index");
+            return view("page.user.index", [
+                'data' => [],
+                "page" => $page,
+                "totalPages" => $totalPages,
+            ]);
         }
     }
 
@@ -68,13 +71,14 @@ class userController extends Controller
                 toastr()->error('لا يوجد بيانات');
             }
             return view('page.user.activity', [
-                'data' => $data,
+                'data' => $data??[],
                 "page" => $page,
                 "totalPages" => $totalPages,
             ]);
         } catch (Exception $e) {
             toastr()->error('خطأ عند جلب البيانات');
             return view('page.user.activity', [
+                'data' => [],
                 "page" => $page,
                 "totalPages" => $totalPages,
             ]);
@@ -96,23 +100,19 @@ class userController extends Controller
             //التحقق من الحقول
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string',
-                'email' => 'required|email|unique:users',
+                'username' => 'required|unique:users',
                 'password' => 'required|string|min:8|confirmed',
                 'user_status' => 'required',
-                'department_id' => 'required|integer',
                 'user_type' => 'required|string',
             ], [
                 "name.required" => "الاسم مطلوب",
-                "email.required" => "حقل البريد الإلكتروني مطلوب.",
-                "email.email" => "حقل البريد الإلكتروني يجب أن يكون عنوان بريد إلكتروني صحيح.",
-                "email.unique" => "حقل البريد الإلكتروني مستخدم مسبقًا.",
+                "username.required" => "حقل البريد الإلكتروني مطلوب.",
+                "username.unique" => "حقل البريد الإلكتروني مستخدم مسبقًا.",
                 "password.required" => "حقل كلمة المرور مطلوب.",
                 "password.string" => "حقل كلمة المرور يجب أن يكون نصًا.",
                 "password.min" => "حقل كلمة المرور يجب أن يحتوي على الأقل 8 أحرف.",
                 "password.confirmed" => "حقل كلمة المرور غير متطابق مع حقل تأكيد كلمة المرور.",
-                "user_status.required" => "حقل حالة المستخدم مطلوب.",
-                "department_id.required" => "حقل معرف القسم مطلوب.",
-                "department_id.integer" => "حقل معرف القسم يجب أن يكون رقمًا صحيحًا.",
+                "user_status.required" => "حقل حالة المستخدم مطلوب.",        
                 "user_type.required" => "حقل نوع المستخدم مطلوب.",
             ]);
 
@@ -125,17 +125,15 @@ class userController extends Controller
             $userCreated = new User();
 
             $name = htmlspecialchars(strip_tags($request->input('name')));
-            $email = htmlspecialchars(strip_tags($request->input('email')));
+            $username = htmlspecialchars(strip_tags($request->input('username')));
             $password = bcrypt($request->input('password'));
             $user_status = htmlspecialchars(strip_tags($request->input('user_status')));
-            $department_id = htmlspecialchars(strip_tags($request->input('department_id')));
             $user_type = htmlspecialchars(strip_tags($request->input('user_type')));
 
             $userCreated->name = $name;
-            $userCreated->email = $email;
+            $userCreated->username = $username;
             $userCreated->password = $password;
             $userCreated->user_status = $user_status;
-            $userCreated->department_id = $department_id;
             $userCreated->user_type = $user_type;
 
             // حفظ المستخدم والتحقق من نجاح العملية
@@ -172,13 +170,6 @@ class userController extends Controller
     
     public function show(string $id)
     {
-        $user = auth()->user();
-        if ($user->id !=  $id) {
-            if ($user->user_type != 'admin') {
-                toastr()->error("غير مصرح لك");
-                return redirect()->back();
-            }
-        }
         try {
             $pageSize = 500;
             $page = request()->input('page', 1);
@@ -211,13 +202,6 @@ class userController extends Controller
      */
     public function edit(string $id)
     {
-        $user = auth()->user();
-        if ($user->id !=  $id) {
-            if ($user->user_type != 'admin') {
-                toastr()->error("غير مصرح لك");
-                return redirect()->back();
-            }
-        }
         try {
             $User = User::find(htmlspecialchars(strip_tags($id)));
             return view("page.user.edit")->with("User", $User);
@@ -236,16 +220,13 @@ class userController extends Controller
             $validator = Validator::make($request->all(), [
                 "id" => "required|integer",
                 'name' => 'nullable|string',
-                'email' => 'nullable|email',
+                'username' => 'nullable',
                 'password' => 'nullable|string',
-                'department_id' => 'integer',
                 'user_type' => 'string',
             ], [
                 "id.required" => "الرقم التعريفي للمستخدم مطلوب",
-                "email.email" => "حقل البريد الإلكتروني يجب أن يكون عنوان بريد إلكتروني صحيح.",
-                "email.unique" => "حقل البريد الإلكتروني مستخدم مسبقًا.",
+                "username.unique" => "حقل البريد الإلكتروني مستخدم مسبقًا.",
                 "password.string" => "حقل كلمة المرور يجب أن يكون نصًا.",
-                "department_id.integer" => "حقل معرف القسم يجب أن يكون رقمًا صحيحًا.",
             ]);
             if ($validator->fails()) {
                 toastr()->error($validator->errors()->first());
@@ -255,19 +236,17 @@ class userController extends Controller
             }
             // البحث عن المستخدم المراد تعديله
             $userToUpdate = User::findOrFail(htmlspecialchars(strip_tags($request["id"])));
-            if (isset($request["email"]) && !empty($request["email"])) {
-                if ($userToUpdate->email != $request["email"]) {
-                    request()->validate(['email' => 'unique:users'], [
-                        "email.unique" => "البريد موجود مسبقا، اختر اسماً آخر",
+            if (isset($request["username"]) && !empty($request["username"])) {
+                if ($userToUpdate->username != $request["username"]) {
+                    request()->validate(['username' => 'unique:users'], [
+                        "username.unique" => "البريد موجود مسبقا، اختر اسماً آخر",
                     ]);
                 }
-                $userToUpdate->email = htmlspecialchars(strip_tags($request["email"]));
+                $userToUpdate->username = htmlspecialchars(strip_tags($request["username"]));
             }
             if (request()->has('name'))
                 $userToUpdate->name = htmlspecialchars(strip_tags($request["name"]));
 
-            if (request()->has('department_id'))
-                $userToUpdate->department_id = htmlspecialchars(strip_tags($request["department_id"]));
 
             if (request()->has('user_status')) {
                 $userToUpdate->user_status = htmlspecialchars(strip_tags($request["user_status"]));

@@ -17,9 +17,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     protected $fillable = [
         'id',
         'name',
-        'email',
+        'username',
         'password',
-        'department_id',
         'user_type',
         'user_status',
     ];
@@ -29,9 +28,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
     public function getJWTIdentifier()
     {

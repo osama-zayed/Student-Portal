@@ -95,7 +95,7 @@ class CollegeNewsController extends Controller
                     );
                 //نهاية كود عملية الاشعار والاضافة الى سجل العمليات
                 toastr()->success('تمت العملية بنجاح');
-                return redirect()->route("CollegeNew_Book.index");
+                return redirect()->route("College-New.index");
             } else {
                 toastr()->error('العملية فشلت');
                 return redirect()->back();

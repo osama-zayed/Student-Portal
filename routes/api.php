@@ -52,7 +52,6 @@ Route::group([
     'prefix' => 'News'
 ], function ($router) {
     Route::get('lastNews', 'App\Http\Controllers\api\NewsController@lastNews');
-    Route::post('News_Details', 'App\Http\Controllers\api\NewsController@NewsDetails');
 });
 ///////////////////////End News /////////////////////////
 ///////////////////////Start library /////////////////////

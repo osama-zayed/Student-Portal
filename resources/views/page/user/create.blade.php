@@ -39,15 +39,15 @@
                                             value="{{ old('name') }}" required="الحقل مطلوب">
                                     </div>
                                     <div class="col">
-                                        <label for="title">البريد الالكتروني
+                                        <label for="title">الاسم الفريد
                                             <span class="text-danger">*
-                                                @error('email')
+                                                @error('username')
                                                     {{ $message }}
                                                 @enderror
                                             </span>
                                         </label>
-                                        <input type="email" name="email" class="form-control"
-                                            value="{{ old('email') }}" required="الحقل مطلوب">
+                                        <input type="text" name="username" class="form-control"
+                                            value="{{ old('username') }}" required="الحقل مطلوب">
                                     </div>
                                 </div><br>
                                 <div class="form-row">
@@ -83,30 +83,12 @@
                                                         {{ $message }}
                                                     @enderror
                                                 </span></label>
-                                            <select id="department_select" class="custom-select mr-sm-2" name="user_status">
+                                            <select id="user_status" class="custom-select mr-sm-2" name="user_status">
                                                 <option value="1" selected>مفعل</option>
                                                 <option value="0">مجمد</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="Grade_id">القسم : <span class="text-danger">*
-                                                    @error('department_id')
-                                                        {{ $message }}
-                                                    @enderror
-                                                </span></label>
-                                            <select id="department_select" class="custom-select mr-sm-2"
-                                                name="department_id">
-                                                <option value="" disabled selected>اختر قسم</option>
-                                                @foreach (\App\Models\department::get() as $department)
-                                                    <option value="{{ $department->id }}">
-                                                        {{ $department->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                    </div>                                  
                                 </div>
                                 <div class="form-row">
                                     <div class="col">
