@@ -10,8 +10,8 @@ class CourseController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
-        $this->middleware('userStatus');
+        $this->middleware('auth:api')->except('showBySpecialization');
+        $this->middleware('userStatus')->except('showBySpecialization');
     }
     public function showByStudent()
     {
@@ -82,4 +82,5 @@ class CourseController extends Controller
             return response()->json(['Status' => false, 'Message' => 'خطأ عند جلب البيانات'], 404);
         }
     }
+
 }

@@ -46,69 +46,20 @@ Route::group([
     Route::post('showBySpecialization', 'App\Http\Controllers\api\CourseController@showBySpecialization');
 });
 ///////////////////////End Course /////////////////////////
-///////////////////////Start Province /////////////////////
+///////////////////////Start News /////////////////////
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'Province'
+    'prefix' => 'News'
 ], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\ProvincesController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\ProvincesController@show');
-    Route::post('Add', 'App\Http\Controllers\api\ProvincesController@Add');
-    Route::put('updata', 'App\Http\Controllers\api\ProvincesController@updata');
+    Route::get('lastNews', 'App\Http\Controllers\api\NewsController@lastNews');
+    Route::post('News_Details', 'App\Http\Controllers\api\NewsController@NewsDetails');
 });
-///////////////////////End Province /////////////////////////
-///////////////////////Start Service /////////////////////
+///////////////////////End News /////////////////////////
+///////////////////////Start library /////////////////////
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'Service'
+    'prefix' => 'library'
 ], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\ServicesController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\ServicesController@show');
-    Route::post('Add', 'App\Http\Controllers\api\ServicesController@Add');
-    Route::put('updata', 'App\Http\Controllers\api\ServicesController@updata');
+    Route::get('showAll', 'App\Http\Controllers\api\libraryController@showAll');
 });
-///////////////////////End Service /////////////////////////
-///////////////////////Start Station /////////////////////
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'Station'
-], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\StationsController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\StationsController@show');
-    Route::post('Add', 'App\Http\Controllers\api\StationsController@Add');
-    Route::post('updata', 'App\Http\Controllers\api\StationsController@updata');
-});
-///////////////////////End Station /////////////////////////
-///////////////////////Start WarehouseReceivingOperation /////////////////////
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'WarehouseReceivingOperation'
-], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\WarehouseReceivingOperationController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\WarehouseReceivingOperationController@show');
-    Route::post('Add', 'App\Http\Controllers\api\WarehouseReceivingOperationController@Add');
-    Route::post('edit', 'App\Http\Controllers\api\WarehouseReceivingOperationController@edit');
-});
-///////////////////////End Station /////////////////////////
-///////////////////////Start WarehouseSupplyOperation /////////////////////
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'WarehouseSupplyOperation'
-], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\WarehouseSupplyOperationsController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\WarehouseSupplyOperationsController@show');
-    Route::post('Add', 'App\Http\Controllers\api\WarehouseSupplyOperationsController@Add');
-    Route::post('edit', 'App\Http\Controllers\api\WarehouseSupplyOperationsController@edit');
-});
-///////////////////////End WarehouseSupplyOperation /////////////////////////
-///////////////////////Start WarehouseTransferOperation /////////////////////
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'WarehouseTransferOperation'
-], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\WarehouseTransferOperationsController@showAll');
-    Route::post('show', 'App\Http\Controllers\api\WarehouseTransferOperationsController@show');
-    Route::post('Add', 'App\Http\Controllers\api\WarehouseTransferOperationsController@Add');
-    Route::post('edit', 'App\Http\Controllers\api\WarehouseTransferOperationsController@edit');
-});
-///////////////////////End WarehouseTransferOperation /////////////////////////
+///////////////////////End library /////////////////////////

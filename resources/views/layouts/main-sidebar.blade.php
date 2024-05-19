@@ -36,6 +36,7 @@
                             <li><a href="{{ route('College.index') }}">عرض الكليات</a></li>
                             <li><a href="{{ route('Specialization.index') }}">عرض التخصصات</a></li>
                             <li> <a href="{{ route('teacher.index') }}">قائمة المدرسين</a> </li>
+                            <li> <a href="{{ route('College-New.index') }}">اخبار الكلية</a> </li>
 
                         </ul>
                     </li>
@@ -92,8 +93,8 @@
                     <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الطلاب</li>
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Security-wanted">
-                            <div class="pull-left"><i class="ti-calendar"></i><span class="right-nav-text">
-                                الطلاب</span></div>
+                            <div class="pull-left"><i class="ti-user"></i><span class="right-nav-text">
+                                    الطلاب</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
@@ -101,9 +102,15 @@
                             <li> <a href="{{ route('Student.index') }}">قائمة الطلاب</a> </li>
                             {{-- <li> <a href="{{ route('Student.create') }}">اضافة مطلوب امنياً</a> </li>
                             <li> <a href="{{ route('Student_deleted') }}">بيانات المطلوبين امنياً المؤرشفة</a> --}}
-                            </li>
-                        </ul>
                     </li>
+                </ul>
+                </li>
+                <li> <a href="{{ route('library_Book.index') }}" >
+                        <div class="pull-left"><i class="ti-book"></i><span class="right-nav-text">
+                                المكتبة</span></div>
+                        <div class="clearfix"></div>
+                    </a> </li>
+                </li>
                 </ul>
             </div>
         </div>
