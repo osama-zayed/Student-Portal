@@ -33,8 +33,9 @@ class CourseController extends Controller
                     'id' => ++$num,
                     'name' => $Course->name,
                     'hours' => $Course->hours,
-                    'teachers_id' => $Course->teachers_id??"",
-                    'teachers_name' => $Course->teachers->name??"",
+                    // 'teachers_id' => $Course->teachers_id??"",
+                    'teachers_name' => $Course->teachers->name??"لا يوجد مدرس",
+                    'teachers_phone_number' => $Course->teachers->phone_number??"",
                 ];
             });
             if ($Course->isEmpty()) {
