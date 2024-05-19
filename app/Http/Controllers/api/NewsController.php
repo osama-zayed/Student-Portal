@@ -13,15 +13,18 @@ class NewsController extends Controller
         try {
             $CollegeNew = CollegeNew::select(
                 'id',
-                'title'
+                'title',
+                'image',
             )
             ->orderBy('id', 'desc')
             ->take(7)
             ->get();
-            $transformedData = $CollegeNew->map(function ($CollegeNew, $num) {
+            $transformedData = $CollegeNew->map(function ($CollegeNew) {
                 return [
                     'id' => $CollegeNew->id,
                     'title' => $CollegeNew->title,
+                    'image' => asset($CollegeNew->image),
+
                 ];
             });
             if ($CollegeNew->isEmpty()) {
@@ -55,12 +58,12 @@ class NewsController extends Controller
                 return [
                     'id' => $CollegeNew->id,
                     'title' => $CollegeNew->title,
-                    '' => asset($CollegeNew->image),
+                    'image' => asset($CollegeNew->image),
                     'description' => $CollegeNew->description,
                 ];
             });
             if ($CollegeNew->isEmpty()) {
-                return response()->json(['Status' => false, 'Message' => 'لا يوجد اخبار'], 404);
+                return response()->json(['Status' => false, 'Message' => 'لا يوجد تفاصيل لهذا الخبر'], 404);
             }
             return response()->json(['Status' => true, 'Message' => "تم جلب البيانات بنجاح", 'data' => $transformedData]);
         } catch (Exception $e) {
