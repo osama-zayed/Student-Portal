@@ -49,7 +49,7 @@
                                         <td>{{ $library['name'] }}</td>
                                         <td>{{ $library['description'] }}</td>
                                         <td>
-                                            <a href="{{ asset($library['url']) }}"
+                                            <a href="{{ asset($library['url']) }}"  target="_blank"
                                             class="btn btn-primary btn-sm" role="button" aria-pressed="true" 
                                             title="عرض الكتاب">عرض الكتاب</i></a>
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"

@@ -189,9 +189,9 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <select class="form-control h-65" name="specialization_id" aria-placeholder="اختر كلية"
+                                    <select class="form-control h-65" name="specialization_id" aria-placeholder="اختر تخصص"
                                         required>
-                                        <option value="" disabled selected>اختر كلية من القائمة</option>
+                                        <option value="" disabled selected>اختر تخصص من القائمة</option>
                                         @forelse (\App\Models\Specialization::get() as $data)
                                             <option value="{{ $data['id'] }}"
                                                 @if ($data->id == old('specialization_id')) selected @endif>

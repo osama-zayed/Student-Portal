@@ -24,7 +24,6 @@
                     </li>
                     <!-- menu title -->
                     <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الادارة</li>
-                    <!-- menu item Incidents-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Incidents">
                             <div class="pull-left"><i class="fa fa-bar-chart-o highlight-icon"></i><span
@@ -40,21 +39,7 @@
 
                         </ul>
                     </li>
-                    <!-- menu item Department-->
-                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">التقارير</li>
-
-                    <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Department-menu">
-                            <div class="pull-left"><i class="ti-calendar"></i><span
-                                    class="right-nav-text">التقارير</span></div>
-                            <div class="pull-right"><i class="ti-plus"></i></div>
-                            <div class="clearfix"></div>
-                        </a>
-                        <ul id="Department-menu" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{ route('report_Incident') }}">تقرير الطلاب</a> </li>
-                            <li> <a href="{{ route('report_Department') }}">تقرير التخصصات</a> </li>
-                        </ul>
-                    </li>
+                 
                     @if (auth()->user()->user_type == 'admin')
                         <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">المستخدمين</li>
                         <li>
@@ -71,25 +56,6 @@
                             </ul>
                         </li>
                     @endif
-                    {{-- @if (auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'incidentOfficer')
-                        <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">المركز</li>
-                        <li>
-                            <a href="javascript:void(0);" data-toggle="collapse" data-target="#Centre">
-                                <div class="pull-left"><i class="ti-calendar"></i><span
-                                        class="right-nav-text">المركز</span>
-                                </div>
-                                <div class="pull-right"><i class="ti-plus"></i></div>
-                                <div class="clearfix"></div>
-                            </a>
-                            <ul id="Centre" class="collapse" data-parent="#sidebarnav">
-                                @if (auth()->user()->user_type == 'admin')
-                                    <li> <a href="{{ route('Specialization.index') }}">تخصصات الشرطة</a> </li>
-                                @endif
-                                <li> <a href="{{ route('College.index') }}">الجرائم</a> </li>
-                            </ul>
-                        </li>
-                    @endif --}}
-
                     <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الطلاب</li>
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Security-wanted">
@@ -100,8 +66,8 @@
                         </a>
                         <ul id="Security-wanted" class="collapse" data-parent="#sidebarnav">
                             <li> <a href="{{ route('Student.index') }}">قائمة الطلاب</a> </li>
-                            {{-- <li> <a href="{{ route('Student.create') }}">اضافة مطلوب امنياً</a> </li>
-                            <li> <a href="{{ route('Student_deleted') }}">بيانات المطلوبين امنياً المؤرشفة</a> --}}
+                            <li> <a href="{{ route('SemesterTask.index') }}">الاعمال الفصلية</a> </li>
+                            <li> <a href="{{ route('Result.index') }}">النتيجة النهائية</a> </li>
                     </li>
                 </ul>
                 </li>

@@ -13,14 +13,14 @@ class SemesterTask extends Model
 
     protected $fillable = [
         'id',
+        'specialization_id',
         'course_id',
         'student_id',
         'semester_num',
         'academic_work_grade',
         'attendance',
         'midterm_grade',
-        'final_exam_grade',
-        'status',
+        'practicality_grade',
         'final_grade',
     ];
 
@@ -32,6 +32,10 @@ class SemesterTask extends Model
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');
+    }
+    public function specialization()
+    {
+        return $this->belongsTo(Specialization::class, 'specialization_id');
     }
 
 }

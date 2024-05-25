@@ -31,10 +31,15 @@ class CollegeController extends Controller
             return view("page.College.index");
         }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function getCourses(Request $request)
+    {
+        $specializationId = $request->input('specialization_id');
+        $semesterNum = $request->input('semester_num');
+        $courses = \App\Models\Course::where('specialization_id', $specializationId)
+                                     ->where('semester_num', $semesterNum)
+                                     ->get();
+        return response()->json($courses);
+    }
     public function create()
     {
         return view("page.College.create");

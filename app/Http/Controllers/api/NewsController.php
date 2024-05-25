@@ -26,7 +26,6 @@ class NewsController extends Controller
                     'title' => $CollegeNew->title,
                     'image' => asset($CollegeNew->image),
                     'description' => $CollegeNew->description,
-
                 ];
             });
             if ($CollegeNew->isEmpty()) {

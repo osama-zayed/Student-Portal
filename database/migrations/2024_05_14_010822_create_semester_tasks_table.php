@@ -12,16 +12,17 @@ class CreateSemesterTasksTable extends Migration
             $table->increments('id');
             $table->integer('course_id')->unsigned();
             $table->integer('student_id')->unsigned();
-            $table->integer('semester_num');
-            $table->float('academic_work_grade');
-            $table->float('attendance');
+            $table->integer('specialization_id')->unsigned();
+            $table->integer('semester_num')->nullable();
+            $table->float('academic_work_grade')->nullable();
+            $table->float('attendance')->nullable();
             $table->float('midterm_grade')->nullable();
-            $table->float('final_exam_grade')->nullable();
-            $table->string('status');
+            $table->float('practicality_grade')->nullable();
             $table->float('final_grade')->nullable();
             $table->timestamps();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('specialization_id')->references('id')->on('specializations')->onDelete('cascade');
         });
     }
 

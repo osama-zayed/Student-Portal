@@ -14,6 +14,7 @@ class Result extends Model
     protected $fillable = [
         'id',
         'student_id',
+        'specialization_id',
         'semester_tasks_id',
         'semester_num',
         'course_id',
@@ -32,8 +33,12 @@ class Result extends Model
     {
         return $this->belongsTo(Course::class, 'course_id');
     }
-    public function semester_tasks()
+    public function semesterTasks()
     {
         return $this->belongsTo(SemesterTask::class, 'semester_tasks_id');
+    }
+    public function specialization()
+    {
+        return $this->belongsTo(Specialization::class, 'specialization_id');
     }
 }

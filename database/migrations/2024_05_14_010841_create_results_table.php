@@ -12,6 +12,7 @@ class CreateResultsTable extends Migration
             $table->increments('id');
             $table->integer('student_id')->unsigned();
             $table->integer('course_id')->unsigned();
+            $table->integer('specialization_id')->unsigned();
             $table->integer('semester_num');
             $table->integer('semester_tasks_id')->unsigned();
             $table->float('academic_work_grade');
@@ -22,6 +23,8 @@ class CreateResultsTable extends Migration
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('course_id')->references('id')->on('courses');
             $table->foreign('semester_tasks_id')->references('id')->on('semester_tasks');
+            $table->foreign('specialization_id')->references('id')->on('specializations')->onDelete('cascade');
+
         });
     }
 

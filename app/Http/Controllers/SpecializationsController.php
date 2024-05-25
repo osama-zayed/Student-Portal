@@ -42,6 +42,13 @@ class SpecializationsController extends Controller
         }
     }
 
+    public function getSpecializations(Request $request)
+    {
+        $collegeId = $request->input('college_id');
+        $specializations = Specialization::where('college_id', $collegeId)->get();
+        return response()->json($specializations);
+    }
+
     public function create()
     {
     }
@@ -49,7 +56,9 @@ class SpecializationsController extends Controller
     {
         try {
             //التحقق من الحقول
-            $validator = Validator::make($request->all(), [
+            $validator = Validator::make(
+                $request->all(),
+                [
                     'name' => 'required|string|unique:specializations,name|min:2',
                     'Number_of_years_of_study' => 'required|integer|min:4|max:6',
                     'Price' => 'required|integer|min:500|max:6000',
@@ -121,7 +130,7 @@ class SpecializationsController extends Controller
             }
         } catch (Exception $e) {
             toastr()->error($e->getMessage());
-            return redirect()->back()->with(["error" => $e->getMessage()]) ->withInput();
+            return redirect()->back()->with(["error" => $e->getMessage()])->withInput();
         }
     }
 
