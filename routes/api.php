@@ -62,3 +62,12 @@ Route::group([
     Route::get('showAll', 'App\Http\Controllers\api\libraryController@showAll');
 });
 ///////////////////////End library /////////////////////////
+///////////////////////Start grade /////////////////////
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'grade'
+], function ($router) {
+    Route::post('semesterTask', 'App\Http\Controllers\api\gradeController@semesterTask');
+    Route::post('result', 'App\Http\Controllers\api\gradeController@result');
+});
+///////////////////////End grade /////////////////////////
