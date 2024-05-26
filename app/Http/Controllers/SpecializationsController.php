@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Specialization;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SpecializationsRequest;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
@@ -52,54 +53,9 @@ class SpecializationsController extends Controller
     public function create()
     {
     }
-    public function store(Request $request)
+    public function store(SpecializationsRequest $request)
     {
         try {
-            //التحقق من الحقول
-            $validator = Validator::make(
-                $request->all(),
-                [
-                    'name' => 'required|string|unique:specializations,name|min:2',
-                    'Number_of_years_of_study' => 'required|integer|min:4|max:6',
-                    'Price' => 'required|integer|min:500|max:6000',
-                    'college_id' => 'required|integer|min:1',
-                    'educational_qualification' => 'required|string|min:1',
-                    'lowest_acceptance_rate' => 'required|integer|min:50|max:90',
-                ],
-                [
-                    'Number_of_years_of_study.required' => "عدد السنين الدراسية مطلوب",
-                    'Number_of_years_of_study.integer' => "يجب أن يكون عدد السنين الدراسية رقم",
-                    'Number_of_years_of_study.min' => "يجب أن يكون عدد السنين الدراسية اكبر من 3",
-                    'Number_of_years_of_study.max' => "يجب أن يكون عدد السنين الدراسية اقل من 6",
-                    'college_id.required' => "رقم الكلية مطلوب",
-                    'college_id.integer' => "يجب أن يكون رقم الكلية رقم",
-                    'college_id.min' => "يجب أن يكون رقم الكلية اكبر من 0",
-                    'college_id.max' => "يجب أن يكون رقم الكلية اقل من 100",
-                    'lowest_acceptance_rate.required' => "اقل معدل مطلوب",
-                    'lowest_acceptance_rate.integer' => "يجب أن يكون رقم معدل رقم",
-                    'lowest_acceptance_rate.min' => "يجب أن يكون اقل معدل اكبر من 50",
-                    'lowest_acceptance_rate.max' => "يجب أن يكون اقل معدل اقل من 90",
-                    'Price.required' => "السعر مطلوب",
-                    'Price.integer' => "يجب أن يكون السعر رقم",
-                    'Price.min' => "يجب أن يكون السعر اكبر من 500$",
-                    'Price.max' => "يجب أن يكون السعر اقل من 6000$",
-                    'name.required' => 'حقل الاسم مطلوب',
-                    'name.string' => "يجب ان يكون اسم التخصص نص",
-                    'name.max' => "اكبر حد لاسم التخصص 255 حرف",
-                    'name.min' => "اقل حد لاسم التخصص 2",
-                    'name.unique' => "يجب ان يكون اسم التخصص فريد",
-                    'educational_qualification.required' => 'حقل المؤهل العلمي مطلوب',
-                    'educational_qualification.string' => "يجب ان يكون المؤهل العلمي نص",
-                    'educational_qualification.max' => "اكبر حد لاسم المؤهل العلمي 255 حرف",
-                    'educational_qualification.min' => "اقل حد لاسم المؤهل العلمي 2",
-                ]
-            );
-            if ($validator->fails()) {
-                toastr()->error($validator->errors()->first());
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
             $AddSpecialization = new Specialization();
             $AddSpecialization->name = htmlspecialchars(strip_tags($request["name"]));
             $AddSpecialization->Number_of_years_of_study = htmlspecialchars(strip_tags($request["Number_of_years_of_study"]));
@@ -108,9 +64,7 @@ class SpecializationsController extends Controller
             $AddSpecialization->educational_qualification = htmlspecialchars(strip_tags($request["educational_qualification"]));
             $AddSpecialization->lowest_acceptance_rate = htmlspecialchars(strip_tags($request["lowest_acceptance_rate"]));
             if ($AddSpecialization->save()) {
-
-                //اضافة الاشعار والاضافة الى سجل العمليات
-                $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي
+                $user = User::find(auth()->user()->id);
                 $date = date('H:i Y-m-d');
                 HelperController::NotificationsAdmin(" لقد تم اضافة تخصص باسم " . $request["name"] . " بواسطة الادمن" . $user->name
                     . " الوقت والتاريخ " . $date);
@@ -120,8 +74,6 @@ class SpecializationsController extends Controller
                             " بواسطة الادمن" . $user->name .
                             " الوقت والتاريخ " . $date,
                     );
-                //نهاية كود عملية الاشعار والاضافة الى سجل العمليات
-
                 toastr()->success('تمت العملية بنجاح');
                 return redirect()->route("Specialization.index");
             } else {
@@ -137,7 +89,15 @@ class SpecializationsController extends Controller
     public function edit(string $id)
     {
         try {
-            $Specializations = Specialization::select('id', 'name', 'Number_of_years_of_study')->where("id", $id)->first();
+            $Specializations = Specialization::select(
+                'id',
+                'name',
+                'college_id',
+                'Price',
+                'Number_of_years_of_study',
+                'educational_qualification',
+                'lowest_acceptance_rate',
+            )->where("id", $id)->first();
 
             return view("page.Specialization.edit", [
                 'Specializations' => $Specializations,
@@ -150,62 +110,25 @@ class SpecializationsController extends Controller
 
     public function update(Request $request, string $id)
     {
-        //التحقق من الحقول
         try {
-            $validator = Validator::make(
-                $request->all(),
-                [
-                    "id" => "required|integer|min:1",
-                    'name' => 'string|min:2',
-                    'Number_of_years_of_study' => 'required|integer|digits:9|starts_with:7',
-
-                ],
-                [
-                    'id.required' => "معرف التخصص مطلوب",
-                    'id.integer' => "معرف التخصص مطلوب",
-                    'id.max' => "اكبر حد لمعرف التخصص 255 حرف",
-                    'id.min' => "اقل حد لمعرف التخصص 1",
-                    'name.required' => 'حقل الاسم مطلوب',
-                    'Number_of_years_of_study.required' => "عدد السنين الدراسية مطلوب",
-                    'Number_of_years_of_study.integer' => "يجب أن يكون عدد السنين الدراسية رقم",
-                    'Number_of_years_of_study.digits' => "يجب أن يكون عدد السنين الدراسية 9 أرقام",
-                    'Number_of_years_of_study.starts_with' => "يجب أن يبدأ عدد السنين الدراسية برقم 7",
-                    'name.string' => "يجب ان يكون اسم التخصص نص",
-                    'name.max' => "اكبر حد لاسم التخصص 255 حرف",
-                    'name.min' => "اقل حد لاسم التخصص 2",
-                ]
-            );
-            if ($validator->fails()) {
-                toastr()->error($validator->errors()->first());
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-            $updataSpecialization = Specialization::findOrFail(htmlspecialchars(strip_tags($request->id)));
-            if (request()->has('name') && $request->name != $updataSpecialization->name) {
-                request()->validate(
-                    ['name' => 'unique:Specializations,name'],
-                    ['name.unique' => "يجب ان يكون اسم التخصص فريد"]
-                );
-                $updataSpecialization->name = htmlspecialchars(strip_tags($request->name));
-            }
-            if (request()->has('Number_of_years_of_study'))
-                $updataSpecialization->Number_of_years_of_study = htmlspecialchars(strip_tags($request->Number_of_years_of_study));
-
-            if ($updataSpecialization->save()) {
-                //اضافة الاشعار والاضافة الى سجل العمليات
-                $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي
+            $updateSpecialization =  Specialization::find(htmlspecialchars(strip_tags($request["id"])));
+            $updateSpecialization->name = htmlspecialchars(strip_tags($request["name"]));
+            $updateSpecialization->Number_of_years_of_study = htmlspecialchars(strip_tags($request["Number_of_years_of_study"]));
+            $updateSpecialization->college_id = htmlspecialchars(strip_tags($request["college_id"]));
+            $updateSpecialization->Price = htmlspecialchars(strip_tags($request["Price"]));
+            $updateSpecialization->educational_qualification = htmlspecialchars(strip_tags($request["educational_qualification"]));
+            $updateSpecialization->lowest_acceptance_rate = htmlspecialchars(strip_tags($request["lowest_acceptance_rate"]));
+            if ($updateSpecialization->save()) {
+                $user = User::find(auth()->user()->id);
                 $date = date('H:i Y-m-d');
-                HelperController::NotificationsAdmin(" لقد تم تعديل التخصص برقم " . $request["id"] . " بواسطة الادمن" . $user->name
+                HelperController::NotificationsAdmin(" لقد تم تعديل تخصص باسم " . $request["name"] . " بواسطة الادمن" . $user->name
                     . " الوقت والتاريخ " . $date);
-                activity()->performedOn($updataSpecialization)->event("تعديل تخصص")->causedBy($user)
+                activity()->performedOn($updateSpecialization)->event("اضافة تخصص")->causedBy($user)
                     ->log(
-                        " تم تعديل تخصص باسم " . $updataSpecialization->project_name .
-                            " معرف المحافظة " . $request->id .
+                        " تم تعديل تخصص باسم " . $updateSpecialization->name .
                             " بواسطة الادمن" . $user->name .
                             " الوقت والتاريخ " . $date,
                     );
-                //نهاية كود عملية الاشعار والاضافة الى سجل العمليات
                 toastr()->success('تمت العملية بنجاح');
                 return redirect()->route("Specialization.index");
             } else {
@@ -214,7 +137,7 @@ class SpecializationsController extends Controller
             }
         } catch (Exception $e) {
             toastr()->error($e->getMessage());
-            return redirect()->back()->with(["error" => $e->getMessage()]);
+            return redirect()->back()->with(["error" => $e->getMessage()])->withInput();
         }
     }
 

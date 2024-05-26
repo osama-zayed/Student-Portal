@@ -5,19 +5,19 @@
 @endsection
 
 @section('title')
-    تعديل خبر {{ $College->name }}
+    تعديل خبر {{ $CollegeNew->title }}
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-الخبر
+    الخبر
 @endsection
 
 @section('page-header')
-الخبر
+    الخبر
 @endsection
 @section('sub-page-header')
-    تعديل خبر {{ $College->name }}
+    تعديل خبر {{ $CollegeNew->title }}
 @endsection
 
 <!-- breadcrumb -->
@@ -30,27 +30,47 @@
                     <div class="col-xs-12">
                         <div class="col-md-12">
                             <br>
-                            <form action="{{ route('College.update', 'test') }}" method="post"
-                                enctype="multipart/form-College">
+                            <form action="{{ route('College-New.update', 'test') }}" method="post"
+                                enctype="multipart/form-CollegeNew">
                                 @method('PUT')
                                 @csrf
+                                <input id="id" type="number" name="id" value="{{ $CollegeNew->id }}" readonly
+                                hidden>
                                 <div class="form-row">
-
-                                    <div class="col">
-                                        <label for="name">اسم الخبر :
-                                            <span class="text-danger">* @error('name')
+                                    <div class="col-12">
+                                        <label for="title">اسم الخبر
+                                            <span class="text-danger">*
+                                                @error('title')
                                                     {{ $message }}
                                                 @enderror
                                             </span>
                                         </label>
-                                        <input type="text" name="name"
-                                            value="{{ $College->name . old('name') }}"
-                                            class="form-control">
-
-                                        <input type="hidden" name="id" value="{{ $College->id }}"
-                                            class="form-control">
+                                        <input id="title" type="text" name="title" class="form-control"
+                                            value="{{ old('title') ?? ($CollegeNew->title ?? '') }}"
+                                            placeholder="أدخل اسم الخبر " required="الحقل مطلوب">
                                     </div>
-
+                                    <div class="col-12">
+                                        <label for="description">وصف الخبر
+                                            <span class="text-danger">*
+                                                @error('description')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
+                                        </label>
+                                        <textarea id="description" type="text" name="description" class="form-control" value=""
+                                            placeholder="أدخل وصف الخبر " required="الحقل مطلوب" cols="30" rows="10">{{ old('description') ?? ($CollegeNew->description ?? '') }}</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="file">صوره الخبر
+                                            <span class="text-danger">*
+                                                @error('file')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
+                                        </label>
+                                        <input id="file" type="file" name="file" class="form-control"
+                                            value="{{ old('file') }}" placeholder="أدخل صورة الخبر ">
+                                    </div>
                                 </div>
                                 <br>
 

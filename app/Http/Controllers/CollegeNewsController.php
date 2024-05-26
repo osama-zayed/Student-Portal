@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CollegeNew;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewRequest;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
@@ -26,7 +27,7 @@ class CollegeNewsController extends Controller
                 toastr()->error('لا يوجد اخبار');
             }
             return view("page.CollegeNew.index", [
-                'data' => $CollegeNew??[]
+                'data' => $CollegeNew ?? []
             ]);
         } catch (Exception $e) {
             toastr()->error('خطأ عند جلب البيانات');
@@ -47,39 +48,20 @@ class CollegeNewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(NewRequest $request)
     {
         try {
-            // $validator = Validator::make($request->all(), [
-            //     [
-            //         'name' => 'required|string|unique:CollegeNews,name|min:2',
-            //         'description' => 'required|string|unique:CollegeNews,name|min:2',
-            //     ],
-            //     [
-            //         'name.required' => "اسم المكتبة مطلوب",
-            //         'name.string' => "يجب ان يكون اسم المكتبة نص",
-            //         'name.max' => "اكبر حد لاسم المكتبة 255 حرف",
-            //         'name.min' => "اقل حد لاسم المكتبة 2",
-            //         'name.unique' => "يجب ان يكون اسم المكتبة فريد",
-            //     ]
-            // ]);
-            // if ($validator->fails()) {
-            //     toastr()->error($validator->errors()->first());
-            //     return redirect()->back()
-            //         ->withErrors($validator)
-            //         ->withInput();
-            // }
             $AddCollegeNew = new CollegeNew();
             $AddCollegeNew->title = htmlspecialchars(strip_tags($request["title"]));
             $AddCollegeNew->description = htmlspecialchars(strip_tags($request["description"]));
             if (isset($request["file"]) && !empty($request["file"])) {
                 $AddCollegeNewImage = request()->file('file');
                 $AddCollegeNewImagePath = 'CollegeNew/' .
-                $AddCollegeNewImage->getClientOriginalName();
+                    $AddCollegeNewImage->getClientOriginalName();
                 $AddCollegeNewImage->move(public_path('CollegeNew/'), $AddCollegeNewImagePath);
                 $AddCollegeNew->image = $AddCollegeNewImagePath;
             }
-            
+
             if ($AddCollegeNew->save()) {
 
                 $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي
@@ -131,52 +113,36 @@ class CollegeNewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(NewRequest $request, string $id)
     {
         try {
-            $data = $request->validate(
-                [
-                    "id" => "required|integer|min:1",
-                    'name' => 'required|string|min:2',
-
-                ],
-                [
-                    'id.required' => "معرف الكلية مطلوب",
-                    'id.integer' => "معرف الكلية مطلوب",
-                    'id.max' => "اكبر حد لمعرف الكلية 255 حرف",
-                    'id.min' => "اقل حد لمعرف الكلية 1",
-                    'name.required' => "اسم الكلية مطلوب",
-                    'name.string' => "يجب ان يكون اسم الكلية نص",
-                    'name.max' => "اكبر حد لاسم الكلية 255 حرف",
-                    'name.min' => "اقل حد لاسم الكلية 2",
-                ]
-            );
-
-            $updataCollegeNew = CollegeNew::findOrFail(htmlspecialchars(strip_tags($data["id"]), ENT_QUOTES));
-            if ($request->has('name') && $data["name"] != $updataCollegeNew->name) {
-                request()->validate(
-                    ['name' => 'unique:CollegeNews,name'],
-                    ['name.unique' => "يجب ان يكون اسم الكلية فريد"]
-                );
+            $updateCollegeNew = CollegeNew::find(htmlspecialchars(strip_tags($request["id"])));
+            $updateCollegeNew->title = htmlspecialchars(strip_tags($request["title"]));
+            $updateCollegeNew->description = htmlspecialchars(strip_tags($request["description"]));
+            if (isset($request["file"]) && !empty($request["file"])) {
+                $updateCollegeNewImage = request()->file('file');
+                $updateCollegeNewImagePath = 'CollegeNew/' .
+                    $updateCollegeNewImage->getClientOriginalName();
+                $updateCollegeNewImage->move(public_path('CollegeNew/'), $updateCollegeNewImagePath);
+                $updateCollegeNew->image = $updateCollegeNewImagePath;
             }
-            $updataCollegeNew->name = htmlspecialchars(strip_tags($data["name"]));
-            if ($updataCollegeNew->save()) {
-                //اضافة الاشعار والاضافة الى سجل العمليات
+
+            if ($updateCollegeNew->save()) {
+
                 $user = User::find(auth()->user()->id); // استرداد المستخدم الحالي
                 $date = date('H:i Y-m-d');
-                HelperController::NotificationsAdmin(" لقد تم تعديل كلية برقم " . $data["id"] . " بواسطة المستخدم " . $user->name
-                    . " الوقت والتاريخ " . $date);
 
-                activity()->performedOn($updataCollegeNew)->event("تعديل كلية")->causedBy($user)
+                HelperController::NotificationsAllUser("لقد تمت إضافة خبر جديد");
+
+                activity()->performedOn($updateCollegeNew)->event("اضافة خبر")->causedBy($user)
                     ->log(
-                        " تم تعديل الكلية " . $updataCollegeNew->name .
-                            " معرف الكلية " . $data["id"] .
+                        ' تم تعديل خبر باسم ' . $updateCollegeNew->name .
                             " بواسطة المستخدم " . $user->name .
                             " الوقت والتاريخ " . $date,
                     );
                 //نهاية كود عملية الاشعار والاضافة الى سجل العمليات
                 toastr()->success('تمت العملية بنجاح');
-                return redirect()->route("CollegeNew.index");
+                return redirect()->route("College-New.index");
             } else {
                 toastr()->error('العملية فشلت');
                 return redirect()->back();

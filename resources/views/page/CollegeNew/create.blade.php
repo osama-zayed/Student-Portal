@@ -35,7 +35,7 @@
                             value="{{ old('description') }}" placeholder="أدخل وصف الخبر " required="الحقل مطلوب" cols="30" rows="10"></textarea>
                         </div>
                         <div class="col-12">
-                            <label for="file">الخبر 
+                            <label for="file">صوره الخبر 
                                 <span class="text-danger">*
                                     @error('file')
                                         {{ $message }}
@@ -43,7 +43,7 @@
                                 </span>
                             </label>
                             <input id="file" type="file" name="file" class="form-control"
-                                value="{{ old('file') }}" placeholder="أدخل الخبر " required="الحقل مطلوب">
+                                value="{{ old('file') }}" placeholder="أدخل صورة الخبر " required="الحقل مطلوب">
                         </div>
                     </div>
                 </div>

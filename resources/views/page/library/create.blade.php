@@ -35,6 +35,17 @@
                             value="{{ old('description') }}" placeholder="أدخل وصف الكتاب" required="الحقل مطلوب" cols="30" rows="10"></textarea>
                         </div>
                         <div class="col-12">
+                            <label for="Image">صورة الكتاب
+                                <span class="text-danger">*
+                                    @error('Image')
+                                        {{ $message }}
+                                    @enderror
+                                </span>
+                            </label>
+                            <input id="Image" type="file" name="Image" class="form-control"
+                                value="{{ old('Image') }}" placeholder="أدخل صورة الكتاب" required="الحقل مطلوب">
+                        </div>
+                        <div class="col-12">
                             <label for="file">الكتاب
                                 <span class="text-danger">*
                                     @error('file')

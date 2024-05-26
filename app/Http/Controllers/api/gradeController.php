@@ -51,7 +51,7 @@ class gradeController extends Controller
                 ];
             });
             if ($SemesterTask->isEmpty()) {
-                return response()->json(['Status' => false, 'Message' => 'لا يوجد كتب'], 404);
+                return response()->json(['Status' => false, 'Message' => 'لا يوجد نتائج'], 404);
             }
             return response()->json(['Status' => true, 'Message' => "تم جلب البيانات بنجاح", 'data' => $transformedData]);
         } catch (Exception $e) {
@@ -93,7 +93,7 @@ class gradeController extends Controller
                 ];
             });
             if ($SemesterTask->isEmpty()) {
-                return response()->json(['Status' => false, 'Message' => 'لا يوجد كتب'], 404);
+                return response()->json(['Status' => false, 'Message' => 'لا يوجد نتائج'], 404);
             }
             return response()->json(['Status' => true, 'Message' => "تم جلب البيانات بنجاح", 'data' => $transformedData]);
         } catch (Exception $e) {
