@@ -17,8 +17,8 @@
 
 
   var baseUrl = window.location.origin;
-  var url = baseUrl + '/Incident/get/data';
-  var Counts = [];
+  var url = baseUrl + '/getStudentCountsBySpecialization';
+  var count = [];
   var labels = [];
   var colors = [];
   $.ajax({
@@ -27,8 +27,8 @@
     success: function (data) {
       // تعبئة قيم البيانات والتصنيفات من البيانات المسترجعة
       $.each(data.data, function (key, value) {
-        Counts.push(value.Counts);
-        labels.push(value.incident_status);
+        count.push(value.count);
+        labels.push(value.name);
         colors.push(getRandomColor());
       });
     }
@@ -38,7 +38,7 @@
     type: 'pie',
     data: {
       datasets: [{
-        data: Counts,
+        data: count,
         backgroundColor: colors,
         label: 'نسبة احصائيات الطلاب'
       }],
@@ -64,7 +64,7 @@
     type: 'bar',
     data: {
       datasets: [{
-        data: Counts,
+        data: count,
         backgroundColor: colors,
         label: 'نسبة احصائيات الطلاب'
       }],

@@ -7,6 +7,8 @@ Route::middleware(["auth", "userStatus", 'admin'])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     // Route::get('/Student/Archive', [App\Http\Controllers\StudentController::class, 'showDeleted'])->name('Student_deleted');
     Route::get('/search', [App\Http\Controllers\HomeController::class, 'searchById'])->name('searchById');
+    Route::post('/Notifications', [App\Http\Controllers\HomeController::class, 'Notifications'])->name('Notifications');
+    Route::get('/getStudentCountsBySpecialization', [App\Http\Controllers\HomeController::class, 'getStudentCountsBySpecialization'])->name('getStudentCountsBySpecialization');
     Route::resource('Student', App\Http\Controllers\StudentController::class);
     Route::resource('Result', App\Http\Controllers\ResultController::class);
     Route::resource('SemesterTask', App\Http\Controllers\SemesterTaskController::class);

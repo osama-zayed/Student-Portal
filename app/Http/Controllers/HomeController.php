@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\College;
 use App\Models\Incident;
 use App\Models\SecurityWanted;
+use App\Models\Specialization;
+use App\Models\Student;
+use App\Models\Teacher;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\Notifications;
 
 class HomeController extends Controller
 {
@@ -24,14 +30,10 @@ class HomeController extends Controller
         //     $fake_incident_count->where('department_id', auth()->user()->department_id);
         // }
         $data = [
-            'incident_count' => 0,
-            'initial_incident_count' => 0,
-            'supplementary_incident_count' => 0,
-            'transferred_incident_count' => 0,
-            'checked_incident_count' => 0,
-            'fake_incident_count' => 0,
-            'security_wanted_count' => 0,
-            'deleted_security_wanted_count'  => 0,
+            'CollegeCount' => College::count(),
+            'SpecializationCount' => Specialization::count(),
+            'TeacherCount' =>Teacher::count(),
+            'StudentCount'  => Student::count(),
         ];
         return view('page.dashboard')->with('data', $data);
     }
@@ -53,16 +55,43 @@ class HomeController extends Controller
         //     return redirect()->back();
         // }
     }
-    public function Incident_get()
+    public function getStudentCountsBySpecialization()
     {
-
-        // $Incidents = DB::table('Incidents')
-        //     ->groupBy('incident_status')
-        //     ->selectRaw('incident_status, COUNT(incident_status) as Counts');
-        // if (auth()->user()->user_type == 'user') {
-        //     $Incidents->where('department_id', auth()->user()->department_id);
-        // }
-        // $IncidentsData = $Incidents->get();
-        // return response()->json(["data" => $IncidentsData]);
+        $studentCounts = DB::table('students')
+            ->select('specializations.name', DB::raw('COUNT(*) as count'))
+            ->join('specializations', 'students.specialization_id', '=', 'specializations.id')
+            ->groupBy('specializations.name')
+            ->get();
+    
+        return response()->json(['data' => $studentCounts]);
+    }
+    public function Notifications(Request $request)
+    {
+        try {
+            $users = Student::query();
+            if ($request['college_id'] != 0) {
+                $users->where('college_id', $request['college_id']);
+            }
+            if ($request['specialization_id'] != 0) {
+                $users->where('specialization_id', $request['specialization_id']);
+            }
+            if ($request['Student_id'] != 0) {
+                $users->where('id', $request['Student_id']);
+            }
+    
+            $usersData = $users->get();
+            if ($usersData->isNotEmpty()) {
+                foreach ($usersData as $user) {
+                    $user->notify(new Notifications([
+                        "body" => $request['NoticeContent']
+                    ]));
+                }
+            }
+            toastr()->success('تمت العملية بنجاح');
+            return redirect()-> route('home');
+        } catch (Exception $e) {
+            toastr()->error('خطأ عند جلب البيانات');
+            return redirect()-> route('home');
+        }
     }
 }
