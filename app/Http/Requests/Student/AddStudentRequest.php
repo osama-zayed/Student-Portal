@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Student;
 
-
+use App\Models\College;
+use App\Models\Specialization;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\Unique;
 
 class AddStudentRequest extends FormRequest
 {
@@ -31,7 +33,12 @@ class AddStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'personal_id' => 'required|numeric|min:1|unique:students,personal_id',
+            'personal_id' => [
+                'required',
+                'numeric',
+                'min:1',
+                'unique:students,personal_id,' . $this->id . ',id',
+            ],
             'full_name' => 'required|string|regex:/^([\p{Arabic}]+\s){3}[\p{Arabic}]+$/u',
             'gender' => 'required|string|min:2',
             'nationality' => 'required|string|min:2',
@@ -39,13 +46,43 @@ class AddStudentRequest extends FormRequest
             'place_of_birth' => 'required|string|min:2',
             'phone_number' => 'required|numeric|digits:9|starts_with:7',
             'relative_phone_number' => 'required|numeric|digits:9|starts_with:7',
-            'educational_qualification' => 'required|string',
-            'high_school_grade' => 'required|numeric|min:0|max:100',
+            'educational_qualification' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $specialization = Specialization::find(request()->input('specialization_id'));
+                    if ($value !== $specialization->educational_qualification) {
+                        $fail('المؤهل للتخصص ' . $specialization->name . ' يجب ان يكون ' . $specialization->educational_qualification . '.');
+                    }
+                },
+            ],
+            'high_school_grade' => [
+                'required',
+                'numeric',
+                'min:0',
+                'max:100',
+                function ($attribute, $value, $fail) {
+                    $specialization = Specialization::find(request()->input('specialization_id'));
+                    if ($value < $specialization->lowest_acceptance_rate) {
+                        $fail('اقل معدل مطلوب للتخصص ' . $specialization->name . ' يجب ان يكون ' . $specialization->lowest_acceptance_rate . '.');
+                    }
+                },
+            ],
             'school_graduation_date' => 'required|date|before:today',
             'discount_percentage' => 'required|numeric|min:0|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4098',
             'college_id' => 'required|integer|min:1',
-            'specialization_id' => 'required|integer|min:1',
+            'specialization_id' => [
+                'required',
+                'integer',
+                'min:1',
+                function ($attribute, $value, $fail) {
+                    $college = College::find(request()->input('college_id'));
+                    if (!$college->Specialization()->whereId($value)->exists()) {
+                        $fail('التخصص ليس ضمن كلية ' . $college->name);
+                    }
+                },
+            ],
         ];
     }
 

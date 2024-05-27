@@ -94,7 +94,7 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="number" name="practicality_grade" class="form-control" max="20"
+                                    <input type="number" name="practicality_grade" class="form-control" max="30"
                                         oninput="calculateTotalGrade()" min="0"
                                         value="{{ old('practicality_grade') ?? ($SemesterTask->practicality_grade ?? 0) }}"
                                         required>
@@ -111,6 +111,8 @@
                             <br>
                             <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right mr-2" id="nextBtn"
                                 type="submit">الطالب التالي</button>
+                                <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right mr-2" id="nextBtn" name="Back" value="Back"
+                                type="submit">حفظ ورجوع</button>
                         </form>
                         <a href="{{ request()->fullUrlWithQuery(['student_id' => max(request()->get('student_id') - 1, 0)]) }}"
                             class="btn btn-primary btn-sm nextBtn btn-lg pull-right h-10 mr-2">

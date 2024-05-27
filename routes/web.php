@@ -22,5 +22,7 @@ Route::middleware(["auth", "userStatus", 'admin'])->group(function () {
     Route::get('/get-courses', [App\Http\Controllers\CollegeController::class, 'getCourses'])->name('get-courses');
     Route::get('/getSemesterTaskData', [App\Http\Controllers\SemesterTaskController::class, 'getSemesterTaskData'])->name('getSemesterTaskData');
     Route::get('/getResultData', [App\Http\Controllers\ResultController::class, 'getResultData'])->name('getResultData');
+    Route::get('/getSemesterTask', [App\Http\Controllers\StudentController::class, 'semesterTask']);
+    Route::get('/ResultData', [App\Http\Controllers\StudentController::class, 'ResultData']);
 });
 Auth::routes();

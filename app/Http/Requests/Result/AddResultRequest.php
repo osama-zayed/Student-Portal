@@ -37,7 +37,7 @@ class AddResultRequest extends FormRequest
             'semester_num' => 'required|integer|min:1',
             'academic_work_grade' => 'required|numeric|between:0,100',
             'final_exam_grade' => 'required|numeric|between:0,100',
-            'final_grade' => 'required|numeric|lte:60',
+            'final_grade' => 'required|numeric|lte:100',
         ];
     }
 
@@ -56,6 +56,15 @@ class AddResultRequest extends FormRequest
             'semester_num.required' => 'حقل معرف الترم الدراسي مطلوب',
             'semester_num.integer' => 'حقل معرف الترم الدراسي يجب أن يكون عددًا صحيحًا',
             'semester_num.min' => 'حقل معرف الترم الدراسي يجب أن يكون أكبر من أو يساوي 1',
+            'academic_work_grade.required' => 'درجة الاعمال الفصلية مطلوبة',
+            'academic_work_grade.numeric' => 'درجة الاعمال الفصلية مطلوبة',
+            'academic_work_grade.between' => 'درجة الاعمال الفصلية يجب ان تكون بين0-20',
+            'final_exam_grade.required' => 'درجة الاختبار النهائي مطلوبة',
+            'final_exam_grade.numeric' => 'درجة الاختبار يجب ان تكون رقماً',
+            'final_exam_grade.between' => 'درجة الاختبار النهائي يجب ان تكون بين0-20',
+            'final_grade.required' => 'المجموع النهائي مطلوب',
+            'final_grade.numeric' => 'يجب ان يكون المجموع النهائي رقم',
+            'final_grade.lte' => 'يجب ان يكون المجموع النهائي اقل من 100',
         ];
     }
 }

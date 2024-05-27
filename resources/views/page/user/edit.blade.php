@@ -118,10 +118,6 @@
                                                 <option value="admin" @if ('admin' == $User->user_type) selected @endif>
                                                     ادمن
                                                 </option>
-                                                <option value="incidentOfficer"
-                                                    @if ('incidentOfficer' == $User->user_type) selected @endif>مسوؤل بلاغات</option>
-                                                <option value="statisticOfficer"
-                                                    @if ('statisticOfficer' == $User->user_type) selected @endif>موظف الإحصاء</option>
                                             </select>
                                         </div>
                                     </div>

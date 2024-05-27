@@ -96,8 +96,6 @@
                                         <select id="user_type" class="custom-select mr-sm-2" name="user_type" multiple required>
                                             <option value="user" >مستخدم</option>
                                             <option value="admin">ادمن</option>
-                                            <option value="incidentOfficer">مسوؤل بلاغات</option>
-                                            <option value="statisticOfficer">موظف الإحصاء</option>
                                         </select>
                                     </div>
                                 </div>

@@ -41,16 +41,9 @@
                                     <th>رقم الهاتف</th>
                                     <th>رقم هاتف احد الاقارب</th>
                                     <th>الجنس</th>
-                                    <th>تاريخ الميلاد</th>
-                                    <th>محل الميلاد</th>
-                                    <th>الجنسية</th>
-                                    <th> المؤهل الدراسي</th>
-                                    <th>المعدل</th>
-                                    <th>تاريخ الحصول عليها</th>
                                     <th>الكلية</th>
                                     <th>التخصص</th>
-                                    <th>نسبة التخفيض</th>
-                                    <th>الفصل الدراسي</th>
+                                    <th>الترم الدراسي</th>
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
@@ -65,17 +58,13 @@
                                         <td>{{ $Student->phone_number }}</td>
                                         <td>{{ $Student->relative_phone_number }}</td>
                                         <td>{{ $Student->gender }}</td>
-                                        <td>{{ $Student->date_of_birth }}</td>
-                                        <td>{{ $Student->place_of_birth }}</td>
-                                        <td>{{ $Student->nationality }}</td>
-                                        <td>{{ $Student->educational_qualification }}</td>
-                                        <td>{{ $Student->high_school_grade }}</td>
-                                        <td>{{ $Student->school_graduation_date }}</td>
                                         <td>{{ $Student->College['name'] }}</td>
                                         <td>{{ $Student->Specialization['name'] }}</td>
-                                        <td>{{ $Student->discount_percentage }}%</td>
                                         <td>{{ $Student->semester_num }}</td>
                                         <td>
+                                            <a href="{{ route('Student.show', $Student->id) }}"
+                                                class="btn btn-primary btn-sm" role="button" aria-pressed="true"
+                                                title="تعديل"><i class="fa fa-eye"></i></a>
                                             <a href="{{ route('Student.edit', $Student->id) }}"
                                                 class="btn btn-info btn-sm" role="button" aria-pressed="true"
                                                 title="تعديل"><i class="fa fa-edit"></i></a>

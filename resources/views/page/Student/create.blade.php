@@ -99,7 +99,8 @@
                                         </span>
                                     </label>
                                     <input type="date" name="date_of_birth" class="form-control h-65"
-                                        value="{{ old('date_of_birth', date('Y-m-d')) }}"   max='{{ date('Y-m-d') }}' required>
+                                    value="{{ old('date_of_birth',  date('Y-m-d', strtotime('-17 years'))) }}"
+                                    max="{{  date('Y-m-d', strtotime('-17 years')) }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="place_of_birth">محل الميلاد
@@ -159,7 +160,8 @@
                                         </span>
                                     </label>
                                     <input type="date" name="school_graduation_date" class="form-control h-65"
-                                        value="{{ old('school_graduation_date', date('Y-m-d')) }}"   max='{{ date('Y-m-d') }}' required>
+                                    value="{{ old('school_graduation_date')  ?? date('Y-m-d', strtotime('-1 month')) }}"
+                                    max="{{ date('Y-m-d') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="college_id">الكلية
@@ -214,14 +216,14 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="image">الصورة الشخصية
-                                        <span class="text-danger">*
+                                        <span class="text-danger">
                                             @error('image')
                                                 {{ $message }}
                                             @enderror
                                         </span>
                                     </label>
                                     <input type="file" name="image" class="form-control h-65"
-                                        value="{{ old('image') }}" required>
+                                        value="{{ old('image') }}" >
                                 </div>
                                 
                             </div>

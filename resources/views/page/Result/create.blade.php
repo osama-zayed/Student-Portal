@@ -57,17 +57,21 @@
                                         </span>
                                     </label>
                                     <input type="number" name="final_exam_grade" class="form-control"
-                                        oninput="calculateTotalGrade()" min="0" max="20"
+                                        oninput="calculateTotalGrade()" min="0" max="60"
                                         value="{{ old('final_exam_grade') ?? ($Result->final_exam_grade ?? 0) }}" required>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-10">
                                     <label for="academic_work_grade">درجة الاعمال الفصلية
                                     </label>
                                     <input type="number" name="academic_work_grade" class="form-control"
-                                        oninput="calculateTotalGrade()" min="0" max="20" readonly
-                                        value="{{ old('academic_work_grade') ?? ($Result->semesterTasks->academic_work_grade ?? 0) }}"
+                                        oninput="calculateTotalGrade()" min="0" max="60" readonly
+                                        value="{{ old('academic_work_grade') ?? ($Result->semesterTasks->final_grade ?? 0) }}"
                                         required>
                                 </div>
+                                    <input type="number" name="SemesterTaskwork" class="form-control"
+                                        oninput="calculateTotalGrade()" min="0" max="60" hidden
+                                        value="{{ old('SemesterTaskwork') ?? ($Result->semesterTasks->academic_work_grade ?? 0) }}"
+                                        required>
 
                                 <div class="col-lg-6 col-md-6 mb-10">
                                     <label for="final_grade">المجموع
@@ -81,6 +85,8 @@
                             <br>
                             <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right mr-2" id="nextBtn"
                                 type="submit">الطالب التالي</button>
+                            <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right mr-2" id="nextBtn" name="Back" value="Back"
+                                type="submit">حفظ ورجوع</button>
                         </form>
                         <a href="{{ request()->fullUrlWithQuery(['student_id' => max(request()->get('student_id') - 1, 0)]) }}"
                             class="btn btn-primary btn-sm nextBtn btn-lg pull-right h-10 mr-2">

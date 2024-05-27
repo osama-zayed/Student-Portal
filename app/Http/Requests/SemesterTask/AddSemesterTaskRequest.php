@@ -57,6 +57,18 @@ class AddSemesterTaskRequest extends FormRequest
             'semester_num.required' => 'حقل معرف الترم الدراسي مطلوب',
             'semester_num.integer' => 'حقل معرف الترم الدراسي يجب أن يكون عددًا صحيحًا',
             'semester_num.min' => 'حقل معرف الترم الدراسي يجب أن يكون أكبر من أو يساوي 1',
+            'academic_work_grade.required' => 'درجة الاعمال الدراسية مطلوبة',
+            'academic_work_grade.numeric' => 'درجة الاعمال الدراسية مطلوبة',
+            'academic_work_grade.between' => 'درجة الاعمال الدراسية يجب ان تكون بين0-20',
+            'attendance.required' => 'درجة الحضور والغياب مطلوبة',
+            'attendance.numeric' => 'درجة الحضور والغياب يجب ان تكون رقماً',
+            'attendance.between' => 'درجة الحضور والغياب يجب ان تكون بين0-20',
+            'midterm_grade.required' => 'درجة الاختبار النصفي مطلوبة',
+            'midterm_grade.numeric' => 'درجة الاختبار يجب ان تكون رقماً',
+            'midterm_grade.between' => 'درجة الاختبار النصفي يجب ان تكون بين0-20',
+            'final_grade.required' => 'المجموع النهائي مطلوب',
+            'final_grade.numeric' => 'يجب ان يكون المجموع النهائي رقم',
+            'final_grade.lte' => 'يجب ان يكون المجموع النهائي اقل من 60',
         ];
     }
 }
