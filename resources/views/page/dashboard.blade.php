@@ -123,7 +123,7 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <select class="form-control h-65" name="Student_id" aria-placeholder="اختر طالب"
+                                    <select searchable class="form-control h-65" name="Student_id" aria-placeholder="اختر طالب"
                                         required>
                                         <option value="" disabled selected>اختر طالب من القائمة</option>
                                         <option value="0" selected>الكل</option>

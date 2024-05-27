@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\College;
-use App\Models\Incident;
-use App\Models\SecurityWanted;
 use App\Models\Specialization;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -17,18 +15,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // $initial_incident_count = Incident::query();
-        // $supplementary_incident_count = Incident::query();
-        // $transferred_incident_count = Incident::query();
-        // $checked_incident_count = Incident::query();
-        // $fake_incident_count = Incident::query();
-        // if (auth()->user()->user_type == 'user') {
-        //     $initial_incident_count->where('department_id', auth()->user()->department_id);
-        //     $supplementary_incident_count->where('department_id', auth()->user()->department_id);
-        //     $transferred_incident_count->where('department_id', auth()->user()->department_id);
-        //     $checked_incident_count->where('department_id', auth()->user()->department_id);
-        //     $fake_incident_count->where('department_id', auth()->user()->department_id);
-        // }
         $data = [
             'CollegeCount' => College::count(),
             'SpecializationCount' => Specialization::count(),
@@ -40,20 +26,17 @@ class HomeController extends Controller
 
     public function searchById()
     {
-        // try {
-        //     $id = request()->input('search');
-        //     $SecurityWanted = SecurityWanted::where('id', $id)
-        //         ->orWhere('registration_number', $id)
-        //         ->first();
-        //     $Incident = Incident::where('id', $id)
-        //         ->orWhere('incident_number', $id)
-        //         ->first();
-
-        //     return view('page.searchResults', compact('SecurityWanted', 'Incident'));
-        // } catch (Exception $e) {
-        //     toastr()->error('خطأ عند جلب البيانات');
-        //     return redirect()->back();
-        // }
+        try {
+            $searchTerm = request()->input('search');
+            $users = Student::where('full_name', 'LIKE', '%' . $searchTerm . '%')
+            ->orWhere('academic_id', $searchTerm)
+                ->get();
+    
+            return view('page.searchResults', compact('users'));
+        } catch (Exception $e) {
+            toastr()->error('خطأ عند جلب البيانات');
+            return redirect()->back();
+        }
     }
     public function getStudentCountsBySpecialization()
     {

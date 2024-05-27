@@ -77,7 +77,7 @@
                                     @include('page.Student.destroy')
                                 @empty
                                     <tr>
-                                        <td colspan="18">لا توجد بيانات</td>
+                                        <td colspan="11">لا توجد بيانات</td>
                                     </tr>
                                 @endforelse
                             </tbody>

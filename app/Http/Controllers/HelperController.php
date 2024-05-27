@@ -7,23 +7,6 @@ use App\Notifications\Notifications;
 
 class HelperController extends Controller
 {
-    static public function checkPermission($Permission)
-    {
-        /*
-        if (auth()->user()->user_type != $Permission) {
-            toastr()->error("غير مصرح لك");
-            return redirect()->back();
-        }
-        <option value="user" >مستخدم</option>
-        <option value="admin">ادمن</option>
-        <option value="incidentOfficer">مسوؤل بلاغات</option>
-        <option value="statisticOfficer">موظف الإحصاء</option>
-        */
-    }
-    // static function sanitizeInput($input)
-    // {
-    //     return htmlspecialchars(strip_tags($input), ENT_QUOTES);
-    // }
     static function NotificationsAllUser($masseg)
     {
         $users = User::where('id', '!=', auth()->user()->id)->get();
@@ -66,28 +49,5 @@ class HelperController extends Controller
                 ]));
             }
         }
-    }
-
-    static public function checkPerformance($startTime, $data)
-    {
-        // $time =microtime(true);
-        // dd(HelperController::checkPerformance($time,$data));
-
-        // @php
-        // $time = microtime(true);
-        // @endphp
-        // @php
-        // $endTime = microtime(true);
-        // $executionTime = $endTime - $time;
-        // @endphp
-        // @dd($executionTime)
-
-        $endTime = microtime(true);
-        $executionTime = $endTime - $startTime;
-
-        $size = strlen($data);
-        $sizeInKB = $size / 1024;
-
-        return ["executionTime" => $executionTime, "sizeInKB" => $sizeInKB];
     }
 }
