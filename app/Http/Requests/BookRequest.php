@@ -33,7 +33,7 @@ class BookRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,gif,bmp|max:2048',
-            'url' => 'nullable|file|mimes:pdf,pptx,ppt|max:12800', 
+            'url' => 'nullable|file|mimes:pdf|max:12800', 
             'description' => 'required|string|max:1000'
         ];
     }
@@ -51,7 +51,7 @@ class BookRequest extends FormRequest
            'image.mimes'=>"صورة الكتاب يجب ان تكون من نوع png,jpg,jpeg,gif,bmp",
            'image.max'=>"اكبر حد لصورة الكتاب 2048 ",
            'url.file'=>"الكتاب يجب ان يكون من نوع pdf,pptx,ppt",
-           'url.mimes'=>"الكتاب يجب ان يكون من نوع pdf,pptx,ppt",
+           'url.mimes'=>"الكتاب يجب ان يكون من نوع pdf",
            'url.max'=>"اكبر حد لصورة الكتاب 12800 ",
         ];
     }

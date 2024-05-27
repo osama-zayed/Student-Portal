@@ -92,8 +92,7 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="number" name="text" class="form-control" pattern="[0-9]+(\.[0-9]+)?"
-                                        title="يرجى إدخال أرقام فقط" value="{{ old('address') }}" required>
+                                    <input type="text" name="address" class="form-control"  value="{{ old('address') }}" required>
                                 </div>
                             </div>
                             <br>
