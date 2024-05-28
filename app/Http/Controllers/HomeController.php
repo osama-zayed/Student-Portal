@@ -77,4 +77,26 @@ class HomeController extends Controller
             return redirect()-> route('home');
         }
     }
+    public function UpdateImageUniversityCalendar(Request $request)
+    {
+        try {
+            $request->validate([
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ],[
+                'file.required' => 'الصورة مطلوبة',
+                'file.image' => 'يجب ان يكون الملف من نوع صوره',
+                'file.mimes' => 'يجب ان يكون الملف باحد الامتدادات التالية jpeg,png,jpg,gif,svg ',
+                'file.max' => 'اقصى حجم للصورة 2048',
+            ]);
+                $updateLibraryFile = $request->file('file');
+                $updateLibraryFile->move(public_path('assets/'), 'UniversityCalendar.jpg');
+                toastr()->success('تمت العملية بنجاح');
+
+    
+            return redirect()->route('home');
+        } catch (Exception $e) {
+            toastr()->error($e->getMessage());
+            return redirect()->route('home');
+        }
+    }
 }

@@ -123,8 +123,8 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <select searchable class="form-control h-65" name="Student_id" aria-placeholder="اختر طالب"
-                                        required>
+                                    <select searchable class="form-control h-65" name="Student_id"
+                                        aria-placeholder="اختر طالب" required>
                                         <option value="" disabled selected>اختر طالب من القائمة</option>
                                         <option value="0" selected>الكل</option>
                                         @forelse (\App\Models\Student::get() as $data)
@@ -149,8 +149,32 @@
                                    </textarea>
                                 </div>
                             </div>
-                            <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">ارسال</button>
+                            <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right" type="submit">ارسال</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mb-30">
+                <div class="card card-statistics ">
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>التقويم الجامعي</th>
+                                <th>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                       data-toggle="modal" data-target="#ShowImageUniversityCalendar">
+                                        عرض
+                                    </button>
+                                </th>
+                                <th>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                         data-toggle="modal" data-target="#UpdateImageUniversityCalendar">
+                                        تعديل
+                                    </button>
+                                </th>
+                            </tr>
+
+                        </table>
                     </div>
                 </div>
             </div>
@@ -183,4 +207,6 @@
 
         </div>
     </div>
+    @include('page.ShowImageUniversityCalendar')
+    @include('page.UpdateImageUniversityCalendar')
 @endsection

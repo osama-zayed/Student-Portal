@@ -1,44 +1,5 @@
 @charset "UTF-8";
 
-/*
-Template:  Webmin - Bootstrap 4 & Angular 5 Admin Dashboard Template
-Author: potenzaglobalsolutions.com
-Design and Developed by: potenzaglobalsolutions.com
-Version : 1.0
-
-NOTE: This file includes all admin Template plugins and Shortcodes. If you don't want to use any plugins from below. You can simply remove that line from this file.
-*/
-/*================================================
-[  Table of contents  ]
-================================================
-
-1. Plugins (all the plugins css)
-2. Variables
-3. Mixins
-4. Helpers
-5. Typography
-6. Components
-	- Accordion
-	- Button
-	- Lists
-	- Nice Select
-	- Pricing
-	- Social Icon
-	- Tabs
-	- Owl Carousel
-7. Sidebar
-8. Layout
-9. Responsive
-
-======================================
-[ End table content ]
-======================================*/
-/*!
- * Bootstrap v4.0.0 (https://getbootstrap.com)
- * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
 :root {
   --blue: #3a486b;
   --indigo: #6610f2;
@@ -31301,4 +31262,39 @@ div.style-customizer .content-chooser input[type=radio]:checked~label {
   .fc-right .fc-button-group .fc-button {
     padding: 6px 13px !important;
   }
+}.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  height: 200px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #cacaca;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 48px 35px -48px rgba(0,0,0,0.1);
+}
+
+.custom-file-upload .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-file-upload .icon svg {
+  height: 80px;
+  fill: rgba(75, 85, 99, 1);
+}
+
+.custom-file-upload .text {
+  margin-top: 10px;
+  color: rgba(75, 85, 99, 1);
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
 }
