@@ -10,6 +10,7 @@ Route::middleware(["auth", "userStatus", 'admin'])->group(function () {
     Route::get('/getStudentCountsBySpecialization', [App\Http\Controllers\HomeController::class, 'getStudentCountsBySpecialization'])->name('getStudentCountsBySpecialization');
     Route::post('/Update/Image/University/Calendar', [App\Http\Controllers\HomeController::class, 'UpdateImageUniversityCalendar'])->name('UpdateImageUniversityCalendar');
     Route::resource('Student', App\Http\Controllers\StudentController::class);
+    Route::put('StudentStatus',[ App\Http\Controllers\StudentController::class,'StudentStatus'])->name('Student.StudentStatus');
     Route::resource('Result', App\Http\Controllers\ResultController::class);
     Route::resource('SemesterTask', App\Http\Controllers\SemesterTaskController::class);
     Route::resource('teacher', App\Http\Controllers\teacherController::class);

@@ -55,7 +55,7 @@ class StudentController extends Controller
     public function semesterTask(Request $request)
     {
         try {
-         
+
             $SemesterTask = SemesterTask::select(
                 'id',
                 'specialization_id',
@@ -68,7 +68,7 @@ class StudentController extends Controller
                 'practicality_grade',
                 'final_grade',
             )
-                ->where('specialization_id', $request->get('specialization_id') )
+                ->where('specialization_id', $request->get('specialization_id'))
                 ->where('student_id', $request->get('student_id'))
                 ->where('semester_num', $request->get('semesterNum'))
                 ->with('course')
@@ -99,7 +99,7 @@ class StudentController extends Controller
     public function ResultData(Request $request)
     {
         try {
-         
+
             $SemesterTask = Result::select(
                 'id',
                 'student_id',
@@ -112,7 +112,7 @@ class StudentController extends Controller
                 'final_grade',
                 'status',
             )
-                ->where('specialization_id', $request->get('specialization_id') )
+                ->where('specialization_id', $request->get('specialization_id'))
                 ->where('student_id', $request->get('student_id'))
                 ->where('semester_num', $request->get('semesterNum'))
                 ->with('course')
@@ -353,9 +353,32 @@ class StudentController extends Controller
             if ($Student->save()) {
                 $date = date('H:i Y-m-d');
                 $user = User::find(auth()->user()->id);
-                activity()->performedOn($Student)->event("إضافة طالب")->causedBy($user)
+                activity()->performedOn($Student)->event("تعديل طالب")->causedBy($user)
                     ->log(
-                        "تمت إضافة طالب جديد بإسم " . $Student->full_name . " والرقم الاكاديمي " . $Student->academic_id . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
+                        "تمت تعديل الطالب " . $Student->full_name . " والرقم الاكاديمي " . $Student->academic_id . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
+                    );
+                toastr()->success('تمت العملية بنجاح');
+                return redirect()->route("Student.index");
+            } else {
+                toastr()->error('العملية فشلت');
+                return redirect()->back();
+            }
+        } catch (Exception $e) {
+            toastr()->error($e->getMessage());
+            return redirect()->back()->with(["error" => $e->getMessage()]);
+        }
+    }
+    public function StudentStatus(Request $request)
+    {
+        try {
+            $Student =  Student::find(htmlspecialchars(strip_tags($request['id'])));
+            $Student->user_status = $request['Student_status'];
+            if ($Student->save()) {
+                $date = date('H:i Y-m-d');
+                $user = User::find(auth()->user()->id);
+                activity()->performedOn($Student)->event("تعديل طالب")->causedBy($user)
+                    ->log(
+                        "تمت تعديل الطالب " . $Student->full_name . " والرقم الاكاديمي " . $Student->academic_id . " بواسطة المستخدم " . $user->name . " في الوقت والتاريخ " . $date,
                     );
                 toastr()->success('تمت العملية بنجاح');
                 return redirect()->route("Student.index");

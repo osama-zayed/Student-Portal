@@ -54,10 +54,6 @@
                                                         مستخدم
                                                     @elseif ($user['user_type'] == 'admin')
                                                         ادمن
-                                                    @elseif ($user['user_type'] == 'incidentOfficer')
-                                                        مسوؤل بلاغات
-                                                    @elseif ($user['user_type'] == 'statisticOfficer')
-                                                        مسوؤل احصاء
                                                     @endif
                                                 </button>
                                             </td>

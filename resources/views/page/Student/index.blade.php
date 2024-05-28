@@ -44,6 +44,7 @@
                                     <th>الكلية</th>
                                     <th>التخصص</th>
                                     <th>الترم الدراسي</th>
+                                    <th>حالة الحساب</th>
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
@@ -62,6 +63,19 @@
                                         <td>{{ $Student->Specialization['name'] }}</td>
                                         <td>{{ $Student->semester_num }}</td>
                                         <td>
+                                            @if ($Student['user_status'])
+                                                <button type="button" class="btn btn-success btn-sm"
+                                                    data-toggle="modal" data-target="#DisableStudent{{ $Student['id'] }}"
+                                                    title="تجميد المستخدم">
+                                                    يعمل </button>
+                                            @else
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#EnableStudent{{ $Student['id'] }}"
+                                                    title="تشغيل المستخدم">لا
+                                                    يعمل</button>
+                                            @endif
+                                        </td>
+                                        <td>
                                             <a href="{{ route('Student.show', $Student->id) }}"
                                                 class="btn btn-primary btn-sm" role="button" aria-pressed="true"
                                                 title="تعديل"><i class="fa fa-eye"></i></a>
@@ -75,6 +89,8 @@
                                     </tr>
 
                                     @include('page.Student.destroy')
+                                    @include('page.Student.EnableUser')
+                                    @include('page.Student.DisableUser')
                                 @empty
                                     <tr>
                                         <td colspan="11">لا توجد بيانات</td>
