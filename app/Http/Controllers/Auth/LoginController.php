@@ -45,7 +45,7 @@ class LoginController extends Controller
 
         $credentials = $request->validated();
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials,true)) {
             $rateLimiter->clear($username);
             $request->session()->regenerate();
             return redirect()->intended($this->redirectTo);

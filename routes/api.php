@@ -25,6 +25,7 @@ Route::group([
     'prefix' => 'College'
 ], function ($router) {
     Route::get('showAll', 'App\Http\Controllers\api\CollegeController@showAll');
+    Route::get('UniversityCalendar', 'App\Http\Controllers\api\CollegeController@UniversityCalendar');
 });
 ///////////////////////End College /////////////////////////
 ///////////////////////Start Specialization /////////////////////

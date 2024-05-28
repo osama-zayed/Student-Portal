@@ -25,4 +25,13 @@ class CollegeController extends Controller
             return response()->json(['Status' => false, 'Message' => 'خطأ عند جلب البيانات'], 404);
         }
     }
+    public function UniversityCalendar()
+    {
+        try {
+            $UniversityCalendar = asset('assets/UniversityCalendar.jpg');
+            return response()->json(['Status' => true, 'Message' => "تم جلب البيانات بنجاح", 'data' => $UniversityCalendar]);
+        } catch (Exception $e) {
+            return response()->json(['Status' => false, 'Message' => 'خطأ عند جلب البيانات'], 404);
+        }
+    }
 }

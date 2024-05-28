@@ -199,10 +199,10 @@ class ResultController extends Controller
                 $status = 'جيد جداً';
             } elseif ($finalGrade >= 70) {
                 $status = 'جيد';
-            } elseif ($finalGrade >= 60) {
+            } elseif ($finalGrade >= 50) {
                 $status = 'مقبول';
-            } else {
-                $status = 'ضعيف';
+            }  else {
+                $status = 'راسب';
             }
             $Result = Result::updateOrCreate(
                 [

@@ -7,8 +7,6 @@ use Illuminate\Validation\ValidationException;
 use App\Models\Student as users;
 use App\Notifications\Notifications;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PersonalAccessToken;
 
@@ -36,7 +34,7 @@ class AuthController extends Controller
             if (!$token = auth('api')->attempt([
                 "academic_id" => $data["academic_id"],
                 "password" => $data["password"],
-            ])) {
+            ],true)) {
                 return response()->json([
                     'Status' => false,
                     'Message' => 'اسم المستخدم أو كلمة المرور غير صحيحة'
