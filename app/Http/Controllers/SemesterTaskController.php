@@ -238,8 +238,10 @@ class SemesterTaskController extends Controller
     private function updateResult(Result $result, SemesterTask $semesterTask)
     {
         $finalGrade = $semesterTask->final_grade + $result->final_exam_grade;
-
-        if ($finalGrade >= 90) {
+        if ($finalGrade >= 100) {
+            toastr()->error('المجموع تعدى ال100 ');
+            return redirect()->back();
+        } elseif ($finalGrade >= 90) {
             $status = 'ممتاز';
         } elseif ($finalGrade >= 80) {
             $status = 'جيد جداً';

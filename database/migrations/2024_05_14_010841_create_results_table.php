@@ -15,10 +15,10 @@ class CreateResultsTable extends Migration
             $table->integer('specialization_id')->unsigned();
             $table->integer('semester_num');
             $table->integer('semester_tasks_id')->unsigned();
-            $table->float('academic_work_grade');
-            $table->float('final_exam_grade');
-            $table->float('final_grade');
-            $table->string('status');
+            $table->float('academic_work_grade')->nullable();
+            $table->float('final_exam_grade')->nullable();
+            $table->float('final_grade')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('course_id')->references('id')->on('courses');
