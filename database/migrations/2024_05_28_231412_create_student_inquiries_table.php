@@ -18,14 +18,12 @@ return new class extends Migration
             $table->text('message'); // رسالة الاستفسار
             $table->string('status')->default('pending'); // حالة الاستفسار (pending, resolved, closed)
             $table->string('inquirie_type'); // حالة الاستفسار (pending, resolved, closed)
-            $table->unsignedInteger('teacher_to')->nullable(); // معرف الموظف المسؤول عن الاستفسار
             $table->timestamp('resolved_at')->nullable(); // تاريخ حل الاستفسار
             $table->text('reply_message')->nullable(); // رسالة الاستفسار
             $table->timestamps();
         
             // إضافة الروابط الخارجية
             $table->foreign('student_id')->references('id')->on('students');
-            $table->foreign('teacher_to')->references('id')->on('teachers');
         });
     }
 

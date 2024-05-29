@@ -31,10 +31,12 @@ Route::group([
 ///////////////////////Start College /////////////////////
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'Student/Inquirie'
+    'prefix' => 'Student'
 ], function ($router) {
-    Route::get('showAll', 'App\Http\Controllers\api\StudentInquirieController@index');
-    Route::get('UniversityCalendar', 'App\Http\Controllers\api\StudentInquirie@UniversityCalendar');
+    Route::get('showAll/complaint', 'App\Http\Controllers\api\StudentInquirieController@showAllComplaint');
+    Route::get('showAll/inquiry', 'App\Http\Controllers\api\StudentInquirieController@showAllInquiry');
+    Route::post('show', 'App\Http\Controllers\api\StudentInquirieController@show');
+    Route::post('Add', 'App\Http\Controllers\api\StudentInquirieController@Add');
 });
 ///////////////////////End College /////////////////////////
 ///////////////////////Start Specialization /////////////////////

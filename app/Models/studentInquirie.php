@@ -16,10 +16,12 @@ class studentInquirie extends Model
         'subject',
         'message',
         'status',
-        'teacher_to',
         'inquirie_type',
         'resolved_at',
         'reply_message',
     ];
-
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
+    }
 }
