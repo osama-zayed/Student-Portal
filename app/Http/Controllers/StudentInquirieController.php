@@ -83,7 +83,7 @@ class StudentInquirieController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+// dd($request['id']);
         try {
             $credentials = $request->validate([
                 'reply_message' => ['required', 'string', 'max:1000', 'min:2'],

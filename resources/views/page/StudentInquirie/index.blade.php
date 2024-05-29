@@ -57,7 +57,7 @@
                                         <td>
                                             <a type="button"class="btn btn-primary btn-sm text-light"
                                                 class="btn btn-primary btn-sm" role="button" data-toggle="modal"
-                                                data-target="#create" aria-pressed="true" title="حل المشكلة"><i
+                                                data-target="#studentInquirie{{ $studentInquirie->id }}" aria-pressed="true" title="حل المشكلة"><i
                                                     class="fa fa-eye"></i></a>
 
                                     </tr>
