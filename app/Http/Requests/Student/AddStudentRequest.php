@@ -71,6 +71,7 @@ class AddStudentRequest extends FormRequest
             'school_graduation_date' => 'required|date|before:today',
             'discount_percentage' => 'required|numeric|min:0|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4098',
+            'academic_year' => 'required|integer',
             'college_id' => 'required|integer|min:1',
             'specialization_id' => [
                 'required',
@@ -139,6 +140,9 @@ class AddStudentRequest extends FormRequest
             'image.image' => 'الملف المرفق يجب أن يكون صورة صالحة.',
             'image.mimes' => 'الصور المسموح بها هي: jpeg, png, jpg, gif.',
             'image.max' => 'حجم الصورة يجب ألا يتجاوز 4098 كيلوبايت.',
+            'academic_year.required' => 'تاريخ العام الدراسي مطلوب',
+            'academic_year.integer' => 'تاريخ العام الدراسي يجب ان يكون رقماً',
+
         ];
     }
 }

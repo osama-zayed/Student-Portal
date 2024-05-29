@@ -16,6 +16,7 @@ class Promotion extends Model
         'gender',
         'phone_number',
         'address',
+        'status',
     ];
 
     protected $table = 'promotions';

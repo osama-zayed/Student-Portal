@@ -3,16 +3,16 @@
     <div style="display: none">@toastr_css</div>
 @endsection
 @section('page-header')
-    الطلاب 
+    الطلاب
 @endsection
 @section('sub-page-header')
     اضافة بيانات طالب جديد
 @endsection
 @section('title')
-الطلاب 
+    الطلاب
 @endsection
 @section('PageTitle')
-الطلاب 
+    الطلاب
 @endsection
 <!-- breadcrumb -->
 @section('content')
@@ -26,7 +26,7 @@
                         <form action="{{ route('Student.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-row">
-                              
+
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="full_name">الاسم
                                         <span class="text-danger">*
@@ -35,8 +35,8 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="text" name="full_name" class="form-control" value="{{ old('full_name') }}"
-                                        required>
+                                    <input type="text" name="full_name" class="form-control"
+                                        value="{{ old('full_name') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="personal_id">رقم البطاقة الشخصيه
@@ -58,8 +58,9 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="number" name="phone_number" class="form-control" pattern="[0-9]+(\.[0-9]+)?" title="يرجى إدخال أرقام فقط"
-                                        value="{{ old('phone_number') }}"    required>
+                                    <input type="number" name="phone_number" class="form-control"
+                                        pattern="[0-9]+(\.[0-9]+)?" title="يرجى إدخال أرقام فقط"
+                                        value="{{ old('phone_number') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="relative_phone_number">رقم هاتف احد الاقرباء
@@ -69,7 +70,8 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="number" name="relative_phone_number" class="form-control" pattern="[0-9]+(\.[0-9]+)?" title="يرجى إدخال أرقام فقط"
+                                    <input type="number" name="relative_phone_number" class="form-control"
+                                        pattern="[0-9]+(\.[0-9]+)?" title="يرجى إدخال أرقام فقط"
                                         value="{{ old('relative_phone_number') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
@@ -88,7 +90,7 @@
                                         <option value="انثى" @if (old('gender') == 'انثى') selected @endif>انثى
                                         </option>
                                     </select>
-                                </div>                          
+                                </div>
 
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="date_of_birth">تاريخ الميلاد
@@ -99,8 +101,8 @@
                                         </span>
                                     </label>
                                     <input type="date" name="date_of_birth" class="form-control h-65"
-                                    value="{{ old('date_of_birth',  date('Y-m-d', strtotime('-17 years'))) }}"
-                                    max="{{  date('Y-m-d', strtotime('-17 years')) }}" required>
+                                        value="{{ old('date_of_birth', date('Y-m-d', strtotime('-17 years'))) }}"
+                                        max="{{ date('Y-m-d', strtotime('-17 years')) }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="place_of_birth">محل الميلاد
@@ -125,6 +127,26 @@
                                         value="{{ old('nationality') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
+                                    <label for="academic_year">العام الدراسي
+                                        <span class="text-danger">*
+                                            @error('academic_year')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </label>
+                                    <select class="form-control h-65" name="academic_year" aria-placeholder="اختر كلية"
+                                        required>
+                                        <option value="" disabled selected>اختر عام دراسي من القائمة</option>
+                                        @forelse (\App\Models\SchoolYear::get() as $data)
+                                            <option value="{{ $data['id'] }}"
+                                                @if ($data->id == old('academic_year')) selected @endif>
+                                                {{ $data['end_date'] }}/{{ $data['start_date'] }}</option>
+                                        @empty
+                                            <option value="">لا يوجد اعوام دراسية</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="educational_qualification">المؤهل الدراسي
                                         <span class="text-danger">*
                                             @error('educational_qualification')
@@ -132,14 +154,16 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <select class="form-control h-65" name="educational_qualification" aria-placeholder="المؤهل مطلوب"
-                                        required>
+                                    <select class="form-control h-65" name="educational_qualification"
+                                        aria-placeholder="المؤهل مطلوب" required>
                                         <option value="" disabled selected>اختر المؤهل</option>
-                                        <option value="ثانوية عامة علمي" @if (old('educational_qualification') == "ثانوية عامة علمي") selected @endif>ثانوية عامة علمي
-                                        <option value="ثانوية عامة ادبي" @if (old('educational_qualification') == "ثانوية عامة ادبي") selected @endif>ثانوية عامة ادبي
+                                        <option value="ثانوية عامة علمي" @if (old('educational_qualification') == 'ثانوية عامة علمي') selected @endif>
+                                            ثانوية عامة علمي
+                                        <option value="ثانوية عامة ادبي" @if (old('educational_qualification') == 'ثانوية عامة ادبي') selected @endif>
+                                            ثانوية عامة ادبي
                                         </option>
                                     </select>
-                                </div>       
+                                </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="high_school_grade">معدل الثانوية
                                         <span class="text-danger">*
@@ -148,9 +172,10 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="number" name="high_school_grade" class="form-control" max="100" min="50"
-                                        value="{{ old('high_school_grade') }}" required>
+                                    <input type="number" name="high_school_grade" class="form-control" max="100"
+                                        min="50" value="{{ old('high_school_grade') }}" required>
                                 </div>
+              
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="school_graduation_date">تاريخ الحصول عليها
                                         <span class="text-danger">*
@@ -160,8 +185,8 @@
                                         </span>
                                     </label>
                                     <input type="date" name="school_graduation_date" class="form-control h-65"
-                                    value="{{ old('school_graduation_date')  ?? date('Y-m-d', strtotime('-1 month')) }}"
-                                    max="{{ date('Y-m-d') }}" required>
+                                        value="{{ old('school_graduation_date') ?? date('Y-m-d', strtotime('-1 month')) }}"
+                                        max="{{ date('Y-m-d') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="college_id">الكلية
@@ -191,8 +216,8 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <select class="form-control h-65" name="specialization_id" aria-placeholder="اختر تخصص"
-                                        required>
+                                    <select class="form-control h-65" name="specialization_id"
+                                        aria-placeholder="اختر تخصص" required>
                                         <option value="" disabled selected>اختر تخصص من القائمة</option>
                                         @forelse (\App\Models\Specialization::get() as $data)
                                             <option value="{{ $data['id'] }}"
@@ -211,8 +236,8 @@
                                             @enderror
                                         </span>
                                     </label>
-                                    <input type="number" name="discount_percentage" class="form-control" max="50" min="30"
-                                        value="{{ old('discount_percentage') }}" required>
+                                    <input type="number" name="discount_percentage" class="form-control" max="50"
+                                        min="30" value="{{ old('discount_percentage') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="image">الصورة الشخصية
@@ -223,9 +248,9 @@
                                         </span>
                                     </label>
                                     <input type="file" name="image" class="form-control h-65"
-                                        value="{{ old('image') }}" >
+                                        value="{{ old('image') }}">
                                 </div>
-                                
+
                             </div>
                             <br>
                             <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right" type="submit">حفظ

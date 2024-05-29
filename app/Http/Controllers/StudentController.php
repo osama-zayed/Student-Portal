@@ -203,6 +203,7 @@ class StudentController extends Controller
             $Student->school_graduation_date = htmlspecialchars(strip_tags($request['school_graduation_date']));
             $Student->discount_percentage = htmlspecialchars(strip_tags($request['discount_percentage']));
             $Student->college_id = htmlspecialchars(strip_tags($request['college_id']));
+            $Student->academic_year = htmlspecialchars(strip_tags($request['academic_year']));
             $Student->specialization_id = htmlspecialchars(strip_tags($request['specialization_id']));
             $Student->password = bcrypt($Student->personal_id ?? $Student->phone_number);
             if (isset($request["image"]) && !empty($request["image"])) {
@@ -341,6 +342,7 @@ class StudentController extends Controller
             $Student->school_graduation_date = htmlspecialchars(strip_tags($request['school_graduation_date']));
             $Student->discount_percentage = htmlspecialchars(strip_tags($request['discount_percentage']));
             $Student->college_id = htmlspecialchars(strip_tags($request['college_id']));
+            $Student->academic_year = htmlspecialchars(strip_tags($request['academic_year']));
             $Student->specialization_id = htmlspecialchars(strip_tags($request['specialization_id']));
             $Student->password = bcrypt($Student->personal_id ?? $Student->phone_number);
             if (isset($request["image"]) && !empty($request["image"])) {
