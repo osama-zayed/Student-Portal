@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('educational_qualification');
             $table->double('lowest_acceptance_rate');
             $table->foreign('college_id')->references('id')->on('colleges'); 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

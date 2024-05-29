@@ -15,6 +15,7 @@ class CreateTeachersTable extends Migration
             $table->string('gender');
             $table->string('phone_number');
             $table->string('address');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

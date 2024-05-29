@@ -13,6 +13,7 @@ class CreateCourseTeacherTable extends Migration
             $table->integer('teacher_id')->unsigned();
             $table->integer('course_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('teacher_id')->references('id')->on('teachers');
             $table->foreign('course_id')->references('id')->on('courses');
         });

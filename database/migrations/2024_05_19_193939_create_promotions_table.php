@@ -22,6 +22,7 @@ class CreatePromotionsTable extends Migration
             $table->integer('to_specialization_id')->unsigned();
             $table->integer('academic_year')->unsigned();
             $table->integer('academic_year_new')->unsigned();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
 
