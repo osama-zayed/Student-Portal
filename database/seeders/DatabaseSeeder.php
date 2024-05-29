@@ -232,7 +232,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123123123'),
             'semester_num' => "1",
             'academic_year' => "1",
-            'image' => 'images/Student/_78b81fc1-26f1-40f7-bb07-3ebda3b44b43.jpg',
+            'image' => 'images/Student/Male.jpg',
         ]);
         Student::create([
             'full_name' => "زيد ثابت محمد مهدي",
@@ -253,7 +253,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123123123'),
             'semester_num' => "1",
             'academic_year' => "1",
-            'image' => 'images/Student/_78b81fc1-26f1-40f7-bb07-3ebda3b44b43.jpg',
+            'image' => 'images/Student/Male.jpg',
         ]);
         CollegeNew::create([
             'title' => 'كلية طب الأسنان تقيم فعالية التغذية بعنوان (نصائح لتحسين صحتك)',

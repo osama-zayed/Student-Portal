@@ -80,7 +80,7 @@
                             <li> <a href="{{ route('Student.index') }}">قائمة الطلاب</a> </li>
                             <li> <a href="{{ route('SemesterTask.index') }}">الاعمال الفصلية</a> </li>
                             <li> <a href="{{ route('Result.index') }}">النتيجة النهائية</a> </li>
-                            <li> <a href="{{ route('Promotion.index') }}">ترقية الطلاب</a> </li>
+                            <li> <a href="{{ route('Promotion.create') }}">ترقية الطلاب</a> </li>
                             <li><a href="{{ route('studentInquirie.index', ['inquirie_type' => 'inquiry']) }}">استفسارات الطلاب</a></li>
                             <li> <a href="{{ route('studentInquirie.index') }}">شكاوي الطلاب</a> </li>
                     </li>

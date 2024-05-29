@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\InquirieRequest;
 use App\Models\studentInquirie;
 use Exception;
 use Illuminate\Http\Request;

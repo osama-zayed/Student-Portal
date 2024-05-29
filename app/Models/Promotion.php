@@ -11,15 +11,15 @@ class Promotion extends Model
 
     protected $fillable = [
         'id',
-        'name',
-        'qualification',
-        'gender',
-        'phone_number',
-        'address',
+        'student_id',
+        'from_semester_num',
+        'to_semester_num',
+        'from_specialization_id',
+        'to_specialization_id',
+        'academic_year',
+        'academic_year_new',
         'status',
     ];
-
     protected $table = 'promotions';
 
-  
 }
