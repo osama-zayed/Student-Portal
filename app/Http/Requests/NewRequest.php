@@ -32,8 +32,8 @@ class NewRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif,bmp|max:2048',
-            'description' => 'required|string|max:1000'
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif,bmp|max:4048',
+            'description' => 'required|string|max:1500'
         ];
     }
 
@@ -45,10 +45,10 @@ class NewRequest extends FormRequest
            'title.max'=>"اكبر حد لعنوان الخبر 255 حرف",
            'description.required'=>"وصف الخبر مطلوب",
            'description.string'=>"وصف الخبر يجب ان يكون نص",
-           'description.max'=>"اكبر حد لوصف الخبر 1000 حرف",
+           'description.max'=>"اكبر حد لوصف الخبر 1500 حرف",
            'image.image'=>"صورة الخبر يجب ان تكون من نوع صورة",
            'image.mimes'=>"صورة الخبر يجب ان تكون من نوع png,jpg,jpeg,gif,bmp",
-           'image.max'=>"اكبر حد لصورة الخبر 2048 ",
+           'image.max'=>"اكبر حد لصورة الخبر 4048 ",
         ];
     }
 }

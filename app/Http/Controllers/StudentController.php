@@ -24,7 +24,6 @@ class StudentController extends Controller
     public function index()
     {
         try {
-
             $pageSize = 100;
             $page = request()->input('page', 1);
             if ($page < 1) $page = 1;

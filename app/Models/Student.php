@@ -45,6 +45,10 @@ class Student extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(College::class, 'college_id');
     }
+    public function SchoolYear()
+    {
+        return $this->belongsTo(SchoolYear::class, 'academic_year');
+    }
 
     public function specialization()
     {

@@ -44,6 +44,8 @@
                                     <th>الكلية</th>
                                     <th>التخصص</th>
                                     <th>الترم الدراسي</th>
+                                    <th>العام الدراسي</th>
+                                    <th>حالة الطالب</th>
                                     <th>حالة الحساب</th>
                                     <th>العمليات</th>
                                 </tr>
@@ -51,7 +53,6 @@
                             <tbody>
                                 @forelse ($data as $Student)
                                     <tr>
-                            
                                         <td>{{ $Student->id }}</td>
                                         <td>{{ $Student->academic_id }}</td>
                                         <td>{{ $Student->full_name }}</td>
@@ -62,6 +63,8 @@
                                         <td>{{ $Student->College['name'] }}</td>
                                         <td>{{ $Student->Specialization['name'] }}</td>
                                         <td>{{ $Student->semester_num }}</td>
+                                        <td>{{ $Student->SchoolYear->start_date}}/{{ $Student->SchoolYear->end_date}}</td> 
+                                        <td>{{ $Student->status }}</td>
                                         <td>
                                             @if ($Student['user_status'])
                                                 <button type="button" class="btn btn-success btn-sm"
