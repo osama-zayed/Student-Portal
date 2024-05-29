@@ -12,6 +12,9 @@ Route::middleware(["auth", "userStatus", 'admin'])->group(function () {
     Route::resource('Student', App\Http\Controllers\StudentController::class);
     Route::put('StudentStatus',[ App\Http\Controllers\StudentController::class,'StudentStatus'])->name('Student.StudentStatus');
     Route::resource('Result', App\Http\Controllers\ResultController::class);
+    Route::resource('Promotion', App\Http\Controllers\PromotionController::class);
+    Route::resource('studentInquirie', App\Http\Controllers\studentInquirieController::class);
+    Route::resource('SchoolYear', App\Http\Controllers\SchoolYearController::class);
     Route::resource('SemesterTask', App\Http\Controllers\SemesterTaskController::class);
     Route::resource('teacher', App\Http\Controllers\teacherController::class);
     Route::resource('Specialization', App\Http\Controllers\SpecializationsController::class);

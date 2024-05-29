@@ -31,8 +31,8 @@
                                     @enderror
                                 </span>
                             </label>
-                            <select class="form-control h-65" id="college_id" name="college_id" aria-placeholder="اختر كلية"
-                                >
+                            <select class="form-control h-65" id="college_id" name="college_id"
+                                aria-placeholder="اختر كلية">
                                 <option value="" disabled selected>اختر كلية من القائمة</option>
                                 @forelse (\App\Models\College::get() as $data)
                                     <option value="{{ $data['id'] }}">
@@ -52,7 +52,7 @@
                                 </span>
                             </label>
                             <select class="form-control h-65" id="specialization_id" name="specialization_id"
-                                aria-placeholder="اختر تخصص" >
+                                aria-placeholder="اختر تخصص">
                                 <option value="" disabled selected>اختر تخصص من القائمة</option>
                             </select>
                         </div>
@@ -65,44 +65,15 @@
                                 </span>
                             </label>
                             <select class="form-control h-65" id="semester_num" name="semester_num"
-                                aria-placeholder="اختر الترم" >
+                                aria-placeholder="اختر الترم">
                                 <option value="" disabled selected>اختر ترم دراسي من القائمة</option>
-                                <option value="1" @if (1 == request()->query('semester_num')) selected @endif>
-                                    الاول
-                                </option>
-                                <option value="2" @if (2 == request()->query('semester_num')) selected @endif>
-                                    الثاني
-                                </option>
-                                <option value="3" @if (3 == request()->query('semester_num')) selected @endif>
-                                    الثالث
-                                </option>
-                                <option value="4" @if (4 == request()->query('semester_num')) selected @endif>
-                                    الرابع
-                                </option>
-                                <option value="5" @if (5 == request()->query('semester_num')) selected @endif>
-                                    الخامس
-                                </option>
-                                <option value="6" @if (6 == request()->query('semester_num')) selected @endif>
-                                    السادس
-                                </option>
-                                <option value="7" @if (7 == request()->query('semester_num')) selected @endif>
-                                    السابع
-                                </option>
-                                <option value="8" @if (8 == request()->query('semester_num')) selected @endif>
-                                    الثامن
-                                </option>
-                                <option value="9" @if (9 == request()->query('semester_num')) selected @endif>
-                                    التاسع
-                                </option>
-                                <option value="10" @if (10 == request()->query('semester_num')) selected @endif>
-                                    العاشر
-                                </option>
-                                <option value="11" @if (11 == request()->query('semester_num')) selected @endif>
-                                    الحادي عشر
-                                </option>
-                                <option value="12" @if (12 == request()->query('semester_num')) selected @endif>
-                                    الثاني عشر
-                                </option>
+                                @forelse (\App\Models\semesterNumber::get() as $data)
+                                    <option value="{{ $data['id'] }}" @if ($data['id'] == request()->query('semester_num')) selected @endif>
+                                        {{ $data['name'] }}
+                                    </option>
+                                @empty
+                                    <option value="">لا يوجد كليات</option>
+                                @endforelse
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-6 mb-10">
@@ -113,8 +84,7 @@
                                     @enderror
                                 </span>
                             </label>
-                            <select class="form-control h-65" id="course_id" name="course_id" aria-placeholder="اختر مقرر"
-                                >
+                            <select class="form-control h-65" id="course_id" name="course_id" aria-placeholder="اختر مقرر">
                                 <option value="" disabled selected>اختر مقرر من القائمة</option>
                             </select>
                         </div>
@@ -304,25 +274,25 @@
                     row.append(`<td><a href="${link}" class="w-100 h-100 d-inline-block">${item . id}</a></td>`);
                     row.append(
                         `<td><a href="${link}" class="w-100 h-100 d-inline-block" >${item . course . name}</a></td>`
-                        );
+                    );
                     row.append(
                         `<td><a href="${link}" class="w-100 h-100 d-inline-block" >${item . student . full_name}</a></td>`
-                        );
+                    );
                     row.append(
                         `<td><a href="${link}" class="w-100 h-100 d-inline-block" >${item . specialization . name}</a></td>`
-                        );
+                    );
                     row.append(
                         `<td><a href="${link}" class="w-100 h-100 d-inline-block" >${item . semester_num}</a></td>`
-                        );
+                    );
                     row.append(
                         `<td><a href="${link}" class="w-100 h-100 d-inline-block" >${item . academic_work_grade}</a></td>`
-                        );
+                    );
                     row.append(
                         `<td><a href="${link}" class="w-100 h-100 d-inline-block" >${item . final_exam_grade}</a></td>`
-                        );
+                    );
                     row.append(
                         `<td><a href="${link}" class="w-100 h-100 d-inline-block" >${item . final_grade}</a></td></tr>`
-                        )
+                    )
 
                     tableBody.append(row);
                 });

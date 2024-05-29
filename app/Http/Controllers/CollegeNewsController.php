@@ -22,7 +22,8 @@ class CollegeNewsController extends Controller
                 'title',
                 'image',
                 "description",
-            )->get();
+            )->orderBy('id', 'desc')
+            ->get();
             if ($CollegeNew->isEmpty()) {
                 toastr()->error('لا يوجد اخبار');
             }

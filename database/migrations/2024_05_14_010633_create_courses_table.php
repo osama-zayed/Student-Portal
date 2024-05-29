@@ -13,10 +13,11 @@ class CreateCoursesTable extends Migration
             $table->string('name');
             $table->integer('hours');
             $table->integer('specialization_id')->unsigned();
-            $table->integer('semester_num');
+            $table->integer('semester_num')->unsigned();
             $table->integer('teachers_id')->unsigned()->nullable();
             $table->foreign('specialization_id')->references('id')->on('specializations');
             $table->foreign('teachers_id')->references('id')->on('teachers');
+            $table->foreign('semester_num')->references('id')->on('semester_numbers');
             $table->timestamps();
         });
     }

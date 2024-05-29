@@ -28,6 +28,15 @@ Route::group([
     Route::get('UniversityCalendar', 'App\Http\Controllers\api\CollegeController@UniversityCalendar');
 });
 ///////////////////////End College /////////////////////////
+///////////////////////Start College /////////////////////
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'Student/Inquirie'
+], function ($router) {
+    Route::get('showAll', 'App\Http\Controllers\api\StudentInquirieController@index');
+    Route::get('UniversityCalendar', 'App\Http\Controllers\api\StudentInquirie@UniversityCalendar');
+});
+///////////////////////End College /////////////////////////
 ///////////////////////Start Specialization /////////////////////
 Route::group([
     'middleware' => 'api',

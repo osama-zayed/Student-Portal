@@ -26,13 +26,15 @@ class CreateStudentsTable extends Migration
             $table->integer('specialization_id')->unsigned();
             $table->string('password');
             $table->string('nationality');
-            $table->integer('semester_num')->default(1);
+            $table->integer('semester_num')->default(1)->unsigned();
             $table->boolean("user_status")->default(true);
             $table->string('image');
-
+            $table->integer('academic_year')->unsigned();
+            $table->foreign('academic_year')->references('id')->on('school_years')->onDelete('cascade');
             $table->timestamps();
             $table->foreign('college_id')->references('id')->on('colleges');
             $table->foreign('specialization_id')->references('id')->on('specializations');
+            $table->foreign('semester_num')->references('id')->on('semester_numbers');
         });
     }
 

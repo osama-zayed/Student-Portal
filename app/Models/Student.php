@@ -36,6 +36,7 @@ class Student extends Authenticatable implements JWTSubject
         'password',
         'semester_num',
         'user_status',
+        'academic_year',
         'image',
     ];
 

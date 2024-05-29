@@ -59,6 +59,7 @@ class SpecializationsController extends Controller
             $AddSpecialization = new Specialization();
             $AddSpecialization->name = htmlspecialchars(strip_tags($request["name"]));
             $AddSpecialization->Number_of_years_of_study = htmlspecialchars(strip_tags($request["Number_of_years_of_study"]));
+            $AddSpecialization->Number_of_semester_of_study = htmlspecialchars(strip_tags($request["Number_of_years_of_study"])) * 2;
             $AddSpecialization->college_id = htmlspecialchars(strip_tags($request["college_id"]));
             $AddSpecialization->Price = htmlspecialchars(strip_tags($request["Price"]));
             $AddSpecialization->educational_qualification = htmlspecialchars(strip_tags($request["educational_qualification"]));
@@ -114,6 +115,7 @@ class SpecializationsController extends Controller
             $updateSpecialization =  Specialization::find(htmlspecialchars(strip_tags($request["id"])));
             $updateSpecialization->name = htmlspecialchars(strip_tags($request["name"]));
             $updateSpecialization->Number_of_years_of_study = htmlspecialchars(strip_tags($request["Number_of_years_of_study"]));
+            $updateSpecialization->Number_of_semester_of_study = htmlspecialchars(strip_tags($request["Number_of_years_of_study"])) * 2;
             $updateSpecialization->college_id = htmlspecialchars(strip_tags($request["college_id"]));
             $updateSpecialization->Price = htmlspecialchars(strip_tags($request["Price"]));
             $updateSpecialization->educational_qualification = htmlspecialchars(strip_tags($request["educational_qualification"]));
