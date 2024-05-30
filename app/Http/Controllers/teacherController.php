@@ -9,16 +9,14 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
-use App\Notifications\Notifications;
-use Illuminate\Support\Facades\Validator;
 
-use function PHPUnit\Framework\isNull;
 
 class teacherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('admin'); 
+    }
     public function index()
     {
         try {

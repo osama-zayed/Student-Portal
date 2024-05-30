@@ -95,8 +95,7 @@
                                                             {{ $message }}
                                                         @enderror
                                                     </span></label>
-                                                <select id="user_status" class="custom-select mr-sm-2"
-                                                    name="user_status">
+                                                <select id="user_status" class="custom-select mr-sm-2" name="user_status">
                                                     <option value="1"
                                                         @if ($User->user_type) selected @endif>
                                                         مفعل</option>
@@ -105,19 +104,16 @@
                                                         مجمد</option>
                                                 </select>
                                             </div>
-                                        </div>                                      
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="Classroom_id">الصلاحية : <span class="text-danger">*</span></label>
                                             <select id="user_type" class="custom-select mr-sm-2" name="user_type" multiple
                                                 required>
-                                                <option value="user" @if ('user' == $User->user_type) selected @endif>
-                                                    مستخدم
-                                                </option>
-                                                <option value="admin" @if ('admin' == $User->user_type) selected @endif>
-                                                    ادمن
-                                                </option>
+                                                <option value="student_affairs">شوؤن طلاب</option>
+                                                <option value="control">الكنترول</option>
+                                                <option value="registration"> الاستقبال</option>
                                             </select>
                                         </div>
                                     </div>

@@ -54,23 +54,26 @@
 
                         </ul>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#teacher">
-                            <div class="pull-left"> <i class="ti-user"></i> <span
-                                    class="right-nav-text">المدرسين</span></div>
-                            <div class="pull-right"><i class="ti-plus"></i></div>
-                            <div class="clearfix"></div>
-                        </a>
-                        <ul id="teacher" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{ route('teacher.index') }}">قائمة المدرسين</a> </li>
-                            <li> <a href="{{ route('teacher.create') }}">اضافة مدرس</a> </li>
+                    @if (auth()->user()->user_type == 'admin')
+                        <li>
+                            <a href="javascript:void(0);" data-toggle="collapse" data-target="#teacher">
+                                <div class="pull-left"> <i class="ti-user"></i> <span
+                                        class="right-nav-text">المدرسين</span></div>
+                                <div class="pull-right"><i class="ti-plus"></i></div>
+                                <div class="clearfix"></div>
+                            </a>
+                            <ul id="teacher" class="collapse" data-parent="#sidebarnav">
+                                <li> <a href="{{ route('teacher.index') }}">قائمة المدرسين</a> </li>
+                                <li> <a href="{{ route('teacher.create') }}">اضافة مدرس</a> </li>
 
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    @endif
                     <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الطلاب</li>
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Security-wanted">
-                            <div class="pull-left"><i class="fa fa-graduation-cap highlight-icon"></i><span class="right-nav-text">
+                            <div class="pull-left"><i class="fa fa-graduation-cap highlight-icon"></i><span
+                                    class="right-nav-text">
                                     الطلاب</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -81,7 +84,8 @@
                             <li> <a href="{{ route('SemesterTask.index') }}">الاعمال الفصلية</a> </li>
                             <li> <a href="{{ route('Result.index') }}">النتيجة النهائية</a> </li>
                             <li> <a href="{{ route('Promotion.create') }}">ترقية الطلاب</a> </li>
-                            <li><a href="{{ route('studentInquirie.index', ['inquirie_type' => 'inquiry']) }}">استفسارات الطلاب</a></li>
+                            <li><a href="{{ route('studentInquirie.index', ['inquirie_type' => 'inquiry']) }}">استفسارات
+                                    الطلاب</a></li>
                             <li> <a href="{{ route('studentInquirie.index') }}">شكاوي الطلاب</a> </li>
                     </li>
                 </ul>

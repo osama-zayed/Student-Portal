@@ -50,10 +50,12 @@
 
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm">
-                                                    @if ($user['user_type'] == 'user')
-                                                        مستخدم
-                                                    @elseif ($user['user_type'] == 'admin')
-                                                        ادمن
+                                                    @if ($user['user_type'] == 'student_affairs')
+                                                        شوؤن الطلاب
+                                                    @elseif ($user['user_type'] == 'control')
+                                                        الكنترول
+                                                    @elseif ($user['user_type'] == 'registration')
+                                                       الاستقبال
                                                     @endif
                                                 </button>
                                             </td>

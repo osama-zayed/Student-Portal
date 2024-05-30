@@ -54,6 +54,11 @@ class SchoolYearController extends Controller
      */
     public function store(SchoolYearRequest $request)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $latestSchoolYear = SchoolYear::latest()->first();
 
@@ -101,7 +106,13 @@ class SchoolYearController extends Controller
      */
     public function edit(string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
+            
             $SchoolYear = SchoolYear::find(htmlspecialchars(strip_tags($id)));
             if (!$SchoolYear->is_current) {
                 toastr()->error('لا يمكن تعديل العام الدراسي الذي انتهى.');
@@ -130,7 +141,11 @@ class SchoolYearController extends Controller
     public function destroy(string $name)
     {
         try {
-            //التحقق من الحقول
+            $user = auth()->user();
+            if ($user->user_type != 'admin') {
+                toastr()->error("غير مصرح لك");
+                return redirect()->back();
+            }
             $data = request()->validate(
                 [
                     "id" => "required|integer|min:1",

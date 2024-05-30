@@ -40,6 +40,11 @@ class LibraryController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         return view("page.library.create");
     }
 
@@ -48,6 +53,11 @@ class LibraryController extends Controller
      */
     public function store(BookRequest $request)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $Addlibrary = new library();
             $Addlibrary->name = htmlspecialchars(strip_tags($request["name"]));
@@ -101,6 +111,11 @@ class LibraryController extends Controller
 
     public function edit(string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $library = library::find(htmlspecialchars(strip_tags($id)));
             return view("page.library.edit", [
@@ -117,6 +132,11 @@ class LibraryController extends Controller
      */
     public function update(BookRequest $request, string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $updateLibrary = library::find(htmlspecialchars(strip_tags($request['id'])));
             $updateLibrary->name = htmlspecialchars(strip_tags($request["name"]));
@@ -164,6 +184,11 @@ class LibraryController extends Controller
      */
     public function destroy(string $name)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             //التحقق من الحقول
             $data = request()->validate(

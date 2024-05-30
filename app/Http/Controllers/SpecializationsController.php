@@ -55,6 +55,11 @@ class SpecializationsController extends Controller
     }
     public function store(SpecializationsRequest $request)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $AddSpecialization = new Specialization();
             $AddSpecialization->name = htmlspecialchars(strip_tags($request["name"]));
@@ -89,6 +94,11 @@ class SpecializationsController extends Controller
 
     public function edit(string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $Specializations = Specialization::select(
                 'id',
@@ -111,6 +121,11 @@ class SpecializationsController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $updateSpecialization =  Specialization::find(htmlspecialchars(strip_tags($request["id"])));
             $updateSpecialization->name = htmlspecialchars(strip_tags($request["name"]));
@@ -149,7 +164,11 @@ class SpecializationsController extends Controller
     public function destroy(string $name)
     {
         try {
-            //التحقق من الحقول
+            $user = auth()->user();
+            if ($user->user_type != 'admin' ) {
+                toastr()->error("غير مصرح لك");
+                return redirect()->back();
+            }
             $data = request()->validate(
                 [
                     "id" => "required|integer|min:1",

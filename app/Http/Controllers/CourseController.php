@@ -56,6 +56,11 @@ class CourseController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'student_affairs' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         return view("page.Course.create");
     }
 
@@ -64,6 +69,11 @@ class CourseController extends Controller
      */
     public function store(CourseRequest $request)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'student_affairs' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $AddCourse = new Course();
             $AddCourse->name = htmlspecialchars(strip_tags($request["name"]));
@@ -106,6 +116,11 @@ class CourseController extends Controller
 
     public function edit(string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'student_affairs' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $Course = Course::find(htmlspecialchars(strip_tags($id)));
             return view("page.Course.edit", [
@@ -122,8 +137,12 @@ class CourseController extends Controller
      */
     public function update(CourseRequest $request, string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'student_affairs' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
-
             $updataCourse = Course::findOrFail(htmlspecialchars(strip_tags($request["id"])));
             $updataCourse->name = htmlspecialchars(strip_tags($request["name"]));
             $updataCourse->hours = htmlspecialchars(strip_tags($request["hours"]));
@@ -165,6 +184,11 @@ class CourseController extends Controller
      */
     public function destroy(string $name)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration'||$user->user_type == 'student_affairs' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             //التحقق من الحقول
             $data = request()->validate(

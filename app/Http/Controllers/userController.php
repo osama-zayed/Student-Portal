@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;
 use Exception;
 use App\Models\User as users;
-use App\Notifications\Notifications;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -16,7 +15,7 @@ class userController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin', ['except' => ['show','edit']]); 
+        $this->middleware('admin', ['except' => ['show', 'edit', 'update']]);
     }
     public function index()
     {
@@ -71,7 +70,7 @@ class userController extends Controller
                 toastr()->error('لا يوجد بيانات');
             }
             return view('page.user.activity', [
-                'data' => $data??[],
+                'data' => $data ?? [],
                 "page" => $page,
                 "totalPages" => $totalPages,
             ]);
@@ -112,7 +111,7 @@ class userController extends Controller
                 "password.string" => "حقل كلمة المرور يجب أن يكون نصًا.",
                 "password.min" => "حقل كلمة المرور يجب أن يحتوي على الأقل 8 أحرف.",
                 "password.confirmed" => "حقل كلمة المرور غير متطابق مع حقل تأكيد كلمة المرور.",
-                "user_status.required" => "حقل حالة المستخدم مطلوب.",        
+                "user_status.required" => "حقل حالة المستخدم مطلوب.",
                 "user_type.required" => "حقل نوع المستخدم مطلوب.",
             ]);
 
@@ -140,11 +139,11 @@ class userController extends Controller
             if ($userCreated->save()) {
 
                 //اضافة الاشعار والاضافة الى سجل العمليات
-                $user = users::find(auth()->user()->id); 
+                $user = users::find(auth()->user()->id);
                 $date = date('H:i Y-m-d');
                 HelperController::NotificationsAdmin(" لقد تم اضافة مستخدم جديد باسم  " .  $userCreated->name
-                . " بواسطه الادمن " . $user->name
-                . " الوقت والتاريخ " . $date);
+                    . " بواسطه الادمن " . $user->name
+                    . " الوقت والتاريخ " . $date);
                 activity()->performedOn($userCreated)->event("اضافة مستخدم")->causedBy($user)
                     ->log(
                         " تم اضافة مستخدم جديد باسم " . $userCreated->name .
@@ -167,10 +166,17 @@ class userController extends Controller
     /**
      * Display the specified resource.
      */
-    
+
     public function show(string $id)
     {
         try {
+            $user = auth()->user();
+            if ($user->id !=  $id) {
+                if ($user->user_type != 'admin') {
+                    toastr()->error("غير مصرح لك");
+                    return redirect()->back();
+                }
+            }
             $pageSize = 500;
             $page = request()->input('page', 1);
             if ($page < 1) $page = 1;
@@ -203,6 +209,13 @@ class userController extends Controller
     public function edit(string $id)
     {
         try {
+            $user = auth()->user();
+            if ($user->id !=  $id) {
+                if ($user->user_type != 'admin') {
+                    toastr()->error("غير مصرح لك");
+                    return redirect()->back();
+                }
+            }
             $User = User::find(htmlspecialchars(strip_tags($id)));
             return view("page.user.edit")->with("User", $User);
         } catch (Exception $e) {
@@ -216,6 +229,7 @@ class userController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         try {
             $validator = Validator::make($request->all(), [
                 "id" => "required|integer",
@@ -228,11 +242,19 @@ class userController extends Controller
                 "username.unique" => "حقل البريد الإلكتروني مستخدم مسبقًا.",
                 "password.string" => "حقل كلمة المرور يجب أن يكون نصًا.",
             ]);
+
             if ($validator->fails()) {
                 toastr()->error($validator->errors()->first());
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput();
+            }
+            $user = auth()->user();
+            if ($user->id != $request["id"]) {
+                if ($user->user_type != 'admin') {
+                    toastr()->error("غير مصرح لك");
+                    return redirect()->back();
+                }
             }
             // البحث عن المستخدم المراد تعديله
             $userToUpdate = User::findOrFail(htmlspecialchars(strip_tags($request["id"])));
@@ -270,17 +292,18 @@ class userController extends Controller
                 $user = users::find(auth()->user()->id);
                 $date = date('H:i Y-m-d');
 
-                HelperController::NotificationsAdmin(" لقد تم تعديل بيانات المستخدم  " .  $userToUpdate->name 
-                . " الوقت والتاريخ " . $date);
+                HelperController::NotificationsAdmin(" لقد تم تعديل بيانات المستخدم  " .  $userToUpdate->name
+                    . " الوقت والتاريخ " . $date);
 
                 activity()->performedOn($userToUpdate)->event("تعديل مستخدم")->causedBy($user)
                     ->log(
                         " تم تعديل مستخدم باسم " . $userToUpdate->name .
-                            " بواسطة الادمن " . $user->name .
                             " الوقت والتاريخ " . $date,
                     );
-                //نهاية كود عملية الاشعار والاضافة الى سجل العمليات
                 toastr()->success("تم التعديل بنجاح");
+                if ($user->user_type != 'admin') {
+                    return redirect()->back();
+                }
                 return  redirect()->route("user.index");
             } else {
                 toastr()->error("خطأ عند التعديل");
@@ -316,10 +339,10 @@ class userController extends Controller
                 //اضافة الاشعار والاضافة الى سجل العمليات
                 $user = users::find(auth()->user()->id);
                 $date = date('H:i Y-m-d');
-    
+
                 HelperController::NotificationsAdmin(" لقد تم حذف المستخدم برقم  " .  $data["id"]
-                . " بواسطه الادمن " . $user->name
-                . " الوقت والتاريخ " . $date);
+                    . " بواسطه الادمن " . $user->name
+                    . " الوقت والتاريخ " . $date);
                 activity()->event("حذف مستخدم")->causedBy($user)
                     ->log(
                         " تم حذف المستخدم " . $name .

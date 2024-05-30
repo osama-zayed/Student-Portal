@@ -36,7 +36,11 @@ class PromotionController extends Controller
     public function store(PromotionRequest $request)
     {
         try {
-
+            $user = auth()->user();
+            if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+                toastr()->error("غير مصرح لك");
+                return redirect()->back();
+            }
             $Students = Student::select(
                 'id',
                 'specialization_id',

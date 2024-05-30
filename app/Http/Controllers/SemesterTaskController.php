@@ -127,6 +127,11 @@ class SemesterTaskController extends Controller
     }
     public function create()
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         $specializationId = htmlspecialchars(strip_tags(request()->get('specialization_id', 0)));
         $semesterNum = htmlspecialchars(strip_tags(request()->get('semester_num', 0)));
         $courseId = htmlspecialchars(strip_tags(request()->get('course_id', 0)));
@@ -177,6 +182,11 @@ class SemesterTaskController extends Controller
      */
     public function store(AddSemesterTaskRequest $request)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $semesterTask = $this->createOrUpdateSemesterTask($request);
 

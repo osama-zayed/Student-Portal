@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::middleware(["auth", "userStatus", 'admin'])->group(function () {
+Route::middleware(["auth", "userStatus"])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/search', [App\Http\Controllers\HomeController::class, 'searchById'])->name('searchById');
     Route::post('/Notifications', [App\Http\Controllers\HomeController::class, 'Notifications'])->name('Notifications');

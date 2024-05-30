@@ -169,6 +169,11 @@ class StudentController extends Controller
     }
     public function create()
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             return view("page.Student.create");
         } catch (\Throwable $th) {
@@ -182,7 +187,11 @@ class StudentController extends Controller
      */
     public function store(AddStudentRequest $request)
     {
-
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
 
             $Student = new Student();
@@ -284,6 +293,11 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $Student = Student::select(
                 'id',
@@ -326,6 +340,11 @@ class StudentController extends Controller
      */
     public function update(AddStudentRequest $request, string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $Student =  Student::find(htmlspecialchars(strip_tags($request['id'])));
             $Student->full_name = htmlspecialchars(strip_tags($request['full_name']));
@@ -371,6 +390,11 @@ class StudentController extends Controller
     }
     public function StudentStatus(Request $request)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $Student =  Student::find(htmlspecialchars(strip_tags($request['id'])));
             $Student->user_status = $request['Student_status'];
@@ -397,6 +421,11 @@ class StudentController extends Controller
      */
     public function destroy(int $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $request = request()->validate([
                 "id" => "required|integer|min:1|max:255",

@@ -10,12 +10,6 @@ use App\Models\Course;
 use App\Models\SemesterTask;
 use App\Models\Student;
 use Exception;
-use Illuminate\Validation\ValidationException;
-use App\Models\User;
-use App\Notifications\Notifications;
-use Illuminate\Support\Facades\Validator;
-
-use function PHPUnit\Framework\isNull;
 
 class ResultController extends Controller
 {
@@ -128,6 +122,11 @@ class ResultController extends Controller
     }
     public function create()
     {
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         $specializationId = htmlspecialchars(strip_tags(request()->get('specialization_id', 0)));
         $semesterNum = htmlspecialchars(strip_tags(request()->get('semester_num', 0)));
         $courseId = htmlspecialchars(strip_tags(request()->get('course_id', 0)));
@@ -178,7 +177,11 @@ class ResultController extends Controller
      */
     public function store(AddResultRequest $request)
     {
-
+        $user = auth()->user();
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $semesterTask = SemesterTask::updateOrCreate(
                 [

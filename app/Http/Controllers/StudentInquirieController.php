@@ -9,9 +9,14 @@ use Illuminate\Validation\ValidationException;
 
 class StudentInquirieController extends Controller
 {
- 
+
     public function index()
     {
+        $user = auth()->user();
+        if ($user->user_type == 'registration' || $user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $inquirie_type = request()->input('inquirie_type', 'complaint');
             $pageSize = 100;
@@ -81,7 +86,11 @@ class StudentInquirieController extends Controller
      */
     public function update(Request $request, string $id)
     {
-// dd($request['id']);
+        $user = auth()->user();
+        if ($user->user_type == 'registration' || $user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $credentials = $request->validate([
                 'reply_message' => ['required', 'string', 'max:1000', 'min:2'],

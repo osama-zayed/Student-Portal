@@ -94,8 +94,9 @@
                                     <div class="col">
                                         <label for="Classroom_id">الصلاحية : <span class="text-danger">*</span></label>
                                         <select id="user_type" class="custom-select mr-sm-2" name="user_type" multiple required>
-                                            <option value="user" >مستخدم</option>
-                                            <option value="admin">ادمن</option>
+                                            <option value="student_affairs" >شوؤن طلاب</option>
+                                            <option value="control" >الكنترول</option>
+                                            <option value="registration" >الاستقبال</option>
                                         </select>
                                     </div>
                                 </div>

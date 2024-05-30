@@ -43,6 +43,11 @@ class CollegeNewsController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
+        if ($user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         return view("page.CollegeNew.create");
     }
 
@@ -51,6 +56,11 @@ class CollegeNewsController extends Controller
      */
     public function store(NewRequest $request)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $AddCollegeNew = new CollegeNew();
             $AddCollegeNew->title = htmlspecialchars(strip_tags($request["title"]));
@@ -100,6 +110,11 @@ class CollegeNewsController extends Controller
 
     public function edit(string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $CollegeNew = CollegeNew::find(htmlspecialchars(strip_tags($id)));
             return view("page.CollegeNew.edit", [
@@ -116,6 +131,11 @@ class CollegeNewsController extends Controller
      */
     public function update(NewRequest $request, string $id)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             $updateCollegeNew = CollegeNew::find(htmlspecialchars(strip_tags($request["id"])));
             $updateCollegeNew->title = htmlspecialchars(strip_tags($request["title"]));
@@ -160,6 +180,11 @@ class CollegeNewsController extends Controller
      */
     public function destroy(string $name)
     {
+        $user = auth()->user();
+        if ($user->user_type == 'control' ) {
+            toastr()->error("غير مصرح لك");
+            return redirect()->back();
+        }
         try {
             //التحقق من الحقول
             $data = request()->validate(

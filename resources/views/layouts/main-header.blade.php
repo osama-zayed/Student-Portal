@@ -32,40 +32,6 @@
             
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item dropdown ">
-                    <a class="nav-link top-nav" data-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="ti-bell"></i>
-                        <span class="badge notification-status" style="background: blue">  </span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-big dropdown-notifications"
-                        style="max-height: 400px;overflow-y: scroll;">
-                        <div class="dropdown-header notifications">
-                            <strong>الاشعارات</strong>
-                        </div>
-                        @forelse(auth()->user()->notifications->take(200) as $notifi)
-                            <p class="dropdown-item"
-                                style="width: 300px;
-                                max-width: 400px;
-                                                        overflow-wrap: break-word;
-                                                        word-wrap: break-word;
-                                                        word-break: break-word;
-                                                        white-space: normal;">
-                                {{ $notifi->data['data'] }}
-                            </p>
-                            <hr>
-                        @empty
-                            <p class="dropdown-item"
-                                style="width: 300px;
-                        max-width: 400px;
-                                                overflow-wrap: break-word;
-                                                word-wrap: break-word;
-                                                word-break: break-word;
-                                                white-space: normal;">
-                                لا يوجد اشعارات
-                            </p>
-                        @endforelse
-                    </div>
-                </li>
                 <li class="nav-item fullscreen">
                     <a id="btnFullscreen" href="#" class="nav-link"><i class="ti-fullscreen"></i></a>
                 </li>
