@@ -57,7 +57,7 @@ class CollegeNewsController extends Controller
             $AddCollegeNew->description = htmlspecialchars(strip_tags($request["description"]));
             if (isset($request["file"]) && !empty($request["file"])) {
                 $AddCollegeNewImage = request()->file('file');
-                $AddCollegeNewImagePath = 'CollegeNew/' .
+                $AddCollegeNewImagePath = 'CollegeNew/' . 
                     $AddCollegeNewImage->getClientOriginalName();
                 $AddCollegeNewImage->move(public_path('CollegeNew/'), $AddCollegeNewImagePath);
                 $AddCollegeNew->image = $AddCollegeNewImagePath;
@@ -72,7 +72,7 @@ class CollegeNewsController extends Controller
 
                 activity()->performedOn($AddCollegeNew)->event("اضافة خبر")->causedBy($user)
                     ->log(
-                        ' تم اضافة خبر جديد باسم ' . $AddCollegeNew->name .
+                        ' تم اضافة خبر جديد بعنوان ' . $AddCollegeNew->name .
                             " بواسطة المستخدم " . $user->name .
                             " الوقت والتاريخ " . $date,
                     );
@@ -135,10 +135,10 @@ class CollegeNewsController extends Controller
 
                 HelperController::NotificationsAllUser("لقد تمت إضافة خبر جديد");
 
-                activity()->performedOn($updateCollegeNew)->event("اضافة خبر")->causedBy($user)
+                activity()->performedOn($updateCollegeNew)->event("تعديل خبر")->causedBy($user)
                     ->log(
-                        ' تم تعديل خبر باسم ' . $updateCollegeNew->name .
-                            " بواسطة المستخدم " . $user->name .
+                        ' تم تعديل خبر بعنوان ' . $updateCollegeNew->name .
+                            " بواسطة المستخدم " . $user->title .
                             " الوقت والتاريخ " . $date,
                     );
                 //نهاية كود عملية الاشعار والاضافة الى سجل العمليات

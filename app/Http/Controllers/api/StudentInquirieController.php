@@ -10,6 +10,11 @@ use Illuminate\Validation\ValidationException;
 
 class StudentInquirieController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+        $this->middleware('userStatus');
+    }
     public function showAllComplaint()
     {
         try {
