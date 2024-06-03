@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class NewRequest extends FormRequest
+class NewsRequest extends FormRequest
 {
 
     public function authorize(): bool
@@ -32,7 +32,7 @@ class NewRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif,bmp|max:4048',
+            'CollegeNewImage' => 'image|mimes:png,jpg,jpeg,gif,bmp|max:4048',
             'description' => 'required|string|max:1500'
         ];
     }
@@ -46,9 +46,9 @@ class NewRequest extends FormRequest
            'description.required'=>"وصف الخبر مطلوب",
            'description.string'=>"وصف الخبر يجب ان يكون نص",
            'description.max'=>"اكبر حد لوصف الخبر 1500 حرف",
-           'image.image'=>"صورة الخبر يجب ان تكون من نوع صورة",
-           'image.mimes'=>"صورة الخبر يجب ان تكون من نوع png,jpg,jpeg,gif,bmp",
-           'image.max'=>"اكبر حد لصورة الخبر 4048 ",
+           'CollegeNewImage.image'=>"صورة الخبر يجب ان تكون من نوع صورة",
+           'CollegeNewImage.mimes'=>"صورة الخبر يجب ان تكون من نوع png,jpg,jpeg,gif,bmp",
+           'CollegeNewImage.max'=>"اكبر حد لصورة الخبر 4048 ",
         ];
     }
 }

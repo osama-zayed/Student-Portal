@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CollegeNew;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\NewRequest;
+use App\Http\Requests\NewsRequest;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
@@ -54,7 +54,7 @@ class CollegeNewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(NewRequest $request)
+    public function store(NewsRequest $request)
     {
         $user = auth()->user();
         if ($user->user_type == 'control' ) {
@@ -65,12 +65,12 @@ class CollegeNewsController extends Controller
             $AddCollegeNew = new CollegeNew();
             $AddCollegeNew->title = htmlspecialchars(strip_tags($request["title"]));
             $AddCollegeNew->description = htmlspecialchars(strip_tags($request["description"]));
-            if (isset($request["file"]) && !empty($request["file"])) {
-                $AddCollegeNewImage = request()->file('file');
-                $AddCollegeNewImagePath = 'CollegeNew/' . 
-                    $AddCollegeNewImage->getClientOriginalName();
-                $AddCollegeNewImage->move(public_path('CollegeNew/'), $AddCollegeNewImagePath);
-                $AddCollegeNew->image = $AddCollegeNewImagePath;
+            if (isset($request["CollegeNewsImage"]) && !empty($request["CollegeNewsImage"])) {
+                $AddCollegeNewsImage = request()->file('CollegeNewsImage');
+                $AddCollegeNewsImagePath = 'CollegeNew/' . 
+                    $AddCollegeNewsImage->getClientOriginalName();
+                $AddCollegeNewsImage->move(public_path('CollegeNew/'), $AddCollegeNewsImagePath);
+                $AddCollegeNew->image = $AddCollegeNewsImagePath;
             }
 
             if ($AddCollegeNew->save()) {
@@ -129,7 +129,7 @@ class CollegeNewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(NewRequest $request, string $id)
+    public function update(NewsRequest $request, string $id)
     {
         $user = auth()->user();
         if ($user->user_type == 'control' ) {
@@ -140,12 +140,11 @@ class CollegeNewsController extends Controller
             $updateCollegeNew = CollegeNew::find(htmlspecialchars(strip_tags($request["id"])));
             $updateCollegeNew->title = htmlspecialchars(strip_tags($request["title"]));
             $updateCollegeNew->description = htmlspecialchars(strip_tags($request["description"]));
-            if (isset($request["file"]) && !empty($request["file"])) {
-                $updateCollegeNewImage = request()->file('file');
-                $updateCollegeNewImagePath = 'CollegeNew/' .
-                    $updateCollegeNewImage->getClientOriginalName();
-                $updateCollegeNewImage->move(public_path('CollegeNew/'), $updateCollegeNewImagePath);
-                $updateCollegeNew->image = $updateCollegeNewImagePath;
+            if (isset($request["CollegeNewsImage"]) && !empty($request["CollegeNewsImage"])) {
+                $updateCollegeNewsImage = $request->file('CollegeNewsImage');
+                $updateCollegeNewsImagePath = 'CollegeNew/' . $updateCollegeNewsImage->getClientOriginalName();
+                $updateCollegeNewsImage->move(public_path('CollegeNew/'), $updateCollegeNewsImagePath);
+                $updateCollegeNew->image = $updateCollegeNewsImagePath;
             }
 
             if ($updateCollegeNew->save()) {

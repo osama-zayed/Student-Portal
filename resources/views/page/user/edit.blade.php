@@ -31,7 +31,7 @@
                         <div class="col-md-12">
                             <br>
                             <form action="{{ route('user.update', 'test') }}" method="post"
-                                enctype="multipart/form-Directorates">
+                            enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <input type="number" name="id" class="form-control" value="{{ $User->id }}"

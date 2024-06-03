@@ -31,7 +31,7 @@
                         <div class="col-md-12">
                             <br>
                             <form action="{{ route('College-New.update', 'test') }}" method="post"
-                                enctype="multipart/form-CollegeNew">
+                            enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <input id="id" type="number" name="id" value="{{ $CollegeNew->id }}" readonly
@@ -61,15 +61,15 @@
                                             placeholder="أدخل وصف الخبر " required="الحقل مطلوب" cols="30" rows="10">{{ old('description') ?? ($CollegeNew->description ?? '') }}</textarea>
                                     </div>
                                     <div class="col-12">
-                                        <label for="file">صوره الخبر
+                                        <label for="CollegeNewsImage">صوره الخبر
                                             <span class="text-danger">*
-                                                @error('file')
+                                                @error('CollegeNewsImage')
                                                     {{ $message }}
                                                 @enderror
                                             </span>
                                         </label>
-                                        <input id="file" type="file" name="file" class="form-control"
-                                            value="{{ old('file') }}" placeholder="أدخل صورة الخبر ">
+                                        <input id="CollegeNewsImage" type="file" name="CollegeNewsImage" class="form-control"
+                                            value="{{ old('CollegeNewsImage') }}" placeholder="أدخل صورة الخبر ">
                                     </div>
                                 </div>
                                 <br>

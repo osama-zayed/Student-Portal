@@ -35,15 +35,15 @@
                             value="{{ old('description') }}" placeholder="أدخل وصف الخبر " required="الحقل مطلوب" cols="30" rows="10"></textarea>
                         </div>
                         <div class="col-12">
-                            <label for="file">صوره الخبر 
+                            <label for="CollegeNewsImage">صوره الخبر 
                                 <span class="text-danger">*
-                                    @error('file')
+                                    @error('CollegeNewsImage')
                                         {{ $message }}
                                     @enderror
                                 </span>
                             </label>
-                            <input id="file" type="file" name="file" class="form-control"
-                                value="{{ old('file') }}" placeholder="أدخل صورة الخبر " required="الحقل مطلوب">
+                            <input id="CollegeNewsImage" type="file" name="CollegeNewsImage" class="form-control"
+                                value="{{ old('CollegeNewsImage') }}" placeholder="أدخل صورة الخبر " required="الحقل مطلوب">
                         </div>
                     </div>
                 </div>

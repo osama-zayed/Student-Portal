@@ -30,7 +30,7 @@
                         <div class="col-md-12">
                             <br>
                             <form action="{{ route('Specialization.update', 'test') }}" method="post"
-                                enctype="multipart/form-Specializations">
+                            enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <input id="id" type="number" hidden readonly name="id" class="form-control"

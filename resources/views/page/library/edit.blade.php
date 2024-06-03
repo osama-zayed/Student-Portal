@@ -31,7 +31,7 @@
                         <div class="col-md-12">
                             <br>
                             <form action="{{ route('library_Book.update', 'test') }}" method="post"
-                                enctype="multipart/form-library">
+                            enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <div class="form-row">
