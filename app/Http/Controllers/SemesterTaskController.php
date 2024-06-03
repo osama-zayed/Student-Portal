@@ -157,7 +157,7 @@ class SemesterTaskController extends Controller
             ->where('semester_num', $semesterNum)
             ->first();
         if (empty($student)) {
-            toastr()->warning('وصلت الى اخر طالب');
+            toastr()->info('وصلت الى اخر طالب');
             return redirect()->route('SemesterTask.index');
         }
         $course = Course::select(
