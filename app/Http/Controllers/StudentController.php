@@ -6,12 +6,15 @@ use App\Http\Requests\Student\AddStudentRequest;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Result;
+use App\Models\SchoolYear;
 use App\Models\SemesterTask;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use App\Notifications\Notifications;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\isNull;
@@ -170,7 +173,7 @@ class StudentController extends Controller
     public function create()
     {
         $user = auth()->user();
-        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control') {
             toastr()->error("غير مصرح لك");
             return redirect()->back();
         }
@@ -188,7 +191,7 @@ class StudentController extends Controller
     public function store(AddStudentRequest $request)
     {
         $user = auth()->user();
-        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control') {
             toastr()->error("غير مصرح لك");
             return redirect()->back();
         }
@@ -294,7 +297,7 @@ class StudentController extends Controller
     public function edit(string $id)
     {
         $user = auth()->user();
-        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control') {
             toastr()->error("غير مصرح لك");
             return redirect()->back();
         }
@@ -316,7 +319,7 @@ class StudentController extends Controller
                 'discount_percentage',
                 'college_id',
                 'specialization_id',
-                'password',
+                'academic_year',
                 'semester_num',
                 'user_status',
                 'image',
@@ -341,7 +344,7 @@ class StudentController extends Controller
     public function update(AddStudentRequest $request, string $id)
     {
         $user = auth()->user();
-        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control') {
             toastr()->error("غير مصرح لك");
             return redirect()->back();
         }
@@ -360,9 +363,41 @@ class StudentController extends Controller
             $Student->school_graduation_date = htmlspecialchars(strip_tags($request['school_graduation_date']));
             $Student->discount_percentage = htmlspecialchars(strip_tags($request['discount_percentage']));
             $Student->college_id = htmlspecialchars(strip_tags($request['college_id']));
-            $Student->academic_year = htmlspecialchars(strip_tags($request['academic_year']));
             $Student->specialization_id = htmlspecialchars(strip_tags($request['specialization_id']));
-            $Student->password = bcrypt($Student->personal_id ?? $Student->phone_number);
+
+            if ($request["semester_num"] != $Student->semester_num) {
+                if ($request["semester_num"] < $Student->semester_num ||($request["semester_num"] - $Student->semester_num) > 1){
+                    throw new Exception('الترم الدراسي الذي ادخلته غير مناسب يرجى الترقية للترم الدراسي التالي ليس اكثر');
+                }
+                $currentDate = now()->format('Y-m-d');
+                $schoolYearStartDate = SchoolYear::find($Student->academic_year)->start_date;
+                if (Carbon::parse($schoolYearStartDate)->lessThanOrEqualTo(Carbon::parse($currentDate))) {
+                    $school_year_new = SchoolYear::find($request['academic_year']);
+                    $school_year = SchoolYear::find($Student->academic_year);
+                    $start_date_diff = Carbon::parse($school_year_new->start_date)->diffInMonths(Carbon::parse($school_year->start_date));
+                    $to_semester_num = $request['semester_num'];
+                    if ($to_semester_num % 2 != 0) {
+                        if ($start_date_diff < 8) {
+                            throw new Exception('يجب أن يكون الفرق بين العام الدراسي الجديد والقديم 8 أشهر على الأقل.');
+                        }
+                    } else {
+                        if ($start_date_diff != 0) {
+                            throw new Exception('يجب أن يكون العام الدراسي هو نفسه في البيانات الجديدة والقديمة.');
+                        }
+                    }
+                } else {
+                    throw new Exception('يجب أن يكون العام الدراسي أقل من تاريخ اليوم الحالي.');
+                }
+                $courses = Course::select('id')->where('specialization_id', $request['specialization_id'])->where('semester_num', $request['semester_num'])->get();
+                foreach ($courses as $course) {
+                    PromotionController::checkCourseForResultAndSemesterTask($Student->semester_num, $course, $Student->id, $Student->specialization_id);
+                }
+                PromotionController::PromotionStudent($Student->semester_num, $Student, $Student->specialization_id, $request['academic_year'], $request['semester_num'], $request['specialization_id'], $Student->academic_year);
+            }
+            $Student->academic_year = htmlspecialchars(strip_tags($request['academic_year']));
+            if (isset($request["password"]) && !empty($request["password"])) {
+                $Student->password = bcrypt($request["password"]);
+            }
             if (isset($request["image"]) && !empty($request["image"])) {
                 $StudentImage = request()->file('image');
                 $StudentImagePath = 'images/Student/' .
@@ -380,18 +415,17 @@ class StudentController extends Controller
                 toastr()->success('تمت العملية بنجاح');
                 return redirect()->route("Student.index");
             } else {
-                toastr()->error('العملية فشلت');
-                return redirect()->back();
+                throw new Exception('العملية فشلت');
             }
         } catch (Exception $e) {
             toastr()->error($e->getMessage());
-            return redirect()->back()->with(["error" => $e->getMessage()]);
+            return redirect()->back()->with(["error" => $e->getMessage()])->withInput();
         }
     }
     public function StudentStatus(Request $request)
     {
         $user = auth()->user();
-        if ($user->user_type == 'control' ) {
+        if ($user->user_type == 'control') {
             toastr()->error("غير مصرح لك");
             return redirect()->back();
         }
@@ -422,7 +456,7 @@ class StudentController extends Controller
     public function destroy(int $id)
     {
         $user = auth()->user();
-        if ($user->user_type == 'student_affairs' || $user->user_type == 'control' ) {
+        if ($user->user_type == 'student_affairs' || $user->user_type == 'control') {
             toastr()->error("غير مصرح لك");
             return redirect()->back();
         }

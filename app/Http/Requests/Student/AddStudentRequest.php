@@ -39,7 +39,7 @@ class AddStudentRequest extends FormRequest
                 'min:1',
                 'unique:students,personal_id,' . $this->id . ',id',
             ],
-            'full_name' => 'required|string|regex:/^([\p{Arabic}]+\s){3}[\p{Arabic}]+$/u',
+            'full_name' => 'required|string|regex:/^([\p{Arabic}]+\s){3,4}[\p{Arabic}]+$/u',
             'gender' => 'required|string|min:2',
             'nationality' => 'required|string|min:2',
             'date_of_birth' => 'required|date',

@@ -37,7 +37,7 @@ class PromotionController extends Controller
     {
         try {
             $user = auth()->user();
-            if ($user->user_type == 'student_affairs' || $user->user_type == 'registration' ) {
+            if ($user->user_type == 'student_affairs' || $user->user_type == 'registration') {
                 toastr()->error("غير مصرح لك");
                 return redirect()->back();
             }
@@ -57,46 +57,8 @@ class PromotionController extends Controller
                 foreach ($courses as $course) {
                     $this->checkCourseForResultAndSemesterTask($request['from_semester_num'], $course, $Student['id'], $request['from_specialization_id']);
                 }
-
-                $lowGradeCourses = Result::where('final_grade', '<', 50)
-                    ->where('semester_num', $request['from_semester_num'])
-                    ->where('student_id', $Student['id'])
-                    ->count();
-                if ($lowGradeCourses > 2) {
-                    $Student->update([
-                        'specialization_id' => $request['from_specialization_id'],
-                        'semester_num' => $request['from_semester_num'],
-                        'academic_year' => $request['academic_year_new'],
-                        'status' => 'راسب'
-                    ]);
-                    Promotion::create([
-                        'student_id' => $Student->id,
-                        'from_semester_num' => $request['from_semester_num'],
-                        'to_semester_num' => $request['from_semester_num'],
-                        'from_specialization_id' => $request['from_specialization_id'],
-                        'to_specialization_id' => $request['from_specialization_id'],
-                        'academic_year' => $request['academic_year'],
-                        'academic_year_new' => $request['academic_year_new'],
-                        'status' => $Student->status,
-                    ]);
-                } else {
-                    $Student->update([
-                        'specialization_id' => $request['to_specialization_id'],
-                        'semester_num' => $request['to_semester_num'],
-                        'academic_year' => $request['academic_year_new'],
-                        'status' => 'ناجح'
-                    ]);
-                    Promotion::create([
-                        'student_id' => $Student->id,
-                        'from_semester_num' => $request['from_semester_num'],
-                        'to_semester_num' => $request['to_semester_num'],
-                        'from_specialization_id' => $request['from_specialization_id'],
-                        'to_specialization_id' => $request['to_specialization_id'],
-                        'academic_year' => $request['academic_year'],
-                        'academic_year_new' => $request['academic_year_new'],
-                        'status' => $Student->status,
-                    ]);
-                }
+                
+                $this->PromotionStudent($request['from_semester_num'], $Student, $request['from_specialization_id'], $request['academic_year_new'], $request['to_semester_num'], $request['to_specialization_id'], $request['academic_year']);
             }
 
             toastr()->success('تمت العملية بنجاح');
@@ -114,7 +76,49 @@ class PromotionController extends Controller
     {
         //
     }
-    public function checkCourseForResultAndSemesterTask($from_semester_num, $course, $Student_id, $specialization_id)
+    public static function PromotionStudent($from_semester_num, $Student, $from_specialization_id, $academic_year_new, $to_semester_num, $to_specialization_id, $academic_year)
+    {
+        $lowGradeCourses = Result::where('final_grade', '<', 50)
+            ->where('semester_num', $from_semester_num)
+            ->where('student_id', $Student->id)
+            ->count();
+        if ($lowGradeCourses > 2) {
+            $Student->update([
+                'specialization_id' => $from_specialization_id,
+                'semester_num' => $from_semester_num,
+                'academic_year' => $academic_year_new,
+                'status' => 'راسب'
+            ]);
+            Promotion::create([
+                'student_id' => $Student->id,
+                'from_semester_num' => $from_semester_num,
+                'to_semester_num' => $from_semester_num,
+                'from_specialization_id' => $from_specialization_id,
+                'to_specialization_id' => $from_specialization_id,
+                'academic_year' => $academic_year,
+                'academic_year_new' => $academic_year_new,
+                'status' => $Student->status,
+            ]);
+        } else {
+            $Student->update([
+                'specialization_id' => $to_specialization_id,
+                'semester_num' => $to_semester_num,
+                'academic_year' => $academic_year_new,
+                'status' => 'ناجح'
+            ]);
+            Promotion::create([
+                'student_id' => $Student->id,
+                'from_semester_num' => $from_semester_num,
+                'to_semester_num' => $to_semester_num,
+                'from_specialization_id' => $from_specialization_id,
+                'to_specialization_id' => $to_specialization_id,
+                'academic_year' => $academic_year,
+                'academic_year_new' => $academic_year_new,
+                'status' => $Student->status,
+            ]);
+        }
+    }
+    public static function checkCourseForResultAndSemesterTask($from_semester_num, $course, $Student_id, $specialization_id)
     {
         $semester_task = SemesterTask::where('course_id', $course->id)
             ->where('semester_num', $from_semester_num)

@@ -105,8 +105,8 @@
                                         </span>
                                     </label>
                                     <input type="date" name="date_of_birth" class="form-control h-65"
-                                    value="{{ old('date_of_birth') ?? ($Student->date_of_birth ??  date('Y-m-d', strtotime('-17 years'))) }}"
-                                    max="{{  date('Y-m-d', strtotime('-17 years')) }}" required>
+                                        value="{{ old('date_of_birth') ?? ($Student->date_of_birth ?? date('Y-m-d', strtotime('-17 years'))) }}"
+                                        max="{{ date('Y-m-d', strtotime('-17 years')) }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="place_of_birth">محل الميلاد
@@ -170,8 +170,8 @@
                                         </span>
                                     </label>
                                     <input type="date" name="school_graduation_date" class="form-control h-65"
-                                    value="{{ old('school_graduation_date') ?? ($Student->school_graduation_date ?? date('Y-m-d', strtotime('-1 month'))) }}"
-                                    max="{{ date('Y-m-d') }}" required>
+                                        value="{{ old('school_graduation_date') ?? ($Student->school_graduation_date ?? date('Y-m-d', strtotime('-1 month'))) }}"
+                                        max="{{ date('Y-m-d') }}" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="college_id">الكلية
@@ -225,6 +225,58 @@
                                         min="30"
                                         value="{{ old('discount_percentage') ?? ($Student->discount_percentage ?? '') }}"
                                         required>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-10">
+                                    <label for="academic_year">العام الدراسي
+                                        <span class="text-danger">*
+                                            @error('academic_year')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </label>
+                                    <select class="form-control h-65" name="academic_year" aria-placeholder="اختر كلية"
+                                        required>
+                                        <option value="" disabled selected>اختر عام دراسي من القائمة</option>
+                                        @forelse (\App\Models\SchoolYear::get() as $data)
+                                            <option value="{{ $data['id'] }}"
+                                                @if ($data->id == old('academic_year') || $Student->academic_year == $data->id) selected @endif>
+                                                {{ $data['end_date'] }}/{{ $data['start_date'] }}</option>
+                                        @empty
+                                            <option value="">لا يوجد اعوام دراسية</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-10">
+                                    <label for="semester_num">الترم الدراسي
+                                        <span class="text-danger">*
+                                            @error('semester_num')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </label>
+                                    <select class="form-control h-65" id="semester_num" name="semester_num"
+                                        aria-placeholder="اختر الترم">
+                                        <option value="" disabled selected>اختر ترم دراسي من القائمة</option>
+                                        @forelse (\App\Models\semesterNumber::get() as $data)
+                                            <option value="{{ $data['id'] }}"
+                                                @if ($data['id'] == old('semester_num') || $Student->semester_num == $data->id) selected @endif>
+                                                {{ $data['name'] }}
+                                            </option>
+                                        @empty
+                                            <option value="">لا يوجد كليات</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-10">
+                                    <label for="password">كلمة السر
+                                        <span class="text-danger">
+                                            @error('password')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </label>
+                                    <input type="password" name="password" class="form-control h-65" 
+                                        value="{{ old('password') }}">
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-10">
                                     <label for="image">الصورة الشخصية
